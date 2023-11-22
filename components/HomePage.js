@@ -19,6 +19,10 @@ const App = () => {
       navigation.navigate('CoursePage', { course });
     };  
 
+    const handleTestButton = (noti) => {
+      navigation.navigate('Notifications', { noti });
+    };  
+
   return (
     <View style={styles.container}>
       <Text style={styles.pageHeader}>Courses</Text>
@@ -87,7 +91,18 @@ const App = () => {
         </View>
       ))}
 
+      
+          <TouchableOpacity
+            style={styles.joinButton}
+            onPress={() => handleTestButton('Notifications')}
+          >
+            <Text>Test</Text>
+          </TouchableOpacity>
+      
+
+
         </View>
+
       </View>
     </View>
   );
