@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const activeCourses = [
-    { id: '1', name: 'CS 147' },
+    { id: '1', name: 'CS 147', people: '5' },
     { id: '2', name: 'ENGLISH 9CE' },
   ];
 
@@ -11,7 +11,7 @@ const inactiveCourses = [
     { id: '3', name: 'CS 161' },
   ];
 
-const App = () => {
+const HomePage = () => {
     const navigation = useNavigation();
 
     const handleJoinPress = (course) => {
@@ -86,7 +86,7 @@ const App = () => {
                 style={styles.askButton}
                 onPress={() => handleJoinPress(course)}
             >
-                <Text style={styles.askButtonTEXT}>Join</Text>
+                <Text style={styles.askButtonTEXT}>Ask</Text>
             </TouchableOpacity>
         </View>
       ))}
@@ -116,24 +116,24 @@ const styles = StyleSheet.create({
   },
   pageHeader: {
     fontSize: 40,
-    marginTop: 90,
+    marginTop: '10%',
     fontWeight: 'bold',
   },
   courseSection: {
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    width: '100%',
   },
   bottomSection: {
     justifyContent: 'flex-end',
-    marginBottom: 200, // adjust space from bottom of screen
+    height: '100%',
+    marginBottom: '40%', // adjust space from bottom of screen
   },
   sectionHeader: {
     color: 'black',
     fontSize: 30,
     fontWeight: 'normal',
-    marginTop: 30, // adjust space from 'Courses' header
+    marginTop: '10%', // adjust space from 'Courses' header
   },
   courseContainer: {
     marginTop: 5,
@@ -181,4 +181,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default HomePage;
