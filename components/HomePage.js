@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import BottomBar from './BottomBar';
 
 const activeCourses = [
     { id: '1', name: 'CS 147', people: '5' },
@@ -71,13 +72,6 @@ const HomePage = () => {
       <View style={[styles.courseSection, styles.bottomSection]}>
         <Text style={styles.sectionHeader}>Inactive Office Hours</Text>
         <View style={styles.courseContainer}>
-            
-          {/* <View style={styles.courseBox}>
-            <Text style={styles.courseBoxTEXT}>CS 161</Text>
-            <View style={styles.askButton}>
-              <Text style={styles.askButtonTEXT}>Ask</Text>
-            </View>
-          </View> */}
 
         {inactiveCourses.map((course) => (
             <View key={course.id} style={styles.courseBox}>
@@ -90,17 +84,12 @@ const HomePage = () => {
             </TouchableOpacity>
         </View>
       ))}
-
-      
           <TouchableOpacity
             style={styles.joinButton}
             onPress={() => handleTestButton('Notifications')}
           >
             <Text>Test</Text>
           </TouchableOpacity>
-      
-
-
         </View>
 
       </View>
