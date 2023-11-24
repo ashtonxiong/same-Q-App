@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import BottomBar from './BottomBar';
 import styles from '../styles';
+import { BottomMenu, Item } from "react-native-bottom-menu";
 
 const activeCourses = [
     { id: '1', name: 'CS 147' },
@@ -71,9 +72,12 @@ const App = () => {
           >
             <Text>Test</Text>
           </TouchableOpacity>
+
+
         </View>
 
       </View>
+      
     </View>
   );
 };
