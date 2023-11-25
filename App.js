@@ -25,15 +25,25 @@ const MainStack = () => {
 
 const App = () => {
   return (
-    <NavigationContainer color={'#000'}>
-      <Tab.Navigator color={"#000"}>
-      <Tab.Screen name="Courses" component={MainStack} 
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarStyle: {
+            backgroundColor: '#cfb8e9', // Set the background color
+          },
+        }}
+        tabBarOptions={{
+          activeTintColor: '#000', // Set the active tab color
+          inactiveTintColor: '#9f6fdd', // Set the inactive tab color
+        }}
+      >
+      <Tab.Screen name="Home" component={MainStack} 
       options={{
         tabBarIcon: ({ color, size }) => (
           <Icon name="home" size={size} color={"#000"} />
         ),
       }}/>
-        <Tab.Screen name="My Questions" component={Notifications} 
+        <Tab.Screen name="Collaborating" component={Notifications} 
           options={{
             tabBarIcon: ({ color, size }) => (
               <Icon name="people" size={size} color={"#000"} />
