@@ -27,9 +27,17 @@ const styles = StyleSheet.create({
     },
     input : {
       width: "100%",
-      height: 70,
-      backgroundColor: "#D9D9D9"
+      height: 82,
+      fontSize: 18,
+      textAlignVertical: 'center',
+      paddingRight: 80,
+      paddingLeft: 20,
     },
+    input2 : {
+      paddingBottom: 20,
+      backgroundColor: "#D9D9D9",
+    },
+
 
     // HomePage
     container1: {
@@ -183,9 +191,27 @@ const styles = StyleSheet.create({
         paddingTop: 1
       },
       sendMessage : {
-        alignSelf : 'flex-end',
+        justifyContent : 'flex-end',
         width : "100%",
-        paddingBottom: 10
+        backgroundColor: "#D9D9D9",
+        paddingTop: 10 
+      },
+      sendMessageBUTTON : {
+        position: "absolute",
+        bottom: "45%",
+        right: 30,
+      },
+      TextsArea : {
+        flex : 1,
+      },
+      huddleButton : {
+        position : 'absolute',
+        height : 100,
+        width : 100,
+        backgroundColor: 'grey',
+        bottom: 20,
+        right : 20,
+        borderRadius: '100%'
       }
 }
 );
