@@ -16,6 +16,28 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         marginTop: '10%', // adjust space from course name header
     },
+    courseBoxTEXT: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: 'black',
+      textAlign: 'left',
+    },
+    icons : {
+      // Nothing here yet
+    },
+    input : {
+      width: "100%",
+      height: 82,
+      fontSize: 18,
+      textAlignVertical: 'center',
+      paddingRight: 80,
+      paddingLeft: 20,
+    },
+    input2 : {
+      paddingBottom: 20,
+      backgroundColor: "#D9D9D9",
+    },
+
 
     // HomePage
     container1: {
@@ -52,12 +74,6 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       backgroundColor: '#b986ee',
       justifyContent: 'space-between', // align items along the row
-    },
-    courseBoxTEXT: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      color: 'black',
-      textAlign: 'left',
     },
     joinButton: {
       width: 70,
@@ -115,6 +131,89 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
       },
-  });
+
+      //QuestionPage
+      questionContainer: {
+        flex: 1,
+        justifyContent: 'space-between'
+      },
+      pageHeader: {
+        marginTop: '15%',
+        alignItems: 'center',
+        justifyContent: 'flex-start'
+      },
+      // pageHeaderText : {
+      //   fontSize: 30,
+      //   marginTop: 30,
+      //   fontWeight: 'bold',
+      // },
+      topBlock: {
+        width: '100%',
+        backgroundColor: '#AB2CFABF',
+        borderRadius: '15em',
+        marginTop: '-10%',
+      },
+      QuestionInfo : {
+        width: '100%',
+        marginLeft: 20,
+        marginTop: 10,
+
+        // This margin controlls the amount of space below the icons
+        marginBottom: "1%",
+      },
+      QuestionInfoText : {
+        fontSize: 18,
+      },
+      questionHelpTimeText : {
+        marginTop: "2%",
+
+        // This margin controls the amount of space for the icons (Sorry, a little scuffed)
+        marginBottom: "5%"
+      },
+      questionActivityIndicator : {
+        // backgroundColor: "white",
+        width: "40%",
+        height: 40,
+        position: 'absolute',
+        bottom: 0,
+        right: 30,
+        justifyContent: 'space-evenly',
+        alignItems: "right",
+        paddingTop: 7,
+        flexDirection: "row"
+      },
+      questionMembers : {
+        flexDirection: "row"
+      },
+      activityNumbers : {
+        fontSize: 18,
+        paddingLeft: 5,
+        paddingTop: 1
+      },
+      sendMessage : {
+        justifyContent : 'flex-end',
+        width : "100%",
+        backgroundColor: "#D9D9D9",
+        paddingTop: 10 
+      },
+      sendMessageBUTTON : {
+        position: "absolute",
+        bottom: "45%",
+        right: 30,
+      },
+      TextsArea : {
+        flex : 1,
+      },
+      huddleButton : {
+        position : 'absolute',
+        height : 100,
+        width : 100,
+        backgroundColor: 'grey',
+        bottom: 20,
+        right : 20,
+        borderRadius: '100%'
+      }
+}
+);
 
 export default styles;
