@@ -26,10 +26,10 @@ import Ripple from 'react-native-material-ripple';
 //           fontWeight: 'bold', // Make the default text bold
 //         },
 //       }}>
-//         <Stack.Screen name="Home" component={HomePage} />
-//         <Stack.Screen name="CoursePage" component={CoursePage} />
-//         <Stack.Screen name="Notifications" component={Notifications} />
-//         <Stack.Screen name="QuestionPage" component={QuestionPage} />
+        // <Stack.Screen name="Home" component={HomePage} />
+        // <Stack.Screen name="CoursePage" component={CoursePage} />
+        // <Stack.Screen name="Notifications" component={Notifications} />
+        // <Stack.Screen name="QuestionPage" component={QuestionPage} />
 //       </Stack.Navigator>
 //     </NavigationContainer>
 //   );
@@ -50,28 +50,63 @@ import Ripple from 'react-native-material-ripple';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
-  return (
-    <Tab.Navigator>
-      {/* <Tab.Screen name="Home"         
-        options={{
-          tabBarIcon: ({ focused, color, size }) => (
-            <FontAwesome name={focused ? 'home' : 'home-outline'} size={size} color={color} />
-          ),
-        }}
-component={HomePage} /> */}
-      <Tab.Screen name="Courses" component={HomePage} />
-      <Tab.Screen name="Account" component={QuestionPage} />
-      <Tab.Screen name="Notifications" component={Notifications} />
-    </Tab.Navigator>
-  );
-}
+// function MyTabs() {
+//   return (
+//     <Tab.Navigator>
+//       <Tab.Screen name="Courses" component={HomePage} />
+//       <Tab.Screen name="My Questions" component={Notifications} />
+//       <Tab.Screen name="Ask" component={Notifications} />
+//       <Tab.Screen name="Notifications" component={Notifications} />
+//       <Tab.Screen name="Account" component={Notifications} />
+//     </Tab.Navigator>
+//   );
+// }
 
+
+// const App = () => {
+//   return (
+//     <NavigationContainer>
+//       <MyTabs />
+//     </NavigationContainer>
+//   );
+// };
+
+// const App = () => {
+//   return (
+//     <NavigationContainer>
+//       <Tab.Navigator>
+        // <Tab.Screen name="Courses" component={HomePage} />
+        // <Tab.Screen name="My Questions" component={Notifications} />
+        // <Tab.Screen name="Ask" component={Notifications} />
+        // <Tab.Screen name="Notifications" component={Notifications} />
+        // <Tab.Screen name="Account" component={Notifications} />
+//       </Tab.Navigator>
+//     </NavigationContainer>
+//   );
+// };
+
+const MainStack = () => {
+  return (
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen name="Home" component={HomePage} />
+      <Stack.Screen name="CoursePage" component={CoursePage} />
+      <Stack.Screen name="Notifications" component={Notifications} />
+      <Stack.Screen name="QuestionPage" component={QuestionPage} />
+
+    </Stack.Navigator>
+  );
+};
 
 const App = () => {
   return (
     <NavigationContainer>
-      <MyTabs />
+      <Tab.Navigator>
+      <Tab.Screen name="Courses" component={MainStack} />
+        <Tab.Screen name="My Questions" component={Notifications} />
+        <Tab.Screen name="Ask" component={Notifications} />
+        <Tab.Screen name="Notifications" component={Notifications} />
+        <Tab.Screen name="Account" component={Notifications} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 };

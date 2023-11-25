@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import BottomBar from './BottomBar';
 import styles from '../styles';
 import { BottomMenu, Item } from "react-native-bottom-menu";
+import CoursePage from './CoursePage';
 
 const activeCourses = [
     { id: '1', name: 'CS 147' },
@@ -14,7 +15,7 @@ const inactiveCourses = [
     { id: '3', name: 'CS 161' },
   ];
 
-const App = () => {
+const HomePage = () => {
     const navigation = useNavigation();
 
     const handleJoinPress = (course) => {
@@ -31,7 +32,7 @@ const App = () => {
     <View style={styles.container1}>
       <Text style={styles.pageHeader}>Courses</Text>
 
-      {/* active office hours */}
+      {/*  ------- active office hours --------- */}
       <View style={styles.courseSection}>
         <Text style={styles.sectionHeader}>Active Office Hours</Text>
         <View style={styles.courseContainer}>
@@ -49,8 +50,11 @@ const App = () => {
       ))}
         </View>
       </View>
+      
+      {/*  ------- active office hours --------- */}
 
-      {/* inactive office hours */}
+
+      {/*  ------- inactive office hours --------- */}
       <View style={[styles.courseSection]}>
         <Text style={styles.sectionHeader}>Inactive Office Hours</Text>
         <View style={styles.courseContainer}>
@@ -77,9 +81,12 @@ const App = () => {
         </View>
 
       </View>
+
+      {/*  -------inactive office hours --------- */}
+
       
     </View>
   );
 };
 
-export default App;
+export default HomePage;
