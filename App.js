@@ -53,7 +53,14 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomePage} />
+      {/* <Tab.Screen name="Home"         
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <FontAwesome name={focused ? 'home' : 'home-outline'} size={size} color={color} />
+          ),
+        }}
+component={HomePage} /> */}
+      <Tab.Screen name="Courses" component={HomePage} />
       <Tab.Screen name="Account" component={QuestionPage} />
       <Tab.Screen name="Notifications" component={Notifications} />
     </Tab.Navigator>

@@ -27,11 +27,14 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'center',
+      // borderWidth: 2, // Set the border width USED TO TEST FOR BORDERS
+      // borderColor: 'red', // Set the border color
     },
     bottomSection: {
       justifyContent: 'flex-end',
       height: '100%',
       marginBottom: '40%', // adjust space from bottom of screen
+
     },
     // sectionHeader: {
     //   color: 'black',

@@ -51,7 +51,7 @@ const App = () => {
       </View>
 
       {/* inactive office hours */}
-      <View style={[styles.courseSection, styles.bottomSection]}>
+      <View style={[styles.courseSection]}>
         <Text style={styles.sectionHeader}>Inactive Office Hours</Text>
         <View style={styles.courseContainer}>
 
