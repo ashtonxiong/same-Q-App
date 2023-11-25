@@ -70,13 +70,6 @@ const HomePage = () => {
             </TouchableOpacity>
         </View>
       ))}
-          <TouchableOpacity
-            style={styles.joinButton}
-            onPress={() => handleTestButton('Notifications')}
-          >
-            <Text>Test</Text>
-          </TouchableOpacity>
-
 
         </View>
 

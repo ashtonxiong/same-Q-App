@@ -6,7 +6,7 @@ import HomePage from './components/HomePage';
 import CoursePage from './components/CoursePage';
 import Notifications from './components/Notifications';
 import QuestionPage from './components/QuestionPage';
-
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -25,13 +25,38 @@ const MainStack = () => {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-      <Tab.Screen name="Courses" component={MainStack} />
-        <Tab.Screen name="My Questions" component={Notifications} />
-        <Tab.Screen name="Ask" component={Notifications} />
-        <Tab.Screen name="Notifications" component={Notifications} />
-        <Tab.Screen name="Account" component={Notifications} />
+    <NavigationContainer color={'#000'}>
+      <Tab.Navigator color={"#000"}>
+      <Tab.Screen name="Courses" component={MainStack} 
+      options={{
+        tabBarIcon: ({ color, size }) => (
+          <Icon name="home" size={size} color={"#000"} />
+        ),
+      }}/>
+        <Tab.Screen name="My Questions" component={Notifications} 
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="people" size={size} color={"#000"} />
+            ),
+          }}/>
+        <Tab.Screen name="Ask" component={Notifications} 
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="plus" size={size} color={"#000"} />
+            ),
+          }}/>
+        <Tab.Screen name="Notifications" component={Notifications} 
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="bell" size={size} color={"#000"} />
+            ),
+          }}/>
+        <Tab.Screen name="Account" component={Notifications} 
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="settings" size={size} color={"#000"} />
+            ),
+          }}/>
       </Tab.Navigator>
     </NavigationContainer>
   );
