@@ -15,11 +15,10 @@ const Tab = createBottomTabNavigator();
 const MainStack = () => {
   return (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={HomePage} />
+      <Stack.Screen name="HomePage" component={HomePage} />
       <Stack.Screen name="CoursePage" component={CoursePage} />
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="QuestionPage" component={QuestionPage} />
-
     </Stack.Navigator>
   );
 };
