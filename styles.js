@@ -4,6 +4,9 @@ const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     // ALL
+    container: {
+        flex: 1,
+    },
     pageHeader: {
         marginTop: '10%',
         textAlign: 'center',
@@ -36,12 +39,6 @@ const styles = StyleSheet.create({
       marginBottom: '40%', // adjust space from bottom of screen
 
     },
-    // sectionHeader: {
-    //   color: 'black',
-    //   fontSize: 30,
-    //   fontWeight: 'normal',
-    //   marginTop: '10%', // adjust space from 'Courses' header
-    // },
     courseContainer: {
       marginTop: 5,
     },
@@ -103,7 +100,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
       },
       questionTEXT: {
-        fontSize: 20,
+        fontSize: 22,
       },
       collabButton: {
         width: 145,
@@ -117,6 +114,16 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
+      },
+      backArrow: {
+        flexDirection: 'row',
+        justifyContent: 'left',
+        marginLeft: '5%',
+        marginTop: '15%',
+      },
+      backTEXT: {
+        fontSize: 18,
+        marginLeft: 5,
       },
   });
 
