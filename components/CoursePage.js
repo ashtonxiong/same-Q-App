@@ -12,7 +12,7 @@ const CoursePage = ({ route }) => {
   const handleCollabPress = (questionText) => {
     // navigate to QuestionPage with the question parameter
     console.log(`Navigating to QuestionPage with question: ${questionText}`);
-    navigation.navigate('QuestionPage', { question: questionText });
+    navigation.navigate('QuestionPage', { question: questionText, course });
   };  
 
   const handleBackHome = (home) => {
@@ -33,6 +33,9 @@ const CoursePage = ({ route }) => {
 
       <View style={styles.container2}>
         <Text style={styles.pageHeader}>{course.name}</Text>
+
+        <Text>Course info here</Text>
+
         <Text style={styles.sectionHeader}>Queue</Text>
 
         <ScrollView contentContainerStyle={styles.scrollContainer}>

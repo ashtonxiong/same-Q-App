@@ -3,9 +3,10 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 
 const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
-    // ALL
+    // ----------ALL----------
     container: {
         flex: 1,
     },
@@ -22,7 +23,7 @@ const styles = StyleSheet.create({
         marginTop: '10%', // adjust space from course name header
     },
 
-    // HomePage
+    // ----------HomePage----------
     container1: {
       flex: 1,
       justifyContent: 'center',
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
 
-    // CoursePage
+    // ----------CoursePage----------
     container2: {
         flex: 1,
         justifyContent: 'flex-start',
@@ -126,6 +127,54 @@ const styles = StyleSheet.create({
       backTEXT: {
         fontSize: 18,
         marginLeft: 5,
+      },
+
+      // ----------QuestionPage----------
+      questionPageBox: {
+        backgroundColor: "#9F6FDD",
+        height: screenHeight * 0.25,
+      },
+      questionPageBoxHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+      },
+      customModalOverlay: {
+        ...StyleSheet.absoluteFillObject, // apply fill to custom modal
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // value for transparency
+      },
+      modalContent: {
+        width: screenWidth * 0.8, 
+        height: 500,
+        padding: 25,
+        backgroundColor: "#CFB8E9",
+        borderRadius: 20, // round corners
+        borderColor: 'black',
+        borderWidth: 5,
+      },
+      modalHeader: {
+        // flexDirection: 'row',
+        alignItems: 'flex-end',
+      },
+      cancelButton: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        marginLeft: '5%',
+        marginTop: 10,
+      },
+      cancelTEXT: {
+        fontSize: 18,
+        marginLeft: 5,
+      },
+      input: {
+        padding: 10,
+        borderWidth: 0.5,
+        borderRadius: 4,
+      },
+      status: {
+        padding: 10,
+        textAlign: 'center',
       },
 
       // ------ Notification Info -------- 
