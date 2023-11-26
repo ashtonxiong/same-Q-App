@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from './components/HomePage';
 import CoursePage from './components/CoursePage';
@@ -15,12 +16,14 @@ const Tab = createBottomTabNavigator();
 
 const MainStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="HomePage" component={HomePage} />
-      <Stack.Screen name="CoursePage" component={CoursePage} />
-      <Stack.Screen name="Notifications" component={Notifications} />
-      <Stack.Screen name="QuestionPage" component={QuestionPage} />
-    </Stack.Navigator>
+    // <View>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="HomePage" component={HomePage} />
+        <Stack.Screen name="CoursePage" component={CoursePage} />
+        <Stack.Screen name="Notifications" component={Notifications} />
+        <Stack.Screen name="QuestionPage" component={QuestionPage} />
+      </Stack.Navigator>
+    // </View>
   );
 };
 
@@ -29,14 +32,25 @@ const App = () => {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
-          tabBarStyle: {
-            backgroundColor: '#cfb8e9', // Set the background color
-          },
+          tabBarActiveTintColor: "#000",
+          tabBarInactiveTintColor: "#9f6fdd",
+          tabBarStyle: [
+            {
+              display: "flex",
+              backgroundColor: '#cfb8e9'
+            },
+            null
+          ]
         }}
-        tabBarOptions={{
-          activeTintColor: '#000', // Set the active tab color
-          inactiveTintColor: '#9f6fdd', // Set the inactive tab color
-        }}
+        // screenOptions={{
+        //   tabBarStyle: {
+        //     backgroundColor: '#cfb8e9', // Set the background color
+        //   },
+        // }}
+        // tabBarOptions={{
+        //   activeTintColor: '#000', // Set the active tab color
+        //   inactiveTintColor: '#9f6fdd', // Set the inactive tab color
+        // }}
       >
       <Tab.Screen name="Home" component={MainStack} 
       options={{

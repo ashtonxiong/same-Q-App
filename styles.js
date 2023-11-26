@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
 
       // ------ Notification Info -------- 
       NotiContainer: {
-        borderBlockColor: "blue",
-        borderWidth: 2,
+        // borderBlockColor: "blue",
+        // borderWidth: 2,
         flex: 1,
         alignItems: 'center',
         marginLeft: 5,
@@ -167,10 +167,11 @@ const styles = StyleSheet.create({
 
       // ------ Collab Info -------- 
       collabHeader : {
-        borderBlockColor: "blue",
-        borderWidth: 2,
+        // borderBlockColor: "blue",
+        // borderWidth: 2,
         // flex: 1,
-        alignItems: 'center',
+        // alignItems: 'center',
+        marginBottom: 25,
       },
       collabBox: {
         // flexDirection: 'row', // have course name and join button in one row
@@ -182,22 +183,57 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: '#b986ee',
         justifyContent: 'space-between', // align items along the row
+        height: '20%',
       },
       collabTopRow: {
-        borderBlockColor: "green",
-        borderWidth: 2,
+        // borderBlockColor: "green",
+        // borderWidth: 2,
         flexDirection: "row",
         justifyContent: 'center', // align items along the row
       },
       collabEarphone: {
         // borderBlockColor: "red",
         // borderWidth: 2,
-        // flex: 1,
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
       },
       collabPeopleIcon: {
         // borderBlockColor: "white",
         // borderWidth: 2,
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
         // flex: 1,
+      },
+      collabMid: {
+        // borderBlockColor: "red",
+        // borderWidth: 2,
+        // flex: 1,
+        flexWrap: 'wrap', // Allow text to wrap
+        overflow: 'hidden', // Hide overflow content
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      collabBot: {
+        // borderBlockColor: "white",
+        // borderWidth: 2,
+        marginTop: 5,
+        flexWrap: 'wrap', // Allow text to wrap
+        overflow: 'hidden', // Hide overflow content
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      collabButton: {
+        height: "100%",
+        borderRadius: 20,
+        backgroundColor: 'black',
+        padding: 5,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+      },
+      collabButtonText: {
+        color: 'white',
+        fontSize: '20%',
+        fontWeight: 'bold',
       },
 
       // ------ Collab Info -------- 

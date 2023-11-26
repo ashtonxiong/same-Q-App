@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -23,24 +23,164 @@ const CollabPage = () => {
           <Text> Collaborating on {numCourses.numQuestions} questions</Text>
         </View>
 
+        {/* --------- FIRST BUTTON -------- */}
+
         <View style={styles.collabBox}>
           {/* top row */}
           <View style={styles.collabTopRow}>
-            <Icon name="people" size="20%" style={styles.collabPeopleIcon} />
-            <Text style={{ fontSize: 20, marginLeft: "5%", marginRight: "5%"}} >Expected Help at 2:15</Text>
-            <Icon style={styles.collabEarphone} name="earphones" size="20%"/>
+            <View style={styles.collabPeopleIcon} >
+              <Text style={{fontSize: '17%', fontWeight: 'bold'}}>2</Text>
+              <Icon name="people" size="20%" />
+            </View>
+            <Text style={{ fontSize: '20%', marginLeft: "5%", marginRight: "5%"}} >Expected Help at <Text style={{fontWeight: 'bold'}}>2:15</Text></Text>
+            <View style={styles.collabEarphone}>
+              <Icon  name="earphones" size="20%"/>
+              <Text style={{fontSize: '17%', fontWeight: 'bold', marginLeft: 3}}>0</Text>
+            </View>
           </View>
 
           {/* middle row */}
-          <View style={styles.collabTopRow}>
-            <Text>Middle</Text>
+          <View style={styles.collabMid}>
+            <Text style={{fontSize: '17%', color: '#000000'}}>How do I add audio and a pulsing effect to the medium-fi prototype?</Text>
           </View>
 
           {/* bottom row */}
-          <View style={styles.collabTopRow}>
-            <Text>Collaborate </Text>
+          <View style={styles.collabBot}>
+          <TouchableOpacity
+            style={styles.collabButton}
+            onPress={() => handleJoinPress("CS 147")}
+          >
+            <Text style={styles.collabButtonText}> Collaborating </Text>
+          </TouchableOpacity>
           </View>
         </View>
+
+        {/* --------- FIRST BUTTON -------- */}
+
+        {/* --------- SECOND BUTTON -------- */}
+
+        <View style={styles.collabBox}>
+          {/* top row */}
+          <View style={styles.collabTopRow}>
+            <View style={styles.collabPeopleIcon} >
+              <Text style={{fontSize: '17%', fontWeight: 'bold'}}>1</Text>
+              <Icon name="people" size="20%" />
+            </View>
+            <Text style={{ fontSize: '20%', marginLeft: "5%", marginRight: "5%"}} >Expected Help at <Text style={{fontWeight: 'bold'}}>2:25</Text></Text>
+            <View style={styles.collabEarphone}>
+              <Icon  name="earphones" size="20%"/>
+              <Text style={{fontSize: '17%', fontWeight: 'bold', marginLeft: 3}}>1</Text>
+            </View>
+          </View>
+
+          {/* middle row */}
+          <View style={styles.collabMid}>
+            <Text style={{fontSize: '17%', color: '#000000'}}>How do I add relative links to the Hi-Fidelity Prototype?</Text>
+          </View>
+
+          {/* bottom row */}
+          <View style={styles.collabBot}>
+          <TouchableOpacity
+            style={styles.collabButton}
+            onPress={() => handleJoinPress("CS 147")}
+          >
+            <Text style={styles.collabButtonText}> Collaborating </Text>
+          </TouchableOpacity>
+          </View>
+        </View>
+        {/* --------- SECOND BUTTON -------- */}
+
+        <View style={styles.collabBox}>
+          {/* top row */}
+          <View style={styles.collabTopRow}>
+            <View style={styles.collabPeopleIcon} >
+              <Text style={{fontSize: '17%', fontWeight: 'bold'}}>3</Text>
+              <Icon name="people" size="20%" />
+            </View>
+            <Text style={{ fontSize: '20%', marginLeft: "5%", marginRight: "5%"}} >Expected Help at <Text style={{fontWeight: 'bold'}}>2:35</Text></Text>
+            <View style={styles.collabEarphone}>
+              <Icon  name="earphones" size="20%"/>
+              <Text style={{fontSize: '17%', fontWeight: 'bold', marginLeft: 3}}>2</Text>
+            </View>
+          </View>
+
+          {/* middle row */}
+          <View style={styles.collabMid}>
+            <Text style={{fontSize: '17%', color: '#000000'}}>How do I upload the website files to the AFS Directory?</Text>
+          </View>
+
+          {/* bottom row */}
+          <View style={styles.collabBot}>
+          <TouchableOpacity
+            style={styles.collabButton}
+            onPress={() => handleJoinPress("CS 147")}
+          >
+            <Text style={styles.collabButtonText}> Collaborating </Text>
+          </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.collabBox}>
+          {/* top row */}
+          <View style={styles.collabTopRow}>
+            <View style={styles.collabPeopleIcon} >
+              <Text style={{fontSize: '17%', fontWeight: 'bold'}}>2</Text>
+              <Icon name="people" size="20%" />
+            </View>
+            <Text style={{ fontSize: '20%', marginLeft: "5%", marginRight: "5%"}} >Expected Help at <Text style={{fontWeight: 'bold'}}>2:15</Text></Text>
+            <View style={styles.collabEarphone}>
+              <Icon  name="earphones" size="20%"/>
+              <Text style={{fontSize: '17%', fontWeight: 'bold', marginLeft: 3}}>0</Text>
+            </View>
+          </View>
+
+          {/* middle row */}
+          <View style={styles.collabMid}>
+            <Text style={{fontSize: '17%', color: '#000000'}}>How do I add audio and a pulsing effect to the medium-fi prototype?</Text>
+          </View>
+
+          {/* bottom row */}
+          <View style={styles.collabBot}>
+          <TouchableOpacity
+            style={styles.collabButton}
+            onPress={() => handleJoinPress("CS 147")}
+          >
+            <Text style={styles.collabButtonText}> Collaborating </Text>
+          </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.collabBox}>
+          {/* top row */}
+          <View style={styles.collabTopRow}>
+            <View style={styles.collabPeopleIcon} >
+              <Text style={{fontSize: '17%', fontWeight: 'bold'}}>2</Text>
+              <Icon name="people" size="20%" />
+            </View>
+            <Text style={{ fontSize: '20%', marginLeft: "5%", marginRight: "5%"}} >Expected Help at <Text style={{fontWeight: 'bold'}}>2:15</Text></Text>
+            <View style={styles.collabEarphone}>
+              <Icon  name="earphones" size="20%"/>
+              <Text style={{fontSize: '17%', fontWeight: 'bold', marginLeft: 3}}>0</Text>
+            </View>
+          </View>
+
+          {/* middle row */}
+          <View style={styles.collabMid}>
+            <Text style={{fontSize: '17%', color: '#000000'}}>How do I add audio and a pulsing effect to the medium-fi prototype?</Text>
+          </View>
+
+          {/* bottom row */}
+          <View style={styles.collabBot}>
+          <TouchableOpacity
+            style={styles.collabButton}
+            onPress={() => handleJoinPress("CS 147")}
+          >
+            <Text style={styles.collabButtonText}> Collaborating </Text>
+          </TouchableOpacity>
+          </View>
+        </View>
+
+        
     </View>
   );
 };
