@@ -128,10 +128,10 @@ const styles = StyleSheet.create({
         marginLeft: 5,
       },
 
-      // ---- Notifications ---
+      // ------ Notification Info -------- 
       NotiContainer: {
-        // borderBlockColor: "blue",
-        // borderWidth: 2,
+        borderBlockColor: "blue",
+        borderWidth: 2,
         flex: 1,
         alignItems: 'center',
         marginLeft: 5,
@@ -161,7 +161,47 @@ const styles = StyleSheet.create({
         // borderColor: "purple",
         // borderWidth: 2,
         // marginRight: '60%',
-      }
+      },
+
+      // ------ Notification Info -------- 
+
+      // ------ Collab Info -------- 
+      collabHeader : {
+        borderBlockColor: "blue",
+        borderWidth: 2,
+        // flex: 1,
+        alignItems: 'center',
+      },
+      collabBox: {
+        // flexDirection: 'row', // have course name and join button in one row
+        padding: 10,
+        margin: 10,
+        width: screenWidth * 0.8,
+        borderWidth: 2,
+        borderColor: '#000',
+        borderRadius: 20,
+        backgroundColor: '#b986ee',
+        justifyContent: 'space-between', // align items along the row
+      },
+      collabTopRow: {
+        borderBlockColor: "green",
+        borderWidth: 2,
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      collabEarphone: {
+        // borderBlockColor: "red",
+        // borderWidth: 2,
+        // flex: 1,
+      },
+      collabPeopleIcon: {
+        // borderBlockColor: "white",
+        // borderWidth: 2,
+        // flex: 1,
+      },
+
+      // ------ Collab Info -------- 
+
   });
 
 export default styles;

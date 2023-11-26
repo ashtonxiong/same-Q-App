@@ -7,6 +7,7 @@ import CoursePage from './components/CoursePage';
 import Notifications from './components/Notifications';
 import QuestionPage from './components/QuestionPage';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import CollabPage from './components/CollabPage';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -43,7 +44,7 @@ const App = () => {
           <Icon name="home" size={size} color={"#000"} />
         ),
       }}/>
-        <Tab.Screen name="Collaborating" component={Notifications} 
+        <Tab.Screen name="Collaborating" component={CollabPage} 
           options={{
             tabBarIcon: ({ color, size }) => (
               <Icon name="people" size={size} color={"#000"} />
