@@ -149,9 +149,10 @@ const styles = StyleSheet.create({
       // },
       topBlock: {
         width: '100%',
-        backgroundColor: '#AB2CFABF',
+        backgroundColor: '#c061fb',
         borderRadius: '15em',
         marginTop: '-10%',
+        zIndex: 1
       },
       QuestionInfo : {
         width: '100%',
@@ -204,14 +205,28 @@ const styles = StyleSheet.create({
       TextsArea : {
         flex : 1,
       },
-      huddleButton : {
-        position : 'absolute',
-        height : 100,
-        width : 100,
+      // huddleButton : {
+      //   position : 'absolute',
+      //   height : 100,
+      //   width : 100,
+      //   backgroundColor: 'grey',
+      //   bottom: 20,
+      //   right : 20,
+      //   borderRadius: '100%'
+      // },
+      huddleBar: {
+        width: '100%',
         backgroundColor: 'grey',
-        bottom: 20,
-        right : 20,
-        borderRadius: '100%'
+        marginTop : "-5%",
+        paddingTop: "7%",
+        borderBottomLeftRadius: "18em", 
+        borderBottomRightRadius: "18em",
+        justifyContent: "center",
+        alignItems: "center",
+      },
+      huddleBarTEXT: {
+        paddingBottom: "1%",
+        fontSize: 16
       }
 }
 );

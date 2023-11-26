@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import { View, Text, TextInput, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard, Touchable, StyleSheet, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
+import { View, Animated, Text, TextInput, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, Keyboard, Touchable, StyleSheet, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from '../styles';
@@ -11,8 +11,82 @@ const QuestionPage = ({ route }) => {
 
     const { question } = route.params;
     const helpTime = "2:15 PM";
-    const questionMembers = "2";
-    const activeInHuddle = "0";
+    var questionMembers = "2";
+
+    const [activeInHuddle, setActiveInHuddle] = useState(0);
+    const [userInHuddle, setUserInHuddle] = useState(false);
+    const [huddleText, setHuddleText] = useState("");
+
+
+    const animatedValue = new Animated.Value(0);
+
+    //ChatGPT color-fading code
+    useEffect(() => {
+        let interval;
+    
+        // Start the animation immediately when userInHuddle becomes true
+        if (userInHuddle) {
+          Animated.timing(animatedValue, {
+            toValue: 1,
+            duration: 1000, // Change the duration as needed
+            useNativeDriver: false,
+          }).start();
+    
+          // Set up the loop after the initial animation
+          interval = setInterval(() => {
+            Animated.timing(animatedValue, {
+              toValue: animatedValue._value === 0 ? 1 : 0,
+              duration: 1000, // Change the duration as needed
+              useNativeDriver: false,
+            }).start();
+          }, 1000); // Change the interval as needed
+        }
+    
+        // Cleanup function to stop the loop when userInHuddle becomes false
+        return () => {
+            clearInterval(interval);
+          };
+        }, [userInHuddle, animatedValue]); // Only re-run the effect when userInHuddle changes
+    
+      // Ensure the color returns to dark grey when userInHuddle becomes false
+        useEffect(() => {
+            if (!userInHuddle) {
+            Animated.timing(animatedValue, {
+                toValue: 0,
+                duration: 1000, // Change the duration as needed
+                useNativeDriver: false,
+            }).start();
+        }
+    }, [userInHuddle, animatedValue]);
+  
+    const backgroundColor = animatedValue.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['darkgrey', 'lightblue'],
+    });
+
+    const huddleTextGenerator = () => {
+        if (userInHuddle && activeInHuddle === 1) {
+            setHuddleText("You're the only one in the huddle.");
+        } else if (activeInHuddle === 0) {
+            setHuddleText("Huddle inactive. Tap to Join.");
+        } else if (activeInHuddle > 1) {
+            setHuddleText(`You and ${activeInHuddle} others are in the huddle!`);
+        }
+    };
+
+    const handleHuddleEnterExit = () => {
+        if (userInHuddle) {
+            setUserInHuddle(false);
+            setActiveInHuddle(prevCount => prevCount - 1);
+        } else {
+            setUserInHuddle(true);
+            setActiveInHuddle(prevCount => prevCount + 1);
+        }
+    };
+
+    useEffect(() => {
+        huddleTextGenerator();
+    }, [userInHuddle, activeInHuddle]);
 
     const navigation = useNavigation();
 
@@ -35,6 +109,7 @@ const QuestionPage = ({ route }) => {
 
             {/* This makes it so everything moves up when the keyboard does */}
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80} style={styles.questionContainer}>
+                
                 <View style={styles.topBlock}>
                     <View style={styles.pageHeader}>
                         <Text style={styles.courseBoxTEXT}>CS147</Text>
@@ -54,13 +129,20 @@ const QuestionPage = ({ route }) => {
                         </View>     
                     </View>
                 </View>
+                <TouchableWithoutFeedback onPress={() => handleHuddleEnterExit()}>
+                    <Animated.View style={[styles.huddleBar, {backgroundColor: backgroundColor}]}>      
+                        <Text style={styles.huddleBarTEXT}>{huddleText}</Text>
+                    </Animated.View>
+                </TouchableWithoutFeedback>
+                
+                
 
                 {/* Area for texts and join huddle button */}
                 <View style={styles.TextsArea}>
                     <ScrollView></ScrollView>
-                    <TouchableOpacity style={styles.huddleButton}>
+                    {/* <TouchableOpacity style={styles.huddleButton}>
 
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
 
                 </View>

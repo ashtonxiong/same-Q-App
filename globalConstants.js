@@ -1,7 +1,5 @@
 const GlobalDefaults = {
-    iconSize : 22,
-    lightGrey : '#9F6FDD',
-    sameQpurple : '#AB2CFABF' 
+    iconSize : 22
 }
 
 export default GlobalDefaults;
