@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
       },
       questionBox: {
-        padding: 30,
+        padding: 10,
         margin: 10,
         width: screenWidth * 0.9,
         height: 100,
@@ -132,10 +132,13 @@ const styles = StyleSheet.create({
       // ----------QuestionPage----------
       questionPageBox: {
         backgroundColor: "#9F6FDD",
-        height: screenHeight * 0.25,
+        height: screenHeight * 0.23,
       },
       questionPageBoxHeader: {
         flexDirection: 'row',
+        marginTop: 45,
+        marginLeft: 15,
+        marginRight: 15,
         justifyContent: 'space-between',
       },
       customModalOverlay: {
@@ -172,9 +175,10 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderRadius: 4,
       },
-      status: {
-        padding: 10,
-        textAlign: 'center',
+      bottomSection2: {
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        flex: 1,
       },
 
       // ------ Notification Info -------- 
