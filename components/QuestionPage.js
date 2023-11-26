@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Keyboard, TouchableWithoutFeedback, TextInput, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -7,30 +7,6 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 const QuestionPage = ({ route }) => {
   const { question, course } = route.params;
   const [isModalVisible, setModalVisible] = useState(false);
-  const [keyboardStatus, setKeyboardStatus] = useState('');
-  const [bottomMargin, setBottomMargin] = useState(0);
-
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        setKeyboardStatus('Keyboard Shown');
-        setBottomMargin(Platform.OS === 'ios' ? 250 : 100); // Adjust this value based on your layout
-      },
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        setKeyboardStatus('Keyboard Hidden');
-        setBottomMargin(0);
-      },
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, []);
 
   const navigation = useNavigation();
 
@@ -40,13 +16,17 @@ const QuestionPage = ({ route }) => {
   };
 
   const clickMoreModal = () => {
-    Keyboard.dismiss();
+    Keyboard.dismiss(); // dismiss keyboard explicitly
     setModalVisible(!isModalVisible);
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={[styles.container, { marginBottom: bottomMargin }]}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
+      >
         <View style={styles.questionPageBox}>
           <View style={styles.questionPageBoxHeader}>
             <TouchableOpacity onPress={handleBackCourse}>
@@ -69,12 +49,12 @@ const QuestionPage = ({ route }) => {
         <View style={styles.bottomSection2}>
           <TextInput
             style={styles.input}
-            placeholder="Click to start typing…"
+            placeholder="Click here…"
             onSubmitEditing={Keyboard.dismiss}
           />
-          <Text style={styles.status}>{keyboardStatus}</Text>
         </View>
 
+        {/* modal overlay */}
         {isModalVisible && (
           <View style={styles.customModalOverlay}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -92,7 +72,7 @@ const QuestionPage = ({ route }) => {
             </TouchableWithoutFeedback>
           </View>
         )}
-      </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 };
