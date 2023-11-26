@@ -1,4 +1,6 @@
+import { ScreenWidth } from '@freakycoder/react-native-helpers';
 import { StyleSheet, Dimensions } from 'react-native';
+
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -125,6 +127,41 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginLeft: 5,
       },
+
+      // ---- Notifications ---
+      NotiContainer: {
+        // borderBlockColor: "blue",
+        // borderWidth: 2,
+        flex: 1,
+        alignItems: 'center',
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: '10%',
+      },
+      NotificationInfo: {
+        // borderColor: "red",
+        // borderWidth: 2,
+        flexDirection: 'row',
+        width: .9 * ScreenWidth,
+        height: '10%',
+        marginTop: '3%', 
+        marginBottom: '3%', 
+      },
+      NotiText: {
+        // borderColor: "green",
+        // borderWidth: 2,
+        height: '100%',
+        marginLeft: '5%',
+        flex: 1,
+        flexWrap: 'wrap', // Allow text to wrap
+        overflow: 'hidden', // Hide overflow content
+      },
+      NotiIcon: {
+        marginLeft: '5%',
+        // borderColor: "purple",
+        // borderWidth: 2,
+        // marginRight: '60%',
+      }
   });
 
 export default styles;
