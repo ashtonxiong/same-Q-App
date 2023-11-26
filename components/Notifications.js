@@ -14,6 +14,9 @@ const Notifications = () => {
 
   return (
     <View style={styles.NotiContainer}>
+        <View >
+          <Text style={styles.courseBoxTEXT}> Notifications </Text>
+        </View>
         <View style={styles.NotificationInfo}>
           <Icon name="people" size={'55%'} color={"#000"} style={styles.NotiIcon} />
           <Text style={styles.NotiText}> Amy L., Jackson D, Rebecca C, and 1 other joined 
