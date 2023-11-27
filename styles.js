@@ -166,6 +166,26 @@ const styles = StyleSheet.create({
       // ------ Notification Info -------- 
 
       // ------ Collab Info -------- 
+      collabScroll: {
+        borderBlockColor: "red",
+        borderWidth: 2,
+        // flex: 1,
+        // flexDirection: 'column',
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: '10%',
+        // alignItems: 'center'
+      },
+      collabContainer: {
+        borderBlockColor: "blue",
+        borderWidth: 2,
+        flex: 1,
+        // flexDirection: 'column',
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: '10%',
+        alignItems: 'center'
+      },
       collabHeader : {
         // borderBlockColor: "blue",
         // borderWidth: 2,
