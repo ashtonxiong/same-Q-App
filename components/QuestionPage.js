@@ -15,7 +15,7 @@ const QuestionPage = ({ route }) => {
       'keyboardDidShow',
       () => {
         setKeyboardStatus('Keyboard Shown');
-        setBottomMargin(Platform.OS === 'ios' ? 250 : 100); // Adjust this value based on your layout
+        setBottomMargin(Platform.OS === 'ios' ? 250 : 250); // Adjust this value based on your layout
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
@@ -46,6 +46,7 @@ const QuestionPage = ({ route }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+
       <View style={[styles.container, { marginBottom: bottomMargin }]}>
         <View style={styles.questionPageBox}>
           <View style={styles.questionPageBoxHeader}>
@@ -76,9 +77,35 @@ const QuestionPage = ({ route }) => {
           </View>
             
           <Text>FULL QUESTION HERE UP TO 200 CHARS?</Text>
-        </View>
+    </View>
 
-        <View style={styles.bottomSection2}>
+        <ScrollView style={styles.chatArea}>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+         </ScrollView>
+
             <View style={styles.inputContainer}>
                 <Icon name="emotsmile" size={25} color="#000" style={styles.emojiIcon} />
                 <TextInput
@@ -89,7 +116,6 @@ const QuestionPage = ({ route }) => {
                 />
                 <Icon name="camera" size={25} color="#000" style={styles.cameraIcon} />
             </View>
-        </View>
 
         {isModalVisible && (
           <View style={styles.customModalOverlay}>

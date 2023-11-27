@@ -130,6 +130,10 @@ const styles = StyleSheet.create({
       },
 
       // ----------QuestionPage----------
+      questionContainer: {
+        flex: 1,
+        // justifyContent: 'space-between'
+      },
       questionPageBox: {
         backgroundColor: "#9F6FDD",
         height: screenHeight * 0.23,
@@ -140,6 +144,12 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         justifyContent: 'space-between',
+      },
+      chatArea: {
+        flex: 1,
+        height: 0,
+        borderColor: "green",
+        borderWidth: 5,
       },
       customModalOverlay: {
         ...StyleSheet.absoluteFillObject, // apply fill to custom modal
@@ -209,12 +219,9 @@ const styles = StyleSheet.create({
       numInHuddle: {
         flexDirection: 'row'
       },
-      bottomSection2: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-      },
       inputContainer: {
+        borderColor: 'red',
+        borderWidth: 5,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#D9D9D9',
