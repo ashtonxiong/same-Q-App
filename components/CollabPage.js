@@ -44,6 +44,7 @@ const CollabPage = () => {
     <View style={styles.collabContainer}>
     <ScrollView 
     // ref={scrollViewRef}
+    showsVerticalScrollIndicator={false}
     contentContainerStyle={{ alignItems: 'center', borderBlockColor: "red", border: 5 }}
     >        
     <View style={styles.collabHeader}>
