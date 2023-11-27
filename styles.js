@@ -177,24 +177,18 @@ const styles = StyleSheet.create({
         // alignItems: 'center'
       },
       collabContainer: {
-        borderBlockColor: "blue",
-        borderWidth: 2,
-        flex: 1,
-        // flexDirection: 'column',
         marginLeft: 5,
         marginRight: 5,
-        marginTop: '10%',
-        alignItems: 'center'
+        marginTop: '0%',
+        paddingTop: 40,
+        paddingHorizontal: 20,
+        height: '100%',
+        paddingBottom: '10%',
       },
       collabHeader : {
-        // borderBlockColor: "blue",
-        // borderWidth: 2,
-        // flex: 1,
-        // alignItems: 'center',
         marginBottom: 25,
       },
       collabBox: {
-        // flexDirection: 'row', // have course name and join button in one row
         padding: 10,
         margin: 10,
         width: screenWidth * 0.8,
@@ -202,8 +196,8 @@ const styles = StyleSheet.create({
         borderColor: '#000',
         borderRadius: 20,
         backgroundColor: '#b986ee',
-        justifyContent: 'space-between', // align items along the row
-        height: '20%',
+        justifyContent: 'space-between',
+        maxHeight: '25%',
       },
       collabTopRow: {
         // borderBlockColor: "green",
