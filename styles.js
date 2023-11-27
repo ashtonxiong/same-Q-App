@@ -154,11 +154,34 @@ const styles = StyleSheet.create({
         backgroundColor: "#CFB8E9",
         borderRadius: 20, // round corners
         borderColor: 'black',
-        borderWidth: 5,
+        borderWidth: 2,
       },
       modalHeader: {
         // flexDirection: 'row',
         alignItems: 'flex-end',
+      },
+      modalHeaderTEXT: {
+        margin: 20,
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+      },
+      modalHeaderTEXT2: {
+        margin: 20,
+        fontSize: 20,
+        textAlign: 'center',
+      },
+      uncollabButton: {
+        width: 175,
+        borderRadius: 20,
+        backgroundColor: 'black',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modalUncollab: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
       },
       cancelButton: {
         flexDirection: 'row',
@@ -170,15 +193,47 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginLeft: 5,
       },
-      input: {
-        padding: 10,
-        borderWidth: 0.5,
-        borderRadius: 4,
+      questionInfoHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 15,
+        marginTop: 5,
+      },
+      questionHost: {
+        fontSize: 18,
+        fontWeight: '200',
+      },
+      numCollaborators: {
+        flexDirection: 'row',
+      },
+      numInHuddle: {
+        flexDirection: 'row'
       },
       bottomSection2: {
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-end',
+      },
+      inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#D9D9D9',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        justifyContent: 'space-between',
+        height: 55,
+      },
+      emojiIcon: {
+        marginRight: 5, // add space between the emoji and text input
+      },
+      input: {
         flex: 1,
+        padding: 0, // remove default padding
+        marginLeft: 5, // add space between the emoji and text input
+        fontSize: 16,
+      },
+      cameraIcon: {
+        marginLeft: 5, // add space between the text input and camera icon
       },
 
       // ------ Notification Info -------- 

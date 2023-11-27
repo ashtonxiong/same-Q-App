@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Keyboard, TouchableWithoutFeedback, TextInput, Platform, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -7,6 +7,30 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 const QuestionPage = ({ route }) => {
   const { question, course } = route.params;
   const [isModalVisible, setModalVisible] = useState(false);
+  const [keyboardStatus, setKeyboardStatus] = useState('');
+  const [bottomMargin, setBottomMargin] = useState(0);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardStatus('Keyboard Shown');
+        setBottomMargin(Platform.OS === 'ios' ? 250 : 100); // Adjust this value based on your layout
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardStatus('Keyboard Hidden');
+        setBottomMargin(0);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
 
   const navigation = useNavigation();
 
@@ -16,17 +40,13 @@ const QuestionPage = ({ route }) => {
   };
 
   const clickMoreModal = () => {
-    Keyboard.dismiss(); // dismiss keyboard explicitly
+    Keyboard.dismiss();
     setModalVisible(!isModalVisible);
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : null}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
-      >
+      <View style={[styles.container, { marginBottom: bottomMargin }]}>
         <View style={styles.questionPageBox}>
           <View style={styles.questionPageBoxHeader}>
             <TouchableOpacity onPress={handleBackCourse}>
@@ -43,18 +63,34 @@ const QuestionPage = ({ route }) => {
             </TouchableOpacity>
           </View>
 
-          <Text>QUESTION TEXT AND INFO HERE</Text>
+         <View style={styles.questionInfoHeader}>
+            <View style={styles.numCollaborators}>
+                <Icon name="people" size={25} color="#000" style={styles.emojiIcon} />
+                <Text> NUM</Text>
+            </View>
+            <Text style={styles.questionHost}>Asked by: XXX</Text>
+            <View style={styles.numInHuddle}>
+                <Text>NUM  </Text>
+                <Icon name="earphones" size={25} color="#000" style={styles.emojiIcon} />
+            </View>
+          </View>
+            
+          <Text>FULL QUESTION HERE UP TO 200 CHARS?</Text>
         </View>
 
         <View style={styles.bottomSection2}>
-          <TextInput
-            style={styles.input}
-            placeholder="Click here…"
-            onSubmitEditing={Keyboard.dismiss}
-          />
+            <View style={styles.inputContainer}>
+                <Icon name="emotsmile" size={25} color="#000" style={styles.emojiIcon} />
+                <TextInput
+                style={styles.input}
+                placeholder="Click to start typing…"
+                // value={text}
+                // onChangeText={(newText) => setText(newText)}
+                />
+                <Icon name="camera" size={25} color="#000" style={styles.cameraIcon} />
+            </View>
         </View>
 
-        {/* modal overlay */}
         {isModalVisible && (
           <View style={styles.customModalOverlay}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -67,12 +103,31 @@ const QuestionPage = ({ route }) => {
                     </View>
                   </TouchableOpacity>
                 </View>
-                <Text>TESTING MODAL WINDOW</Text>
+                <Text style={styles.modalHeaderTEXT}>Question Information</Text>
+                <Text style={styles.modalHeaderTEXT2}>
+                    Course: {course.name} {'\n'}
+                    Asked by: XXX {'\n'}
+                    Created on: XXX {'\n'} {'\n'}
+
+                    Current Collaborators: XXX {'\n'}
+                    Total Collaborators: XXX {'\n'} {'\n'}
+
+                    Last Active: XXX
+                </Text>
+
+                <View style={styles.modalUncollab}>
+                    <TouchableOpacity
+                        style={styles.uncollabButton}
+                        onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}>
+                        <Text style={styles.collabButtonTEXT}>Uncollaborate</Text>
+                    </TouchableOpacity>
+                </View>
+
               </View>
             </TouchableWithoutFeedback>
           </View>
         )}
-      </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
