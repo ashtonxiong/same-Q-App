@@ -17,7 +17,8 @@ const Tab = createBottomTabNavigator();
 const MainStack = () => {
   return (
     // <View>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Home"
+      screenOptions={{headerShown: false}}>
         <Stack.Screen name="HomePage" component={HomePage} />
         <Stack.Screen name="CoursePage" component={CoursePage} />
         <Stack.Screen name="Notifications" component={Notifications} />
@@ -32,6 +33,7 @@ const App = () => {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
+          headerShown: false,
           tabBarActiveTintColor: "#000",
           tabBarInactiveTintColor: "#9f6fdd",
           tabBarStyle: [
@@ -57,6 +59,7 @@ const App = () => {
         tabBarIcon: ({ color, size }) => (
           <Icon name="home" size={size} color={"#000"} />
         ),
+        
       }}/>
         <Tab.Screen name="Collaborating" component={CollabPage} 
           options={{

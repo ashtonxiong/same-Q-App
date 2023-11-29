@@ -4,13 +4,19 @@ import { StyleSheet, Dimensions } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
 
+const { width, height } = Dimensions.get('window');
+const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
+    
+
 const styles = StyleSheet.create({
     // ALL
     container: {
         flex: 1,
     },
     pageHeader: {
-        marginTop: '10%',
+        // borderBlockColor: "blue",
+        // borderWidth: 2,
+        marginTop: '20%',
         textAlign: 'center',
         fontSize: 40,
         fontWeight: 'bold',
@@ -183,7 +189,7 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         paddingHorizontal: 20,
         height: '100%',
-        paddingBottom: '10%',
+        paddingBottom: '0.5%',
       },
       collabHeader : {
         marginBottom: 25,
@@ -246,7 +252,7 @@ const styles = StyleSheet.create({
       },
       collabButtonText: {
         color: 'white',
-        fontSize: '20%',
+        fontSize: 20 * scaleFactor,
         fontWeight: 'bold',
       },
 
