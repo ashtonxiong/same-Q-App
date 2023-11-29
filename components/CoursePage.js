@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -23,15 +23,17 @@ const CoursePage = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={handleBackHome}>
-      <View style={styles.backArrow}>
-        <Icon name="arrow-left" size={20} color="#000"/>
-        <Text style={styles.backTEXT}>Home</Text>
+      <View style={styles.appBar}>
+        <TouchableOpacity
+          onPress={handleBackHome}>
+        <View style={styles.backArrow}>
+          <Icon name="arrow-left" size={20} color="#000"/>
+          <Text style={styles.backTEXT}>Home</Text>
+        </View>
+        </TouchableOpacity>
       </View>
-      </TouchableOpacity>
 
-      <View style={styles.container2}>
+      <View style={styles.container}>
         <Text style={styles.pageHeader}>{course.name}</Text>
 
         <Text>Course info here</Text>

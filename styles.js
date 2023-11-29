@@ -10,8 +10,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    appBar: {
+      backgroundColor: "#9F6FDD",
+      height: 115,
+    },
     pageHeader: {
-        marginTop: '10%',
+        marginTop: '5%',
         textAlign: 'center',
         fontSize: 40,
         fontWeight: 'bold',
@@ -21,20 +25,24 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'normal',
         marginTop: '10%', // adjust space from course name header
+        marginLeft: 20,
+    },
+    backArrow: {
+      flexDirection: 'row',
+      justifyContent: 'left',
+      marginLeft: '5%',
+      marginTop: '17%',
+    },
+    backTEXT: {
+      fontSize: 18,
+      marginLeft: 5,
     },
 
     // ----------HomePage----------
-    container1: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
     courseSection: {
       flex: 1,
       justifyContent: 'flex-start',
-      alignItems: 'center',
-      // borderWidth: 2, // Set the border width USED TO TEST FOR BORDERS
-      // borderColor: 'red', // Set the border color
+      alignItems: 'left',
     },
     bottomSection: {
       justifyContent: 'flex-end',
@@ -49,9 +57,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row', // have course name and join button in one row
       padding: 30,
       margin: 10,
-      width: screenWidth * 0.8,
-      borderWidth: 2,
-      borderColor: '#000',
+      width: screenWidth * 0.95,
       borderRadius: 20,
       backgroundColor: '#b986ee',
       justifyContent: 'space-between', // align items along the row
@@ -86,13 +92,24 @@ const styles = StyleSheet.create({
       fontSize: 24,
       fontWeight: 'bold',
     },
+    menuModalOverlay: {
+      ...StyleSheet.absoluteFillObject, // apply fill to custom modal
+      justifyContent: 'center',
+      alignItems: 'left',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // value for transparency
+    },
+    menuModalContent: {
+      width: screenWidth * 0.7,
+      height: screenHeight,
+      backgroundColor: "#9f6fdd",
+      borderRadius: 20, // round corners
+    },
+    menuModalTEXT: {
+      marginTop: '75%',
+      textAlign: 'center',
+    },
 
     // ----------CoursePage----------
-    container2: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-      },
       questionBox: {
         padding: 10,
         margin: 10,
@@ -118,21 +135,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
       },
-      backArrow: {
-        flexDirection: 'row',
-        justifyContent: 'left',
-        marginLeft: '5%',
-        marginTop: '15%',
-      },
-      backTEXT: {
-        fontSize: 18,
-        marginLeft: 5,
-      },
 
       // ----------QuestionPage----------
       questionContainer: {
         flex: 1,
-        // justifyContent: 'space-between'
       },
       questionPageBox: {
         backgroundColor: "#9F6FDD",
@@ -167,7 +173,6 @@ const styles = StyleSheet.create({
         borderWidth: 2,
       },
       modalHeader: {
-        // flexDirection: 'row',
         alignItems: 'flex-end',
       },
       modalHeaderTEXT: {

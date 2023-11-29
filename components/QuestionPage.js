@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Keyboard, TouchableWithoutFeedback, TextInput, Platform, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback, TextInput, Platform, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -7,21 +7,18 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 const QuestionPage = ({ route }) => {
   const { question, course } = route.params;
   const [isModalVisible, setModalVisible] = useState(false);
-  const [keyboardStatus, setKeyboardStatus] = useState('');
   const [bottomMargin, setBottomMargin] = useState(0);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
-        setKeyboardStatus('Keyboard Shown');
         setBottomMargin(Platform.OS === 'ios' ? 250 : 250); // Adjust this value based on your layout
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
       'keyboardDidHide',
       () => {
-        setKeyboardStatus('Keyboard Hidden');
         setBottomMargin(0);
       },
     );
@@ -58,8 +55,8 @@ const QuestionPage = ({ route }) => {
             </TouchableOpacity>
             <TouchableOpacity onPress={clickMoreModal}>
               <View style={styles.backArrow}>
-                <Text style={styles.backTEXT}>More </Text>
                 <Icon name="exclamation" size={20} color="#000" />
+                <Text style={styles.backTEXT}>More</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -108,13 +105,14 @@ const QuestionPage = ({ route }) => {
 
             <View style={styles.inputContainer}>
                 <Icon name="emotsmile" size={25} color="#000" style={styles.emojiIcon} />
+                <Icon name="camera" size={26} color="#000" style={styles.emojiIcon} />
                 <TextInput
                 style={styles.input}
                 placeholder="Click to start typing…"
                 // value={text}
                 // onChangeText={(newText) => setText(newText)}
                 />
-                <Icon name="camera" size={25} color="#000" style={styles.cameraIcon} />
+                <Icon name="paper-plane" size={25} color="#000" style={styles.cameraIcon} />
             </View>
 
         {isModalVisible && (
@@ -144,7 +142,8 @@ const QuestionPage = ({ route }) => {
                 <View style={styles.modalUncollab}>
                     <TouchableOpacity
                         style={styles.uncollabButton}
-                        onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}>
+                        // onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}
+                        >
                         <Text style={styles.collabButtonTEXT}>Uncollaborate</Text>
                     </TouchableOpacity>
                 </View>
@@ -153,6 +152,7 @@ const QuestionPage = ({ route }) => {
             </TouchableWithoutFeedback>
           </View>
         )}
+
       </View>
     </TouchableWithoutFeedback>
   );
