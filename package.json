@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@freakycoder/react-native-helpers": "^2.2.2",
+    "@react-native-async-storage/async-storage": "^1.20.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.5.11",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/stack": "^6.3.20",
+    "@supabase/supabase-js": "^2.39.0",
     "expo": "~49.0.15",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",

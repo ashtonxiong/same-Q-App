@@ -9,6 +9,8 @@ const styles = StyleSheet.create({
     // ----------ALL----------
     container: {
         flex: 1,
+        borderColor: 'red',
+        borderWidth: 2,
     },
     appBar: {
       backgroundColor: "#9F6FDD",
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
       questionBox: {
         padding: 10,
         margin: 10,
-        width: screenWidth * 0.9,
+        width: screenWidth * 0.95,
         height: 100,
         borderWidth: 2,
         borderColor: '#9F6FDD',
@@ -134,6 +136,9 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
+      },
+      scrollContainer: {
+        alignItems: 'center'
       },
 
       // ----------QuestionPage----------
@@ -296,7 +301,7 @@ const styles = StyleSheet.create({
         // flexDirection: 'row', // have course name and join button in one row
         padding: 10,
         margin: 10,
-        width: screenWidth * 0.8,
+        width: screenWidth * 0.95,
         borderWidth: 2,
         borderColor: '#000',
         borderRadius: 20,
