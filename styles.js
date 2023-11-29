@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
       fontSize: 30,
       fontWeight: 'normal',
       marginTop: '10%', // adjust space from course name header
+      marginLeft: '3%'
   },
     // pageHeader: {
     //     marginTop: '5%',
@@ -66,7 +67,6 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
       height: '100%',
       marginBottom: '40%', // adjust space from bottom of screen
-
     },
     courseContainer: {
       marginTop: 5,
@@ -140,14 +140,14 @@ const styles = StyleSheet.create({
       questionTEXT: {
         fontSize: 22,
       },
-      collabButton: {
+      courseCollabButton: {
         width: 145,
         borderRadius: 20,
         backgroundColor: 'black',
         justifyContent: 'center',
         alignItems: 'center',
       },
-      collabButtonTEXT: {
+      courseCollabButtonTEXT: {
         color: 'white',
         fontSize: 24,
         fontWeight: 'bold',
