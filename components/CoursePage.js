@@ -44,9 +44,9 @@ const CoursePage = ({ route }) => {
         <View style={styles.questionBox}>
           <Text style={styles.questionTEXT}>FIRST TWO LINES OF QUESTION</Text>
           <TouchableOpacity
-            style={styles.collabButton}
+            style={styles.courseCollabButton}
             onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}>
-            <Text style={styles.collabButtonTEXT}>Collaborate</Text>
+            <Text style={styles.courseCollabButtonText}>Collaborate</Text>
           </TouchableOpacity>
         </View>
         </ScrollView>

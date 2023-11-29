@@ -140,14 +140,14 @@ const styles = StyleSheet.create({
       questionTEXT: {
         fontSize: 22,
       },
-      collabButton: {
+      courseCollabButton: {
         width: 145,
         borderRadius: 20,
         backgroundColor: 'black',
         justifyContent: 'center',
         alignItems: 'center',
       },
-      collabButtonTEXT: {
+      courseCollabButtonText: {
         color: 'white',
         fontSize: 24,
         fontWeight: 'bold',
