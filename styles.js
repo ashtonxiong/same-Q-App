@@ -12,6 +12,8 @@ const styles = StyleSheet.create({
     // ALL
     container: {
         flex: 1,
+        borderColor: 'red',
+        borderWidth: 2,
     },
     pageHeader: {
         // borderBlockColor: "blue",
@@ -101,7 +103,7 @@ const styles = StyleSheet.create({
       questionBox: {
         padding: 30,
         margin: 10,
-        width: screenWidth * 0.9,
+        width: screenWidth * 0.95,
         height: 100,
         borderWidth: 2,
         borderColor: '#9F6FDD',
@@ -122,6 +124,9 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
+      },
+      scrollContainer: {
+        alignItems: 'center'
       },
       backArrow: {
         flexDirection: 'row',
@@ -197,9 +202,9 @@ const styles = StyleSheet.create({
       collabBox: {
         padding: 10,
         margin: 10,
-        width: screenWidth * 0.8,
-        borderWidth: 2,
-        borderColor: '#000',
+        width: screenWidth * 0.85,
+        // borderWidth: 2,
+        // borderColor: '#000',
         borderRadius: 20,
         backgroundColor: '#b986ee',
         justifyContent: 'space-between',
