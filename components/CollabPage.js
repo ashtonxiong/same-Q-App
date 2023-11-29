@@ -30,8 +30,6 @@ const CollabPage = () => {
       navigation.navigate('CoursePage', { course });
     };  
 
-    const scrollViewRef = useRef(null); // Create a ref for the ScrollView
-
     const { width, height } = Dimensions.get('window');
     const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
     
@@ -43,7 +41,7 @@ const CollabPage = () => {
     <ScrollView 
     // ref={scrollViewRef}
     showsVerticalScrollIndicator={false}
-    contentContainerStyle={{ alignItems: 'center', borderBlockColor: "red", border: 5 }}
+    contentContainerStyle={{ alignItems: 'center' }}
     >        
     <View style={styles.collabHeader}>
       <Text style={styles.courseBoxTEXT}> Collaborating </Text>
