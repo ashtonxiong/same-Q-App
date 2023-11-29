@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback, TextInput, Platform, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback, TextInput, Platform, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -13,7 +13,7 @@ const QuestionPage = ({ route }) => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
-        setBottomMargin(Platform.OS === 'ios' ? 250 : 250); // Adjust this value based on your layout
+        setBottomMargin(Platform.OS === 'ios' ? 0 : 0); // Adjust this value based on your layout
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
@@ -42,6 +42,11 @@ const QuestionPage = ({ route }) => {
   };
 
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      enabled
+      style={{ flex: 1 }}
+    >
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 
       <View style={[styles.container, { marginBottom: bottomMargin }]}>
@@ -77,6 +82,7 @@ const QuestionPage = ({ route }) => {
     </View>
 
         <ScrollView style={styles.chatArea}>
+          <View>
             <Text>Content here</Text>
             <Text>Content here</Text>
             <Text>Content here</Text>
@@ -101,6 +107,24 @@ const QuestionPage = ({ route }) => {
             <Text>Content here</Text>
             <Text>Content here</Text>
             <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            <Text>Content here</Text>
+            </View>
          </ScrollView>
 
             <View style={styles.inputContainer}>
@@ -144,7 +168,7 @@ const QuestionPage = ({ route }) => {
                         style={styles.uncollabButton}
                         // onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}
                         >
-                        <Text style={styles.collabButtonTEXT}>Uncollaborate</Text>
+                        <Text style={styles.courseCollabButtonText}>Uncollaborate</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -155,6 +179,7 @@ const QuestionPage = ({ route }) => {
 
       </View>
     </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

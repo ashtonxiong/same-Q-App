@@ -2,26 +2,19 @@ import { ScreenWidth } from '@freakycoder/react-native-helpers';
 import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
-const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
-
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
+const scaleFactor = Math.min(width, height) / 375; // adjust 375 based on design reference width
 
 const styles = StyleSheet.create({
     // ----------ALL----------
     container: {
         flex: 1,
-        // borderColor: 'red',
-        // borderWidth: 2,
     },
     appBar: {
       backgroundColor: "#9F6FDD",
-      height: 115,
+      height: '13%',
     },
     pageHeader: {
-      // borderBlockColor: "blue",
-      // borderWidth: 2,
-      marginTop: '20%',
+      marginTop: '5%',
       textAlign: 'center',
       fontSize: 40,
       fontWeight: 'bold',
@@ -31,20 +24,8 @@ const styles = StyleSheet.create({
       fontSize: 30,
       fontWeight: 'normal',
       marginTop: '10%', // adjust space from course name header
+      marginLeft: width * 0.05,
   },
-    // pageHeader: {
-    //     marginTop: '5%',
-    //     textAlign: 'center',
-    //     fontSize: 40,
-    //     fontWeight: 'bold',
-    // },
-    // sectionHeader: {
-    //     color: 'black',
-    //     fontSize: 30,
-    //     fontWeight: 'normal',
-    //     marginTop: '10%', // adjust space from course name header
-    //     marginLeft: 20,
-    // },
     backArrow: {
       flexDirection: 'row',
       justifyContent: 'left',
@@ -55,6 +36,7 @@ const styles = StyleSheet.create({
       fontSize: 18,
       marginLeft: 5,
     },
+    // ----------ALL----------
 
     // ----------HomePage----------
     courseSection: {
@@ -66,7 +48,6 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
       height: '100%',
       marginBottom: '40%', // adjust space from bottom of screen
-
     },
     courseContainer: {
       marginTop: 5,
@@ -75,7 +56,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row', // have course name and join button in one row
       padding: 30,
       margin: 10,
-      width: screenWidth * 0.95,
+      width: width * 0.95,
       borderRadius: 20,
       backgroundColor: '#b986ee',
       justifyContent: 'space-between', // align items along the row
@@ -95,7 +76,7 @@ const styles = StyleSheet.create({
     },
     joinButtonTEXT: {
       color: 'white',
-      fontSize: 24,
+      fontSize: 20 * scaleFactor,
       fontWeight: 'bold',
     },
     askButton: {
@@ -107,7 +88,7 @@ const styles = StyleSheet.create({
     },
     askButtonTEXT: {
       color: 'white',
-      fontSize: 24,
+      fontSize: 20 * scaleFactor,
       fontWeight: 'bold',
     },
     menuModalOverlay: {
@@ -117,8 +98,8 @@ const styles = StyleSheet.create({
       backgroundColor: 'rgba(0, 0, 0, 0.5)', // value for transparency
     },
     menuModalContent: {
-      width: screenWidth * 0.7,
-      height: screenHeight,
+      width: width * 0.7,
+      height: height,
       backgroundColor: "#9f6fdd",
       borderRadius: 20, // round corners
     },
@@ -126,12 +107,13 @@ const styles = StyleSheet.create({
       marginTop: '75%',
       textAlign: 'center',
     },
+    // ----------HomePage----------
 
     // ----------CoursePage----------
       questionBox: {
         padding: 10,
         margin: 10,
-        width: screenWidth * 0.95,
+        width: width * 0.95,
         height: 100,
         borderWidth: 2,
         borderColor: '#9F6FDD',
@@ -149,13 +131,14 @@ const styles = StyleSheet.create({
       },
       courseCollabButtonText: {
         color: 'white',
-        fontSize: 24,
+        fontSize: 20 * scaleFactor,
         fontWeight: 'bold',
         textAlign: 'center',
       },
       scrollContainer: {
         alignItems: 'center'
       },
+      // ----------CoursePage----------
 
       // ----------QuestionPage----------
       questionContainer: {
@@ -163,7 +146,7 @@ const styles = StyleSheet.create({
       },
       questionPageBox: {
         backgroundColor: "#9F6FDD",
-        height: screenHeight * 0.23,
+        height: height * 0.23,
       },
       questionPageBoxHeader: {
         flexDirection: 'row',
@@ -174,9 +157,9 @@ const styles = StyleSheet.create({
       },
       chatArea: {
         flex: 1,
-        height: 0,
         borderColor: "green",
         borderWidth: 5,
+        height: '100%',
       },
       customModalOverlay: {
         ...StyleSheet.absoluteFillObject, // apply fill to custom modal
@@ -185,7 +168,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // value for transparency
       },
       modalContent: {
-        width: screenWidth * 0.8, 
+        width: width * 0.8, 
         height: 500,
         padding: 25,
         backgroundColor: "#CFB8E9",
@@ -268,6 +251,7 @@ const styles = StyleSheet.create({
       cameraIcon: {
         marginLeft: 5, // add space between the text input and camera icon
       },
+      // ----------QuestionPage----------
 
       // ------ Notification Info -------- 
       NotiContainer: {
@@ -303,7 +287,6 @@ const styles = StyleSheet.create({
         // borderWidth: 2,
         // marginRight: '60%',
       },
-
       // ------ Notification Info -------- 
 
       // ------ Collab Info -------- 
@@ -333,7 +316,7 @@ const styles = StyleSheet.create({
       collabBox: {
         padding: 10,
         margin: 10,
-        width: screenWidth * 0.95,
+        width: width * 0.95,
         borderWidth: 2,
         borderColor: '#000',
         borderRadius: 10,
@@ -391,7 +374,6 @@ const styles = StyleSheet.create({
         fontSize: 20 * scaleFactor,
         fontWeight: 'bold',
       },
-
       // ------ Collab Info -------- 
 
   });
