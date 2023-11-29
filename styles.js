@@ -10,46 +10,90 @@ const screenHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     // ----------ALL----------
     container: {
-        flex: 1,
-        // borderColor: 'red',
-        // borderWidth: 2,
-    },
-    appBar: {
-      backgroundColor: "#9F6FDD",
-      height: 115,
-    },
-    pageHeader: {
-      // borderBlockColor: "blue",
+      flex: 1,
+      // borderColor: 'red',
       // borderWidth: 2,
-      marginTop: '20%',
-      textAlign: 'center',
-      fontSize: 40,
-      fontWeight: 'bold',
-  },
-  sectionHeader: {
-      color: 'black',
-      fontSize: 30,
-      fontWeight: 'normal',
-      marginTop: '10%', // adjust space from course name header
-  },
-    // pageHeader: {
-    //     marginTop: '5%',
-    //     textAlign: 'center',
-    //     fontSize: 40,
-    //     fontWeight: 'bold',
+    },
+    // ----------Top Header----------
+    // appBar: {
+    //   borderColor: "green",
+    //   borderWidth: 2,
+    //   backgroundColor: "#9F6FDD",
+    //   height: 115 * scaleFactor,
+    //   flexDirection: 'row',
+    //   // justifyContent: 'space-between',
+    //   alignItems: 'center',
+    //   paddingHorizontal: '5%'
     // },
-    // sectionHeader: {
-    //     color: 'black',
-    //     fontSize: 30,
-    //     fontWeight: 'normal',
-    //     marginTop: '10%', // adjust space from course name header
-    //     marginLeft: 20,
+    // backArrow: {
+    //   borderColor: "blue",
+    //   borderWidth: 2,
+    //   flexDirection: 'row',
+    //   justifyContent: 'left',
+    //   // marginLeft: '5%',
+    //   // marginTop: '17%',
     // },
+    // className: {
+    //   // flex: 1,
+    //   borderColor: 'yellow',
+    //   borderWidth: 2,
+    //   marginLeft: '5%',
+    //   // alignItems: 'center', // Center text vertically
+    //   justifyContent: 'center',
+    //   paddingLeft: '10%',
+    //   paddingRight: '10%'
+    // },
+    // classNameText: {
+    //   fontSize: 20 * scaleFactor,
+    // },
+    appBar: {
+      borderColor: 'green',
+      borderWidth: 2,
+      backgroundColor: '#9F6FDD',
+      height: 115 * scaleFactor,
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingHorizontal: '5%',
+    },
     backArrow: {
       flexDirection: 'row',
       justifyContent: 'left',
-      marginLeft: '5%',
-      marginTop: '17%',
+    },
+    headerContainer: {
+      flex: 1,
+      alignItems: 'center',
+    },
+    classNameText: {
+      fontSize: 20 * scaleFactor,
+    },
+    // ---------- ^^ Top Header ^^ ----------
+    classInfo: {
+      flexDirection: 'column'
+    },
+    courseDetails: {
+      margin: '3%',
+      flexDirection: 'column',
+    },
+    courseDetailTop: {
+      flexDirection: 'row',
+    },
+    courseDetailBottom: {
+      flexDirection: 'row',
+    },
+    courseHeaderContainer: {
+      marginTop: -50 * scaleFactor, // Moves the title up into header
+    },
+    pageHeader: {
+      textAlign: 'center',
+      fontSize: 40,
+      fontWeight: 'bold',
+
+      // marginTop: -50 * scaleFactor, // Moves the title/course/class up into header
+    },
+    sectionHeader: {
+      color: 'black',
+      fontSize: 30,
+      fontWeight: 'normal',
     },
     backTEXT: {
       fontSize: 18,
@@ -66,7 +110,6 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
       height: '100%',
       marginBottom: '40%', // adjust space from bottom of screen
-
     },
     courseContainer: {
       marginTop: 5,
@@ -154,7 +197,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
       },
       scrollContainer: {
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingBottom: '60%',
       },
 
       // ----------QuestionPage----------
@@ -318,14 +362,8 @@ const styles = StyleSheet.create({
         // alignItems: 'center'
       },
       collabContainer: {
-        // borderBlockColor: "green",
-        // borderWidth: 2,
-        // marginLeft: 5,
-        // marginRight: 5,
         marginTop: '20%',
-        // paddingTop: 10,
         height: '100%',
-        paddingBottom: '0.5%',
       },
       collabHeader : {
         marginBottom: 25,
@@ -393,6 +431,72 @@ const styles = StyleSheet.create({
       },
 
       // ------ Collab Info -------- 
+
+      // ------ Queue Box Scrolling Info -------- 
+
+      queueBox: {
+        padding: 10,
+        margin: 10,
+        width: screenWidth * 0.95,
+        borderWidth: 2,
+        borderColor: '#b986ee',
+        borderRadius: 10,
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'space-between',
+        maxHeight: '35%',
+      },
+      queueTopRow: {
+        // borderBlockColor: "green",
+        // borderWidth: 2,
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      queueEarphone: {
+        // borderBlockColor: "red",
+        // borderWidth: 2,
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      queuePeopleIcon: {
+        // borderBlockColor: "white",
+        // borderWidth: 2,
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+        // flex: 1,
+      },
+      queuebMid: {
+        // borderBlockColor: "red",
+        // borderWidth: 2,
+        // flex: 1,
+        flexWrap: 'wrap', // Allow text to wrap
+        overflow: 'hidden', // Hide overflow content
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      queueBot: {
+        // borderBlockColor: "white",
+        // borderWidth: 2,
+        marginTop: 5,
+        flexWrap: 'wrap', // Allow text to wrap
+        overflow: 'hidden', // Hide overflow content
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      queueButton: {
+        height: "100%",
+        borderRadius: 20,
+        backgroundColor: 'black',
+        padding: 5,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+      },
+      queueButtonText: {
+        color: 'white',
+        fontSize: 20 * scaleFactor,
+        fontWeight: 'bold',
+      },
+
+      // ------ Queue Box Scrolling Info -------- 
 
   });
 

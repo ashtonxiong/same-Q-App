@@ -39,10 +39,12 @@ const HomePage = () => {
           </View>
         </TouchableOpacity>
       </View>
-      <Text style={styles.pageHeader}>Courses</Text>
+      <View style={styles.courseHeaderContainer}>
+        <Text style={styles.pageHeader}>Courses</Text>
+      </View>
 
       {/*  ------- active office hours --------- */}
-      <View style={styles.courseSection}>
+      <View style={[styles.courseSection, { marginTop: '10%' }]}>
         <Text style={styles.sectionHeader}>Active Office Hours</Text>
         <View style={styles.courseContainer}>
           {activeCourses.map((course) => (

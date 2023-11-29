@@ -44,15 +44,6 @@ const App = () => {
             null
           ]
         }}
-        // screenOptions={{
-        //   tabBarStyle: {
-        //     backgroundColor: '#cfb8e9', // Set the background color
-        //   },
-        // }}
-        // tabBarOptions={{
-        //   activeTintColor: '#000', // Set the active tab color
-        //   inactiveTintColor: '#9f6fdd', // Set the inactive tab color
-        // }}
       >
       <Tab.Screen name="Home" component={MainStack} 
       options={{

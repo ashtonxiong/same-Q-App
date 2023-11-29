@@ -41,12 +41,14 @@ const CollabPage = () => {
     <ScrollView 
     // ref={scrollViewRef}
     showsVerticalScrollIndicator={false}
-    contentContainerStyle={{ alignItems: 'center' }}
+    contentContainerStyle={{ alignItems: 'center', paddingBottom: '20%'}} 
+    // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
     >        
     <View style={styles.collabHeader}>
       <Text style={styles.courseBoxTEXT}> Collaborating </Text>
       <Text> Collaborating on {numCourses.numQuestions} questions</Text>
     </View>
+
       {pages.map(page => (
           <View key={page.id} style={styles.collabBox}>
           {/* top row */}
