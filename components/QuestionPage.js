@@ -5,9 +5,35 @@ import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 
 const QuestionPage = ({ route }) => {
-  const { question, course } = route.params;
+  const { question, course, object } = route.params;
   const [isModalVisible, setModalVisible] = useState(false);
   const [bottomMargin, setBottomMargin] = useState(0);
+
+  const [messages, setMessages] = useState([
+    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
+    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
+    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
+    {text: "No Worries! Anytime", color: "gray" },
+    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
+    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
+    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
+    {text: "No Worries! Anytime", color: "gray" },
+    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
+    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
+    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
+    {text: "No Worries! Anytime", color: "gray" },
+    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
+    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
+    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
+    {text: "No Worries! Anytime", color: "gray" },    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
+    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
+    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
+    {text: "No Worries! Anytime", color: "gray" },
+    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
+    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
+    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
+    {text: "No Worries! Anytime", color: "gray" },
+  ]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -31,6 +57,30 @@ const QuestionPage = ({ route }) => {
 
   const navigation = useNavigation();
 
+  const renderMessages = () => {
+    return messages.map((message, index) => {
+      if (message.color === "gray") {
+        return (
+          <View key={index} style={[styles.grayTextMessageContainer]}>
+            <Text style={{ marginRight: '2%' }}>PFP</Text>
+            <View style={styles.grayMessage}>
+              <Text>{message.text}</Text>
+            </View>
+          </View>
+        );
+      } else {
+        return (
+          <View key={index} style={[styles.purpleTextMessageContainer]}>
+            <View style={styles.purpleMessage}>
+              <Text>{message.text}</Text>
+            </View>
+            <Text style={{ marginRight: '2%' }}>PFP</Text>
+          </View>
+        );
+      }
+    });
+  };
+
   const handleBackCourse = () => {
     console.log(`Navigating to CoursePage with course: ${course.name}`);
     navigation.navigate('CoursePage', { course });
@@ -42,7 +92,6 @@ const QuestionPage = ({ route }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 
       <View style={[styles.container, { marginBottom: bottomMargin }]}>
         <View style={styles.questionPageBox}>
@@ -64,44 +113,25 @@ const QuestionPage = ({ route }) => {
          <View style={styles.questionInfoHeader}>
             <View style={styles.numCollaborators}>
                 <Icon name="people" size={25} color="#000" style={styles.emojiIcon} />
-                <Text> NUM</Text>
+                <Text style={{fontSize: 20}}> {question.numPeople} </Text>
             </View>
-            <Text style={styles.questionHost}>Asked by: XXX</Text>
+            <Text style={[styles.questionHost, { fontWeight: 'Bold' }]} >Asked by: {question.askedBy}</Text>
             <View style={styles.numInHuddle}>
-                <Text>NUM  </Text>
+                <Text style={{fontSize: 20}}> {question.earphone}  </Text>
                 <Icon name="earphones" size={25} color="#000" style={styles.emojiIcon} />
             </View>
           </View>
-            
-          <Text>FULL QUESTION HERE UP TO 200 CHARS?</Text>
+            <View style={{alignItems: 'center'}}>
+              <Text style={{fontSize: 17}}>{question.text}</Text>
+          </View>
     </View>
 
-        <ScrollView style={styles.chatArea}>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-            <Text>Content here</Text>
-         </ScrollView>
+        <ScrollView style={[styles.chatArea, {marginTop: 10}]}>
+        {renderMessages()}
+
+          
+
+        </ScrollView>
 
             <View style={styles.inputContainer}>
                 <Icon name="emotsmile" size={25} color="#000" style={styles.emojiIcon} />
@@ -130,11 +160,11 @@ const QuestionPage = ({ route }) => {
                 <Text style={styles.modalHeaderTEXT}>Question Information</Text>
                 <Text style={styles.modalHeaderTEXT2}>
                     Course: {course.name} {'\n'}
-                    Asked by: XXX {'\n'}
+                    Asked by: {question.askedBy}
                     Created on: XXX {'\n'} {'\n'}
 
-                    Current Collaborators: XXX {'\n'}
-                    Total Collaborators: XXX {'\n'} {'\n'}
+                    Current Collaborators: {question.numPeople} {'\n'}
+                    Total Collaborators: {question.numPeople + question.earphone} {'\n'} {'\n'}
 
                     Last Active: XXX
                 </Text>
@@ -154,7 +184,6 @@ const QuestionPage = ({ route }) => {
         )}
 
       </View>
-    </TouchableWithoutFeedback>
   );
 };
 

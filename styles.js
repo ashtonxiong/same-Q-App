@@ -47,8 +47,6 @@ const styles = StyleSheet.create({
     //   fontSize: 20 * scaleFactor,
     // },
     appBar: {
-      borderColor: 'green',
-      borderWidth: 2,
       backgroundColor: '#9F6FDD',
       height: 115 * scaleFactor,
       flexDirection: 'row',
@@ -219,9 +217,37 @@ const styles = StyleSheet.create({
       chatArea: {
         flex: 1,
         height: 0,
-        borderColor: "green",
-        borderWidth: 5,
+        // borderColor: "green",
+        // borderWidth: 5,
       },
+
+      // ------ Text Message Styling  -------- 
+      grayTextMessageContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        padding: 5,     
+      },
+      grayMessage: {
+        borderRadius: 10,
+        padding: 10,
+        backgroundColor: 'gray',
+        maxWidth: '50%',
+      },
+      purpleTextMessageContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        padding: 5,     
+      },
+      purpleMessage: {
+        borderRadius: 10,
+        padding: 10,
+        backgroundColor: '#b986ee',
+        maxWidth: '50%',
+      },
+      // ------ Text Message Styling  -------- 
+
+
       customModalOverlay: {
         ...StyleSheet.absoluteFillObject, // apply fill to custom modal
         justifyContent: 'center',
@@ -290,8 +316,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
       },
       inputContainer: {
-        borderColor: 'red',
-        borderWidth: 5,
+        // borderColor: 'red',
+        // borderWidth: 5,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#D9D9D9',
@@ -497,6 +523,9 @@ const styles = StyleSheet.create({
       },
 
       // ------ Queue Box Scrolling Info -------- 
+
+
+
 
   });
 

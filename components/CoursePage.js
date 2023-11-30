@@ -9,22 +9,31 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 const CoursePage = ({ route }) => {
   const { course } = route.params;
 
+
   const navigation = useNavigation();
   const { width, height } = Dimensions.get('window');
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
 
+  
+
   const [times, setTimes] = useState([
-    { numPeople: 2, time: "2:15", earphone: 0, text: "How do I add audio and a pulsing effect to the medium-fi prototype?", id: 1 },
-    { numPeople: 1, time: "2:30", earphone: 2, text: "How do I add audio and a pulsing effect to the medium-fi prototype?", id: 2 },
-    { numPeople: 2, time: "2:15", earphone: 0, text: "How do I add audio and a pulsing effect to the medium-fi prototype?", id: 3 },
-    { numPeople: 2, time: "2:15", earphone: 0, text: "How do I add audio and a pulsing effect to the medium-fi prototype?", id: 4 },
-    { numPeople: 1, time: "2:30", earphone: 2, text: "How do I add audio and a pulsing effect to the medium-fi prototype?", id: 5 },
+    { numPeople: 2, time: "2:15", earphone: 0, 
+    text: "How do I my highlight reel to the AFS Directory?", 
+    askedBy: 'LeBron James', id: 1 },
+    { numPeople: 3, time: "2:30", earphone: 2, 
+    text: "Where should I conduct Interviews for my needfinding?", askedBy: 'Donald Glover',id: 2 },
+    { numPeople: 2, time: "2:45", earphone: 2, 
+    text: "How do I add audio and a pulsing effect to the medium-fi prototype?", askedBy: 'Sally Ride', id: 3 },
+    { numPeople: 10, time: "3:00", earphone: 5, 
+    text: "How do I add my songs to the hi-fi prototype?", askedBy: 'Taylor Swift', id: 4 },
+    { numPeople: 3, time: "3:15", earphone: 2, 
+    text: "How can I align our app's theme with my nocturnal aesthetic without disrupting existing color schemes?", askedBy: "Batman",id: 5 },
   ]);
 
-  const handleCollabPress = (questionText) => {
+  const handleCollabPress = (questionText, object) => {
     // navigate to QuestionPage with the question parameter
     console.log(`Navigating to QuestionPage with question: ${questionText}`);
-    navigation.navigate('QuestionPage', { question: questionText, course });
+    navigation.navigate('QuestionPage', { question: questionText, course, object });
   };  
 
   const handleBackHome = (home) => {
@@ -128,7 +137,7 @@ const CoursePage = ({ route }) => {
             <View style={styles.queueBot}>
             <TouchableOpacity
               style={styles.queueButton}
-              onPress={() => handleCollabPress("CS 147")}
+              onPress={() => handleCollabPress(time)}
             >
               <Text style={styles.queueButtonText}> Collaborate </Text>
             </TouchableOpacity>
