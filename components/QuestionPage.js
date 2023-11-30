@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback, TextInput, Platform, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback, TextInput, Platform, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -39,7 +39,7 @@ const QuestionPage = ({ route }) => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
-        setBottomMargin(Platform.OS === 'ios' ? 250 : 250); // Adjust this value based on your layout
+        setBottomMargin(Platform.OS === 'ios' ? 0 : 0); // Adjust this value based on your layout
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
@@ -92,6 +92,11 @@ const QuestionPage = ({ route }) => {
   };
 
   return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      enabled
+      style={{ flex: 1 }}
+    >
 
       <View style={[styles.container, { marginBottom: bottomMargin }]}>
         <View style={styles.questionPageBox}>
@@ -171,7 +176,7 @@ const QuestionPage = ({ route }) => {
                         style={styles.uncollabButton}
                         // onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}
                         >
-                        <Text style={styles.collabButtonTEXT}>Uncollaborate</Text>
+                        <Text style={styles.courseCollabButtonText}>Uncollaborate</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -181,6 +186,7 @@ const QuestionPage = ({ route }) => {
         )}
 
       </View>
+    </KeyboardAvoidingView>
   );
 };
 
