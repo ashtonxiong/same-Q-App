@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#b986ee',
         maxWidth: '50%',
+        marginRight: 5,
       },
       // ------ Text Message Styling  -------- 
 

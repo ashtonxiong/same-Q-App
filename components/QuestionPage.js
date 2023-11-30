@@ -126,24 +126,21 @@ const QuestionPage = ({ route }) => {
           </View>
     </View>
 
-        <ScrollView style={[styles.chatArea, {marginTop: 10}]}>
-        {renderMessages()}
-
-          
-
+        <ScrollView style={[styles.chatArea, {paddingBottom: '60%'}]}>
+          {renderMessages()}
         </ScrollView>
 
-            <View style={styles.inputContainer}>
-                <Icon name="emotsmile" size={25} color="#000" style={styles.emojiIcon} />
-                <Icon name="camera" size={26} color="#000" style={styles.emojiIcon} />
-                <TextInput
-                style={styles.input}
-                placeholder="Click to start typing…"
-                // value={text}
-                // onChangeText={(newText) => setText(newText)}
-                />
-                <Icon name="paper-plane" size={25} color="#000" style={styles.cameraIcon} />
-            </View>
+        <View style={styles.inputContainer}>
+            <Icon name="emotsmile" size={25} color="#000" style={styles.emojiIcon} />
+            <Icon name="camera" size={26} color="#000" style={styles.emojiIcon} />
+            <TextInput
+            style={styles.input}
+            placeholder="Click to start typing…"
+            // value={text}
+            // onChangeText={(newText) => setText(newText)}
+            />
+            <Icon name="paper-plane" size={25} color="#000" style={styles.cameraIcon} />
+        </View>
 
         {isModalVisible && (
           <View style={styles.customModalOverlay}>
