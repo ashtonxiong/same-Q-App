@@ -102,18 +102,20 @@ const QuestionPage = ({ route }) => {
         scrollViewRef.current.scrollToEnd({ animated: true});
     }, [text]);
 
-    function Message(text, time, sender) {
+    function Message(text, time, senderID, senderName) {
         this.text = text;
         this.time = time;
-        this.sender = sender;
+        this.sender = senderID;
+        this.senderName = senderName;
 
-        this.color = sender != defaults.user ? 'lightgrey' : '#5052b5'
-        this.textColor = sender != defaults.user ? 'black' : 'white'
+        this.color = senderID != defaults.user ? 'lightgrey' : '#5052b5'
+        this.textColor = senderID != defaults.user ? 'black' : 'white'
+        this.alignment = senderID != defaults.user ? 'flex-start' :  'flex-end'
     }
 
     const messagesStart = [
-        new Message("blah", 20, 0),
-        new Message("asldfkj", 22, 1)
+        new Message("Anyone made any progress?", 20, 1, "Adam"),
+        new Message("I got through part b, but after that I'm lost", 22, 1, "Jenna")
     ]
 
     const [messages, setMessages] = useState(messagesStart);
@@ -124,9 +126,11 @@ const QuestionPage = ({ route }) => {
           return;
         }
     
-        setMessages((messages) => [...messages, new Message(text, Date.now(), 0)]);
+        setMessages((messages) => [...messages, new Message(text, Date.now(), 0, "You")]);
         setText(''); // Clear the TextInput after adding an item
       };
+
+    const messagesRef = useRef();
 
     return (
         // This makes it so you can 'tap out' of the text entry area
@@ -136,9 +140,9 @@ const QuestionPage = ({ route }) => {
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80} style={styles.questionContainer}>
                 
                 <View style={styles.topBlock}>
-                    <View style={styles.pageHeader}>
+                    {/* <View style={styles.pageHeader}>
                         <Text style={styles.courseBoxTEXT}>CS147</Text>
-                    </View>
+                    </View> */}
                     <View style={styles.QuestionInfo}>
                         <Text style={styles.QuestionInfoText}>{question} </Text>
                         <Text style={styles.questionHelpTimeText}>Scheduled for {helpTime}</Text>
@@ -163,11 +167,16 @@ const QuestionPage = ({ route }) => {
                 
                 {/* Area for texts and join huddle button */}
                 <View style={styles.TextsArea}>
-                    <ScrollView>
+                    <ScrollView ref={messagesRef}
+                    onContentSizeChange={() => messagesRef.current.scrollToEnd({ animated: true })}>
                     {messages.map((message) => (
-                        <View key={message.time} style={[styles.message, {backgroundColor: message.color}]}>
-                            <Text style={[styles.messageTEXT, {color: message.textColor}]}>{message.text}</Text>
+                        <View>
+                            <Text style={[styles.senderStyle, {alignSelf: message.alignment}]}>{message.senderName}</Text>
+                            <View key={message.time} style={[styles.message, {backgroundColor: message.color, alignSelf: message.alignment}]}>
+                                <Text style={[styles.messageTEXT, {color: message.textColor}]}>{message.text}</Text>
+                            </View>
                         </View>
+                        
                     ))}
 
                     </ScrollView>

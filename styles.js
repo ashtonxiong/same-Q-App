@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
     },
     input : {
       width: "100%",
-      height: 82,
+      // height: 82,
+      height: 50,
       fontSize: 18,
       textAlignVertical: 'center',
       paddingRight: 80,
@@ -115,9 +116,9 @@ const styles = StyleSheet.create({
         borderColor: '#9F6FDD',
         borderRadius: 20,
       },
-      questionTEXT: {
-        fontSize: 20,
-      },
+      // questionTEXT: {
+      //   fontSize: 20,
+      // },
       collabButton: {
         width: 145,
         borderRadius: 20,
@@ -150,8 +151,8 @@ const styles = StyleSheet.create({
       topBlock: {
         width: '100%',
         backgroundColor: '#c061fb',
-        borderRadius: '15em',
-        marginTop: '-10%',
+        borderBottomLeftRadius: '15em',
+        borderBottomRightRadius:  '15em',
         zIndex: 1
       },
       QuestionInfo : {
@@ -204,6 +205,8 @@ const styles = StyleSheet.create({
       },
       TextsArea : {
         flex : 1,
+        paddingTop: 10,
+        paddingBottom: 10
       },
       // huddleButton : {
       //   position : 'absolute',
@@ -227,6 +230,18 @@ const styles = StyleSheet.create({
       huddleBarTEXT: {
         paddingBottom: "1%",
         fontSize: 16
+      },
+      message: {
+        maxWidth: '80%',
+        padding: 10,
+        borderRadius: 10,
+        marginBottom: 10,
+      },
+      senderStyle: {
+        color: 'rgb(76, 77, 77)',
+        marginLeft: 10,
+        fontSize: 13,
+        marginRight: 10
       }
 }
 );
