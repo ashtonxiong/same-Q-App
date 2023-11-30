@@ -6,7 +6,6 @@ import styles from '../styles';
 import defaults from '../globalConstants'
 
 
-
 const QuestionPage = ({ route }) => {
 
     const { question } = route.params;
@@ -103,6 +102,32 @@ const QuestionPage = ({ route }) => {
         scrollViewRef.current.scrollToEnd({ animated: true});
     }, [text]);
 
+    function Message(text, time, sender) {
+        this.text = text;
+        this.time = time;
+        this.sender = sender;
+
+        this.color = sender != defaults.user ? 'lightgrey' : '#5052b5'
+        this.textColor = sender != defaults.user ? 'black' : 'white'
+    }
+
+    const messagesStart = [
+        new Message("blah", 20, 0),
+        new Message("asldfkj", 22, 1)
+    ]
+
+    const [messages, setMessages] = useState(messagesStart);
+
+    const addMessage = () => {
+        if (text.trim() === '') {
+          // Don't add empty items
+          return;
+        }
+    
+        setMessages((messages) => [...messages, new Message(text, Date.now(), 0)]);
+        setText(''); // Clear the TextInput after adding an item
+      };
+
     return (
         // This makes it so you can 'tap out' of the text entry area
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -136,10 +161,16 @@ const QuestionPage = ({ route }) => {
                 </TouchableWithoutFeedback>
                 
                 
-
                 {/* Area for texts and join huddle button */}
                 <View style={styles.TextsArea}>
-                    <ScrollView></ScrollView>
+                    <ScrollView>
+                    {messages.map((message) => (
+                        <View key={message.time} style={[styles.message, {backgroundColor: message.color}]}>
+                            <Text style={[styles.messageTEXT, {color: message.textColor}]}>{message.text}</Text>
+                        </View>
+                    ))}
+
+                    </ScrollView>
                     {/* <TouchableOpacity style={styles.huddleButton}>
 
                     </TouchableOpacity> */}
@@ -162,7 +193,7 @@ const QuestionPage = ({ route }) => {
                     </ScrollView>
                     <View style={styles.sendMessageBUTTON}>
                         {/* This needs to be made to do something still */}
-                        <TouchableOpacity>
+                        <TouchableOpacity  onPress={addMessage}>
                             <Icon name="paper-plane" size={defaults.iconSize*1.5} style={styles.icons}/>
                         </TouchableOpacity>
                     </View>
