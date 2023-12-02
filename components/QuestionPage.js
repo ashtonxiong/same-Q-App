@@ -9,6 +9,11 @@ const QuestionPage = ({ route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [bottomMargin, setBottomMargin] = useState(0);
 
+  const [collabStatus, setCollabStatus] = useState([
+    "Collaborate"
+  ]);
+
+
   const [messages, setMessages] = useState([
     {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
     {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
@@ -78,6 +83,13 @@ const QuestionPage = ({ route }) => {
           </View>
         );
       }
+    });
+  };
+
+  const handleCollabPress = () => {
+    setCollabStatus((prevStatus) => {
+      // Toggle between "Collaborate" and "Uncollaborate"
+      return prevStatus[0] === "Collaborate" ? ["Uncollaborate"] : ["Collaborate"];
     });
   };
 
@@ -155,7 +167,7 @@ const QuestionPage = ({ route }) => {
                   <TouchableOpacity onPress={clickMoreModal}>
                     <View style={styles.cancelButton}>
                       <Icon name="close" size={20} color="#000" />
-                      <Text style={styles.cancelTEXT}>Cancel</Text>
+                      <Text style={styles.cancelTEXT}></Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -174,9 +186,9 @@ const QuestionPage = ({ route }) => {
                 <View style={styles.modalUncollab}>
                     <TouchableOpacity
                         style={styles.uncollabButton}
-                        // onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}
+                        onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}
                         >
-                        <Text style={styles.courseCollabButtonText}>Uncollaborate</Text>
+                        <Text style={styles.courseCollabButtonText}>{collabStatus}</Text>
                     </TouchableOpacity>
                 </View>
 

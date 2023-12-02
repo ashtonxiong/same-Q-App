@@ -86,16 +86,16 @@ const CoursePage = ({ route }) => {
             <View style={styles.courseDetailTop}>
               <View style={{flexDirection: 'row'}}>
                 <Text style={{fontWeight: 'bold'}}>Instructor: </Text>
-                <Text> Instructor Name </Text>
+                <Text> James Landay </Text>
               </View>
-              <Text style={{marginLeft: 'auto'}}> TEMP</Text>
+              <Text style={{marginLeft: 'auto'}}> 5 Questions in Queue</Text>
             </View>
             <View style={styles.courseDetailBottom}>
               <View style={{flexDirection: 'row'}}>
                 <Text style={{fontWeight: 'bold'}}>Duration: </Text>
-                <Text> Duration Time </Text>
+                <Text> 5:00PM - 6:00PM</Text>
               </View>
-              <Text style={{marginLeft: 'auto'}}> TEMP</Text>
+              <Text style={{marginLeft: 'auto'}}> 20 Active </Text>
             </View>
           </View>
           <View style={{alignItems: 'center'}}>
@@ -134,12 +134,12 @@ const CoursePage = ({ route }) => {
             </View>
 
             {/* bottom row */}
-            <View style={styles.queueBot}>
+            <View style={[styles.queueBot ]}>
             <TouchableOpacity
               style={styles.queueButton}
               onPress={() => handleCollabPress(time)}
             >
-              <Text style={styles.queueButtonText}> Collaborate </Text>
+              <Text style={[styles.queueButtonText, ]}> View </Text>
             </TouchableOpacity>
             </View>
         </View>

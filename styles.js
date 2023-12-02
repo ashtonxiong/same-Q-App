@@ -514,8 +514,9 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'black',
         padding: 5,
+        width: '30%',
         // justifyContent: 'center',
-        // alignItems: 'center',
+        alignItems: 'center',
       },
       queueButtonText: {
         color: 'white',
