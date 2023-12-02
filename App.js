@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from './components/HomePage';
 import CoursePage from './components/CoursePage';
@@ -39,7 +38,8 @@ const App = () => {
           tabBarStyle: [
             {
               display: "flex",
-              backgroundColor: '#cfb8e9'
+              backgroundColor: '#cfb8e9',
+              height: '10%',
             },
             null
           ]

@@ -59,6 +59,9 @@ const QuestionPage = ({ route }) => {
 
   const renderMessages = () => {
     return messages.map((message, index) => {
+      console.log("question:", question)
+      console.log("course:", course)
+
       if (message.color === "gray") {
         return (
           <View key={index} style={[styles.grayTextMessageContainer]}>
@@ -82,7 +85,7 @@ const QuestionPage = ({ route }) => {
   };
 
   const handleBackCourse = () => {
-    console.log(`Navigating to CoursePage with course: ${course.name}`);
+    console.log(`Navigating to CoursePage with course: ${course.course}`);
     navigation.navigate('CoursePage', { course });
   };
 
@@ -104,7 +107,7 @@ const QuestionPage = ({ route }) => {
             <TouchableOpacity onPress={handleBackCourse}>
               <View style={styles.backArrow}>
                 <Icon name="arrow-left" size={20} color="#000" />
-                <Text style={styles.backTEXT}>{course.name}</Text>
+                <Text style={styles.backTEXT}>{course.course}</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={clickMoreModal}>
@@ -118,16 +121,16 @@ const QuestionPage = ({ route }) => {
          <View style={styles.questionInfoHeader}>
             <View style={styles.numCollaborators}>
                 <Icon name="people" size={25} color="#000" style={styles.emojiIcon} />
-                <Text style={{fontSize: 20}}> {question.numPeople} </Text>
+                <Text style={{fontSize: 20}}> {question.num_collab} </Text>
             </View>
-            <Text style={[styles.questionHost, { fontWeight: 'Bold' }]} >Asked by: {question.askedBy}</Text>
+            <Text style={[styles.questionHost, { fontWeight: 'Bold' }]} >Asked by: {question.author}</Text>
             <View style={styles.numInHuddle}>
-                <Text style={{fontSize: 20}}> {question.earphone}  </Text>
+                <Text style={{fontSize: 20}}> {question.num_huddle}  </Text>
                 <Icon name="earphones" size={25} color="#000" style={styles.emojiIcon} />
             </View>
           </View>
             <View style={{alignItems: 'center'}}>
-              <Text style={{fontSize: 17}}>{question.text}</Text>
+              <Text style={{fontSize: 17}}>{question.question}</Text>
           </View>
     </View>
 
@@ -161,8 +164,8 @@ const QuestionPage = ({ route }) => {
                 </View>
                 <Text style={styles.modalHeaderTEXT}>Question Information</Text>
                 <Text style={styles.modalHeaderTEXT2}>
-                    Course: {course.name} {'\n'}
-                    Asked by: {question.askedBy}
+                    Course: {course.course} {'\n'}
+                    Asked by: {question.author}
                     Created on: XXX {'\n'} {'\n'}
 
                     Current Collaborators: {question.numPeople} {'\n'}
