@@ -141,10 +141,10 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         width: screenWidth * 0.95,
-        height: 20,
+        // height: 20,
         borderWidth: 2,
         borderColor: '#9F6FDD',
-        borderRadius: 20,
+        // borderRadius: 20,
       },
       questionTEXT: {
         fontSize: 22,
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
       },
       scrollContainer: {
         alignItems: 'center',
-        paddingBottom: '60%',
+        // paddingBottom: '10%',
       },
 
       // ----------QuestionPage----------
@@ -193,14 +193,15 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         width: screenWidth * 0.95,
-        height: screenHeight * 0.35,
+        // height: screenHeight * 0.20,
         borderWidth: 2,
         borderColor: '#b986ee',
         borderRadius: 10,
         backgroundColor: '#FFFFFF',
-        justifyContent: 'space-between',
-        maxHeight: '35%',
+        // justifyContent: 'space-between',
+        // maxHeight: '35%',
       },
+      
       queueTopRow: {
         flexDirection: "row", // align items along the row
         justifyContent: 'space-between', // space between icon and help time
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: 'center', // align items along the row
       },
-      queuebMid: {
+      queueMid: {
         flexWrap: 'wrap', // Allow text to wrap
         overflow: 'hidden', // Hide overflow content
         flexDirection: "row",
