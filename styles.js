@@ -11,41 +11,8 @@ const styles = StyleSheet.create({
     // ----------ALL----------
     container: {
       flex: 1,
-      // borderColor: 'red',
-      // borderWidth: 2,
+      backgroundColor: 'white',
     },
-    // ----------Top Header----------
-    // appBar: {
-    //   borderColor: "green",
-    //   borderWidth: 2,
-    //   backgroundColor: "#9F6FDD",
-    //   height: 115 * scaleFactor,
-    //   flexDirection: 'row',
-    //   // justifyContent: 'space-between',
-    //   alignItems: 'center',
-    //   paddingHorizontal: '5%'
-    // },
-    // backArrow: {
-    //   borderColor: "blue",
-    //   borderWidth: 2,
-    //   flexDirection: 'row',
-    //   justifyContent: 'left',
-    //   // marginLeft: '5%',
-    //   // marginTop: '17%',
-    // },
-    // className: {
-    //   // flex: 1,
-    //   borderColor: 'yellow',
-    //   borderWidth: 2,
-    //   marginLeft: '5%',
-    //   // alignItems: 'center', // Center text vertically
-    //   justifyContent: 'center',
-    //   paddingLeft: '10%',
-    //   paddingRight: '10%'
-    // },
-    // classNameText: {
-    //   fontSize: 20 * scaleFactor,
-    // },
     appBar: {
       backgroundColor: '#9F6FDD',
       height: 115 * scaleFactor,
@@ -92,6 +59,7 @@ const styles = StyleSheet.create({
       color: 'black',
       fontSize: 30,
       fontWeight: 'normal',
+      marginLeft: '5%',
     },
     backTEXT: {
       fontSize: 18,
@@ -173,10 +141,10 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         width: screenWidth * 0.95,
-        height: 100,
+        // height: 20,
         borderWidth: 2,
         borderColor: '#9F6FDD',
-        borderRadius: 20,
+        // borderRadius: 20,
       },
       questionTEXT: {
         fontSize: 22,
@@ -196,7 +164,7 @@ const styles = StyleSheet.create({
       },
       scrollContainer: {
         alignItems: 'center',
-        paddingBottom: '60%',
+        // paddingBottom: '10%',
       },
 
       // ----------QuestionPage----------
@@ -217,15 +185,71 @@ const styles = StyleSheet.create({
       chatArea: {
         flex: 1,
         height: 0,
-        // borderColor: "green",
-        // borderWidth: 5,
       },
+      // ----------QuestionPage----------
+
+      // ------ Queue Box Scrolling Info -------- 
+      queueBox: {
+        padding: 10,
+        margin: 10,
+        width: screenWidth * 0.95,
+        // height: screenHeight * 0.20,
+        borderWidth: 2,
+        borderColor: '#b986ee',
+        borderRadius: 10,
+        backgroundColor: '#FFFFFF',
+        // justifyContent: 'space-between',
+        // maxHeight: '35%',
+      },
+      
+      queueTopRow: {
+        flexDirection: "row", // align items along the row
+        justifyContent: 'space-between', // space between icon and help time
+      },
+      queueEarphone: {
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      queuePeopleIcon: {
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      queueMid: {
+        flexWrap: 'wrap', // Allow text to wrap
+        overflow: 'hidden', // Hide overflow content
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      queueBot: {
+        marginTop: 5,
+        flexWrap: 'wrap', // Allow text to wrap
+        overflow: 'hidden', // Hide overflow content
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      queueButton: {
+        height: "100%",
+        borderRadius: 20,
+        backgroundColor: 'black',
+        padding: 5,
+        width: '30%',
+        alignItems: 'center'
+      },
+      queueButtonText: {
+        color: 'white',
+        fontSize: 20 * scaleFactor,
+        fontWeight: 'bold',
+      },
+      // ------ Queue Box Scrolling Info -------- 
 
       // ------ Text Message Styling  -------- 
+      messageAndTimeContainer: {
+        flexDirection: 'column'
+      },
       grayTextMessageContainer: {
         width: '100%',
         flexDirection: 'row',
-        padding: 5,     
+        padding: 5,    
       },
       grayMessage: {
         borderRadius: 10,
@@ -233,11 +257,19 @@ const styles = StyleSheet.create({
         backgroundColor: 'gray',
         maxWidth: '50%',
       },
+      grayMessageInitials: {
+        marginLeft: '2%',
+        marginRight: '4%',
+      },
+      grayTextMessageTime: {
+        textAlign: 'left',
+        paddingLeft: '10%'
+      },
       purpleTextMessageContainer: {
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'flex-end',
-        padding: 5,     
+        padding: 5,    
+        justifyContent: 'flex-end', 
       },
       purpleMessage: {
         borderRadius: 10,
@@ -246,9 +278,17 @@ const styles = StyleSheet.create({
         maxWidth: '50%',
         marginRight: 5,
       },
+      purpleTextMessageTime: {
+        textAlign: 'right',
+        paddingRight: '4%'
+      },
+      emptyChat: {
+        textAlign: 'center',
+        fontWeight: '200',
+      },
       // ------ Text Message Styling  -------- 
 
-
+      // ------ Question Page w/ Chat  -------- 
       customModalOverlay: {
         ...StyleSheet.absoluteFillObject, // apply fill to custom modal
         justifyContent: 'center',
@@ -278,14 +318,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
       },
-      uncollabButton: {
+      modalCollabUncollabTEXT: {
         width: 175,
         borderRadius: 20,
         backgroundColor: 'black',
         justifyContent: 'center',
         alignItems: 'center',
       },
-      modalUncollab: {
+      modalCollabUncollab: {
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
@@ -317,8 +357,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
       },
       inputContainer: {
-        // borderColor: 'red',
-        // borderWidth: 5,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#D9D9D9',
@@ -339,11 +377,10 @@ const styles = StyleSheet.create({
       cameraIcon: {
         marginLeft: 5, // add space between the text input and camera icon
       },
+      // ------ Question Page w/ Chat  -------- 
 
       // ------ Notification Info -------- 
       NotiContainer: {
-        // borderBlockColor: "blue",
-        // borderWidth: 2,
         flex: 1,
         alignItems: 'center',
         marginLeft: 5,
@@ -351,8 +388,6 @@ const styles = StyleSheet.create({
         marginTop: '20%',
       },
       NotificationInfo: {
-        // borderColor: "red",
-        // borderWidth: 2,
         flexDirection: 'row',
         width: .9 * ScreenWidth,
         height: '10%',
@@ -360,8 +395,6 @@ const styles = StyleSheet.create({
         marginBottom: '3%', 
       },
       NotiText: {
-        // borderColor: "green",
-        // borderWidth: 2,
         height: '100%',
         marginLeft: '5%',
         flex: 1,
@@ -370,23 +403,15 @@ const styles = StyleSheet.create({
       },
       NotiIcon: {
         marginLeft: '5%',
-        // borderColor: "purple",
-        // borderWidth: 2,
-        // marginRight: '60%',
       },
 
       // ------ Notification Info -------- 
 
       // ------ Collab Info -------- 
       collabScroll: {
-        // borderBlockColor: "red",
-        // borderWidth: 2,
-        // flex: 1,
-        // flexDirection: 'column',
         marginLeft: 5,
         marginRight: 5,
         marginTop: '10%',
-        // alignItems: 'center'
       },
       collabContainer: {
         marginTop: '20%',
@@ -407,36 +432,24 @@ const styles = StyleSheet.create({
         maxHeight: '25%',
       },
       collabTopRow: {
-        // borderBlockColor: "green",
-        // borderWidth: 2,
         flexDirection: "row",
         justifyContent: 'center', // align items along the row
       },
       collabEarphone: {
-        // borderBlockColor: "red",
-        // borderWidth: 2,
         flexDirection: "row",
         justifyContent: 'center', // align items along the row
       },
       collabPeopleIcon: {
-        // borderBlockColor: "white",
-        // borderWidth: 2,
         flexDirection: "row",
         justifyContent: 'center', // align items along the row
-        // flex: 1,
       },
       collabMid: {
-        // borderBlockColor: "red",
-        // borderWidth: 2,
-        // flex: 1,
         flexWrap: 'wrap', // Allow text to wrap
         overflow: 'hidden', // Hide overflow content
         flexDirection: "row",
         justifyContent: 'center', // align items along the row
       },
       collabBot: {
-        // borderBlockColor: "white",
-        // borderWidth: 2,
         marginTop: 5,
         flexWrap: 'wrap', // Allow text to wrap
         overflow: 'hidden', // Hide overflow content
@@ -448,86 +461,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'black',
         padding: 5,
-        // justifyContent: 'center',
-        // alignItems: 'center',
       },
       collabButtonText: {
         color: 'white',
         fontSize: 20 * scaleFactor,
         fontWeight: 'bold',
       },
-
       // ------ Collab Info -------- 
-
-      // ------ Queue Box Scrolling Info -------- 
-
-      queueBox: {
-        padding: 10,
-        margin: 10,
-        width: screenWidth * 0.95,
-        borderWidth: 2,
-        borderColor: '#b986ee',
-        borderRadius: 10,
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'space-between',
-        maxHeight: '35%',
-      },
-      queueTopRow: {
-        // borderBlockColor: "green",
-        // borderWidth: 2,
-        flexDirection: "row",
-        justifyContent: 'center', // align items along the row
-      },
-      queueEarphone: {
-        // borderBlockColor: "red",
-        // borderWidth: 2,
-        flexDirection: "row",
-        justifyContent: 'center', // align items along the row
-      },
-      queuePeopleIcon: {
-        // borderBlockColor: "white",
-        // borderWidth: 2,
-        flexDirection: "row",
-        justifyContent: 'center', // align items along the row
-        // flex: 1,
-      },
-      queuebMid: {
-        // borderBlockColor: "red",
-        // borderWidth: 2,
-        // flex: 1,
-        flexWrap: 'wrap', // Allow text to wrap
-        overflow: 'hidden', // Hide overflow content
-        flexDirection: "row",
-        justifyContent: 'center', // align items along the row
-      },
-      queueBot: {
-        // borderBlockColor: "white",
-        // borderWidth: 2,
-        marginTop: 5,
-        flexWrap: 'wrap', // Allow text to wrap
-        overflow: 'hidden', // Hide overflow content
-        flexDirection: "row",
-        justifyContent: 'center', // align items along the row
-      },
-      queueButton: {
-        height: "100%",
-        borderRadius: 20,
-        backgroundColor: 'black',
-        padding: 5,
-        width: '30%',
-        // justifyContent: 'center',
-        alignItems: 'center',
-      },
-      queueButtonText: {
-        color: 'white',
-        fontSize: 20 * scaleFactor,
-        fontWeight: 'bold',
-      },
-
-      // ------ Queue Box Scrolling Info -------- 
-
-
-
 
   });
 
