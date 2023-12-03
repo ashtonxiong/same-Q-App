@@ -24,8 +24,17 @@ const styles = StyleSheet.create({
       marginTop: 40 * scaleFactor,
       justifyContent: 'center',
       borderBottomWidth: 1,
-      borderBottomColor: 'darkgrey',
+      borderBottomColor: 'lightgrey',
       paddingBottom: 5,
+
+      // backgroundColor: '#fff',
+      // borderRadius: 10,
+      // elevation: 8, // Increased elevation for a more pronounced effect on Android
+      // shadowColor: '#000', // iOS shadow
+      // shadowOffset: { width: 0, height: 8 },
+      // shadowOpacity: 0.4, // Increased shadow opacity for a more pronounced effect on iOS
+      // shadowRadius: 4,
+      // padding: 16,
     },
     backArrow: {
       flexDirection: 'row',
@@ -402,34 +411,43 @@ const styles = StyleSheet.create({
       // ------ Queue Box Scrolling Info -------- 
 
       queueBox: {
-        padding: 10,
         margin: 10,
         width: screenWidth * 0.95,
-        borderWidth: 2,
-        borderColor: 'darkgrey',
-        borderRadius: 10,
-        backgroundColor: '#FFFFFF',
         justifyContent: 'space-between',
         maxHeight: '35%',
+
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        elevation: 8, // Increased elevation for a more pronounced effect on Android
+        shadowColor: '#000', // iOS shadow
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.4, // Increased shadow opacity for a more pronounced effect on iOS
+        shadowRadius: 4,
+        padding: 10,
+
+
       },
       queueTopRow: {
         // borderBlockColor: "green",
         // borderWidth: 2,
         flexDirection: "row",
-        justifyContent: 'center', // align items along the row
+        justifyContent: 'space-between',
+        marginBottom: 5
       },
-      queueEarphone: {
-        // borderBlockColor: "red",
-        // borderWidth: 2,
-        flexDirection: "row",
-        justifyContent: 'center', // align items along the row
+      questionNumsBlock: {
+        flexDirection: 'row',
+        alignSelf: 'flex-end'
       },
-      queuePeopleIcon: {
-        // borderBlockColor: "white",
-        // borderWidth: 2,
+      iconBlock: {
         flexDirection: "row",
-        justifyContent: 'center', // align items along the row
-        // flex: 1,
+      },
+      questionIcon: {
+        alignSelf: "center"
+      },
+      expectedText: {
+        marginLeft: 5,
+        fontSize: 20,
+        alignSelf: 'flex-end',
       },
       queueBot: {
         // borderBlockColor: "white",

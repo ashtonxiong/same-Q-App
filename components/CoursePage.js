@@ -3,8 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, Dimensions} from 'react-nativ
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-
-
+import FAIcon from 'react-native-vector-icons/FontAwesome5'
 
 const CoursePage = ({ route }) => {
   const { course } = route.params;
@@ -44,7 +43,6 @@ const CoursePage = ({ route }) => {
 
   return (
     <View style={styles.container}>
-
       {/* <View style={styles.appBar}>
         <TouchableOpacity
           onPress={handleBackHome}>
@@ -59,11 +57,9 @@ const CoursePage = ({ route }) => {
       </View> */}
 
       <View style={styles.appBar}>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={handleBackHome}>
+        <TouchableOpacity style={styles.backButton} onPress={handleBackHome}>
           <View style={styles.backArrow}>
-          <Icon name="arrow-left" size={20} color="#000"/>
+            <Icon name="arrow-left" size={20} color="#000" />
           </View>
         </TouchableOpacity>
         {/* <View style={styles.headerContainer}>
@@ -71,14 +67,10 @@ const CoursePage = ({ route }) => {
             LOGO
           </Text>
         </View> */}
-          <Text style={styles.pageHeader}>
-            {course.name}
-          </Text>
-          <Text>
-            2:15-4:00 • Mariah Carey
-          </Text>
+        <Text style={styles.pageHeader}>{course.name}</Text>
+        <Text>2:15-4:00 • Mariah Carey</Text>
 
-          {/* <View style={styles.OHInfo}>
+        {/* <View style={styles.OHInfo}>
             <View style={[styles.OHText, {alignItems: "flex-end"}]}>
               <Text>Duration</Text>
             </View>
@@ -90,11 +82,9 @@ const CoursePage = ({ route }) => {
             </View>
 
           </View> */}
-        
       </View>
 
       <View>
-
         {/* <View style={styles.classInfo}>
           
 
@@ -129,38 +119,54 @@ const CoursePage = ({ route }) => {
             </TouchableOpacity>
           </View> */}
 
-          {times.map(time => (
+          {times.map((time) => (
             <View key={time.id} style={styles.queueBox}>
-            {/* top row */}
-            <View style={styles.queueTopRow}>
-              <View style={styles.queuePeopleIcon} >
-                <Text style={{fontSize: 17 * scaleFactor, fontWeight: 'bold'}}>{time.numPeople}</Text>
-                <Icon name="people" size={20 * scaleFactor} />
+              {/* top row */}
+              <View style={styles.queueTopRow}>
+                <View style={styles.questionNumsBlock}>
+                  <View style={styles.iconBlock}>
+                    <FAIcon name="clock" size={20 * scaleFactor} style={styles.questionIcon}/>
+                    <Text style={styles.expectedText}>{time.time}  </Text>
+                  </View>
+                  <View style={styles.iconBlock}>
+                    <FAIcon name="user" size={20 * scaleFactor} style={styles.questionIcon}/>
+                    <Text
+                      style={styles.expectedText}>
+                       {time.numPeople}
+                    </Text>
+                  </View>
+                </View>
+
+                <View style={styles.questionNumsBlock}>
+                  <View style={styles.iconBlock}>
+                    <FAIcon name="volume-up" size={20 * scaleFactor} style={styles.questionIcon}/>
+                    <Text style={styles.expectedText}>
+                      {time.earphone}  </Text>
+                    <FAIcon name="comments" size={20 * scaleFactor} style={styles.questionIcon}/>
+                    <Text style={styles.expectedText}>
+                      {time.earphone}</Text>
+                  </View>
+                </View>
               </View>
-              <Text style={{ fontSize: 20 + scaleFactor, marginLeft: 5 * scaleFactor, marginRight: 5 * scaleFactor}} >Expected Help at <Text style={{fontWeight: 'bold'}}>{time.time}</Text></Text>
-              <View style={styles.queueEarphone}>
-                <Icon  name="earphones" size={20 * scaleFactor} />
-                <Text style={{fontSize: 20 * scaleFactor, fontWeight: 'bold', marginLeft: 3}}>{time.earphone}</Text>
+
+              {/* middle row */}
+              <View style={styles.queueMid}>
+                <Text style={{ fontSize: 20, color: "#000000" }}>
+                  {time.text}
+                </Text>
+              </View>
+
+              {/* bottom row */}
+              <View style={styles.queueBot}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => handleCollabPress(time)}
+                >
+                  <Text style={styles.buttonText}> Collaborate </Text>
+                </TouchableOpacity>
               </View>
             </View>
-
-            {/* middle row */}
-            <View style={styles.queueMid}>
-              <Text style={{fontSize: 17 * scaleFactor, color: '#000000'}}>{time.text}</Text>
-            </View>
-
-            {/* bottom row */}
-            <View style={styles.queueBot}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => handleCollabPress(time)}
-            >
-              <Text style={styles.buttonText}> Collaborate </Text>
-            </TouchableOpacity>
-            </View>
-        </View>
-))}
-
+          ))}
         </ScrollView>
       </View>
     </View>

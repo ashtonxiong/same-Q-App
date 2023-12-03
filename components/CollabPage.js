@@ -45,12 +45,11 @@ const CollabPage = () => {
     // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
     >        
     <View style={styles.collabHeader}>
-      <Text style={styles.courseBoxTEXT}> Collaborating </Text>
-      <Text> Collaborating on {numCourses.numQuestions} questions</Text>
+      <Text style={[styles.courseBoxTEXT, {alignSelf: 'center'}]}> Joined questions</Text>
     </View>
 
       {pages.map(page => (
-          <View key={page.id} style={styles.collabBox}>
+          <View key={page.id} style={styles.queueBox}>
           {/* top row */}
           <View style={styles.collabTopRow}>
             <View style={styles.collabPeopleIcon} >
@@ -72,10 +71,10 @@ const CollabPage = () => {
           {/* bottom row */}
           <View style={styles.collabBot}>
           <TouchableOpacity
-            style={styles.collabButton}
+            style={styles.button}
             onPress={() => handleJoinPress("CS 147")}
           >
-            <Text style={styles.collabButtonText}> Collaborating </Text>
+            <Text style={styles.buttonText}> View </Text>
           </TouchableOpacity>
           </View>
         </View>

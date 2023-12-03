@@ -37,7 +37,6 @@ const App = () => {
     // Cleanup function
     return () => {
       // Reset status bar color and style when the component is unmounted
-      StatusBar.setBackgroundColor('default_color');
       StatusBar.setBarStyle('default_style');
     };
   }, []);
@@ -48,12 +47,13 @@ const App = () => {
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: "#000",
-          tabBarInactiveTintColor: "#9f6fdd",
+          tabBarActiveTintColor: "#5e42a6",
+          tabBarInactiveTintColor: "darkgrey",
           tabBarStyle: [
             {
               display: "flex",
-              backgroundColor: '#cfb8e9'
+              paddingTop: 10
+              // backgroundColor: '#cfb8e9'
             },
             null
           ]
@@ -61,33 +61,33 @@ const App = () => {
       >
       <Tab.Screen name="Home" component={MainStack} 
       options={{
-        tabBarIcon: ({ color, size }) => (
-          <Icon name="home" size={size} color={"#000"} />
+        tabBarIcon: ({ color, size, focused }) => (
+          <Icon name="home" size={size} color={focused ? "#5e42a6" : 'darkgrey'} />
         ),
         
       }}/>
         <Tab.Screen name="Collaborating" component={CollabPage} 
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="people" size={size} color={"#000"} />
+            tabBarIcon: ({ color, size, focused }) => (
+              <Icon name="people" size={size} color={focused ? "#5e42a6" : 'darkgrey'} />
             ),
           }}/>
         <Tab.Screen name="Ask" component={Notifications} 
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="plus" size={size} color={"#000"} />
+            tabBarIcon: ({ color, size, focused }) => (
+              <Icon name="plus" size={size} color={focused ? "#5e42a6" : 'darkgrey'} />
             ),
           }}/>
         <Tab.Screen name="Notifications" component={Notifications} 
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="bell" size={size} color={"#000"} />
+            tabBarIcon: ({ color, size, focused }) => (
+              <Icon name="bell" size={size} color={focused ? "#5e42a6" : 'darkgrey'} />
             ),
           }}/>
         <Tab.Screen name="Account" component={Notifications} 
           options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="settings" size={size} color={"#000"} />
+            tabBarIcon: ({ color, size, focused }) => (
+              <Icon name="settings" size={size} color={focused ? "#5e42a6" : 'darkgrey'} />
             ),
           }}/>
       </Tab.Navigator>
