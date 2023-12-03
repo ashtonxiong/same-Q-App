@@ -23,6 +23,18 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#DDCFFF',
     },
+    tabBarContainer: {
+      backgroundColor: 'white',
+      borderTopLeftRadius: 20,
+      borderTopRightRadius: 20,
+      overflow: 'hidden', // Clip the content within the rounded borders
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: -2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5, // For Android
+      height: '10%',
+    },
     appBar: {
       backgroundColor: 'white',
       height: 115 * scaleFactor,
@@ -80,8 +92,6 @@ const styles = StyleSheet.create({
     courseSection: {
       // marginBottom: 10,
       marginTop: 30,
-      borderColor: 'red',
-      borderWidth: 2,
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'left',
@@ -100,8 +110,14 @@ const styles = StyleSheet.create({
       margin: 10,
       width: screenWidth * 0.95,
       borderRadius: 20,
-      backgroundColor: '#b986ee',
+      backgroundColor: 'white',
+      borderColor: '#5E42A6',
+      borderWidth: 1.5,
       justifyContent: 'space-between', // align items along the row
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: .5,
+      shadowRadius: 4,
     },
     courseBoxTEXT: {
       // fontFamily:"Comfortaa-Medium",
@@ -113,9 +129,13 @@ const styles = StyleSheet.create({
     joinButton: {
       width: 70,
       borderRadius: 20,
-      backgroundColor: 'black',
+      backgroundColor: '#5E42A6',
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: .5,
+      shadowRadius: 4,
     },
     joinButtonTEXT: {
       color: 'white',
@@ -125,9 +145,13 @@ const styles = StyleSheet.create({
     askButton: {
       width: 70,
       borderRadius: 20,
-      backgroundColor: 'black',
+      backgroundColor: '#5E42A6',
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: .5,
+      shadowRadius: 10,
     },
     askButtonTEXT: {
       color: 'white',
@@ -187,7 +211,9 @@ const styles = StyleSheet.create({
         flex: 1,
       },
       questionPageBox: {
-        backgroundColor: "#9F6FDD",
+        borderBottomColor: '#5E42A6',
+        borderBottomWidth: 2,
+        backgroundColor: "white",
         height: screenHeight * 0.23,
       },
       questionPageBoxHeader: {
@@ -245,7 +271,7 @@ const styles = StyleSheet.create({
       queueButton: {
         height: "100%",
         borderRadius: 20,
-        backgroundColor: 'black',
+        backgroundColor: '#5E42A6',
         padding: 5,
         width: '30%',
         alignItems: 'center'
