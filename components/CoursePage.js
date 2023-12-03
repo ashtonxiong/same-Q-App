@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { supabase } from '../supabase';
+const { parse, getTime } = require('date-fns');
 
 const CoursePage = ({ route }) => {
   const { course } = route.params;
@@ -34,7 +35,7 @@ const CoursePage = ({ route }) => {
           num_collab: item.num_collaborators,
           num_huddle: item.num_huddle,
           chats: item.chats,
-          help: item.expected_help,
+          expected_help: item.expected_help,
         }));
   
         setQuestions(questionInfoArray);
@@ -57,6 +58,62 @@ const CoursePage = ({ route }) => {
     console.log(`Navigating to HomePage`);
     navigation.navigate('HomePage');
   };  
+
+  // func to parse "HH:MM a" formatted help times
+  const parseTime = (timeString) => {
+    const [time, period] = timeString.split(' ');
+    const [hours, minutes] = time.split(':').map(Number);
+    const hours24 = period === 'PM' ? hours + 12 : hours;
+    return [hours24, minutes];
+  };
+
+  const renderQuestions = () => {
+    if (questions.length === 0) {
+      return (
+        <Text style={styles.emptyChat}>Be the first one to ask a question!</Text>
+      );
+    }
+  
+    // sort the questions based on expected help time
+    const sortedQuestionsArray = [...questions].sort((a, b) => {
+      const timeA = new Date(2000, 0, 1, ...parseTime(a.expected_help));
+      const timeB = new Date(2000, 0, 1, ...parseTime(b.expected_help));
+      return timeA - timeB;
+    });
+  
+    return sortedQuestionsArray.map((question) => (
+      <View key={question.uid} style={styles.queueBox}>
+        {/* top row */}
+        <View style={styles.queueTopRow}>
+          <View style={styles.queuePeopleIcon}>
+            <Text style={{ fontSize: 17 * scaleFactor, fontWeight: 'bold' }}>{question.num_collab}</Text>
+            <Icon name="people" size={20 * scaleFactor} />
+          </View>
+          <Text style={{ fontSize: 20 + scaleFactor, marginLeft: 5 * scaleFactor, marginRight: 5 * scaleFactor }}>Expected Help at <Text style={{ fontWeight: 'bold' }}>{question.expected_help}</Text></Text>
+          <View style={styles.queueEarphone}>
+            <Icon name="earphones" size={20 * scaleFactor} />
+            <Text style={{ fontSize: 20 * scaleFactor, fontWeight: 'bold', marginLeft: 3 }}>{question.num_huddle}</Text>
+          </View>
+        </View>
+  
+        {/* middle row */}
+        <View style={styles.queueMid}>
+          <Text style={{ fontSize: 17 * scaleFactor, color: '#000000' }}>{question.question}</Text>
+        </View>
+  
+        {/* bottom row */}
+        <View style={styles.queueBot}>
+          <TouchableOpacity
+            style={styles.queueButton}
+            onPress={() => handleCollabPress(course, question)}
+          >
+            <Text style={styles.queueButtonText}> View </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    ));
+  }
+  
 
   return (
     <View style={styles.container}>
@@ -107,39 +164,7 @@ const CoursePage = ({ route }) => {
         </View>
 
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-
-          {questions.map((question) => (
-            <View key={question.uid} style={styles.queueBox}>
-            {/* top row */}
-            <View style={styles.queueTopRow}>
-              <View style={styles.queuePeopleIcon} >
-                <Text style={{fontSize: 17 * scaleFactor, fontWeight: 'bold'}}>{question.num_collab}</Text>
-                <Icon name="people" size={20 * scaleFactor} />
-              </View>
-              <Text style={{ fontSize: 20 + scaleFactor, marginLeft: 5 * scaleFactor, marginRight: 5 * scaleFactor}} >Expected Help at <Text style={{fontWeight: 'bold'}}>{question.help}</Text></Text>
-              <View style={styles.queueEarphone}>
-                <Icon  name="earphones" size={20 * scaleFactor} />
-                <Text style={{fontSize: 20 * scaleFactor, fontWeight: 'bold', marginLeft: 3}}>{question.num_huddle}</Text>
-              </View>
-            </View>
-
-            {/* middle row */}
-            <View style={styles.queueMid}>
-              <Text style={{fontSize: 17 * scaleFactor, color: '#000000'}}>{question.question}</Text>
-            </View>
-
-            {/* bottom row */}
-            <View style={styles.queueBot}>
-            <TouchableOpacity
-              style={styles.queueButton}
-              onPress={() => handleCollabPress(course, question)}
-            >
-              <Text style={styles.queueButtonText}> View </Text>
-            </TouchableOpacity>
-            </View>
-        </View>
-))}
-
+            {renderQuestions()}
         </ScrollView>
       </View>
     </View>
