@@ -5,15 +5,6 @@ import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { supabase } from '../supabase';
 
-// const activeCourses = [
-//   { id: '1', name: 'CS 147' },
-//   { id: '2', name: 'ENGLISH 9CE' },
-// ];
-
-// const inactiveCourses = [
-//   { id: '3', name: 'CS 161' },
-// ];
-
 const HomePage = () => {
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
@@ -34,30 +25,12 @@ const HomePage = () => {
   const [activeClasses, setActive] = useState([]);
   const [inactiveClasses, setInactive] = useState([]);
 
-  // const getActive = async () => {
-  //   const {data, error, ...response} = await supabase
-  //     .from("sameQ-app-data")
-  //     .select("course")
-  //     .eq('status', 'TRUE');
-  //     console.log('data: ', data);
-  //     console.log('error: ', error);
-  //     console.log('response: ', response);
-
-  //     if (data) {
-  //       const courses = data.map(item => item.course);
-  //       setActive(courses);
-  //     }
-  // }
-
   const getActive = async () => {
     try {
       const { data, error } = await supabase
         .from("sameQ-app-data")
         .select("id, course, instructor, duration, num_active_students, num_questions")
         .eq('status', 'TRUE');
-  
-      console.log('data: ', data);
-      console.log('error: ', error);
   
       if (data) {
         // Now 'data' is an array of objects with 'id' and 'course' columns
@@ -84,11 +57,8 @@ const HomePage = () => {
         .select("id, course, instructor, duration, num_active_students, num_questions")
         .eq('status', 'FALSE');
   
-      console.log('data: ', data);
-      console.log('error: ', error);
-  
       if (data) {
-        // Now 'data' is an array of objects with 'id' and 'course' columns
+        // 'data' is an array of objects with 'id' and 'course' columns
         const coursesArray = data.map(item => ({
           id: item.id,
           course: item.course,

@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     // ----------ALL----------
     container: {
       flex: 1,
+      backgroundColor: 'white',
     },
     appBar: {
       backgroundColor: '#9F6FDD',
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         width: screenWidth * 0.95,
-        height: screenHeight * 0.20,
+        height: screenHeight * 0.35,
         borderWidth: 2,
         borderColor: '#b986ee',
         borderRadius: 10,
@@ -230,6 +231,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'black',
         padding: 5,
+        width: '30%',
+        alignItems: 'center'
       },
       queueButtonText: {
         color: 'white',
@@ -239,10 +242,13 @@ const styles = StyleSheet.create({
       // ------ Queue Box Scrolling Info -------- 
 
       // ------ Text Message Styling  -------- 
+      messageAndTimeContainer: {
+        flexDirection: 'column'
+      },
       grayTextMessageContainer: {
         width: '100%',
         flexDirection: 'row',
-        padding: 5,     
+        padding: 5,    
       },
       grayMessage: {
         borderRadius: 10,
@@ -250,11 +256,19 @@ const styles = StyleSheet.create({
         backgroundColor: 'gray',
         maxWidth: '50%',
       },
+      grayMessageInitials: {
+        marginLeft: '2%',
+        marginRight: '4%',
+      },
+      grayTextMessageTime: {
+        textAlign: 'left',
+        paddingLeft: '10%'
+      },
       purpleTextMessageContainer: {
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'flex-end',
-        padding: 5,     
+        padding: 5,    
+        justifyContent: 'flex-end', 
       },
       purpleMessage: {
         borderRadius: 10,
@@ -263,9 +277,17 @@ const styles = StyleSheet.create({
         maxWidth: '50%',
         marginRight: 5,
       },
+      purpleTextMessageTime: {
+        textAlign: 'right',
+        paddingRight: '4%'
+      },
+      emptyChat: {
+        textAlign: 'center',
+        fontWeight: '200',
+      },
       // ------ Text Message Styling  -------- 
 
-
+      // ------ Question Page w/ Chat  -------- 
       customModalOverlay: {
         ...StyleSheet.absoluteFillObject, // apply fill to custom modal
         justifyContent: 'center',
@@ -295,14 +317,14 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlign: 'center',
       },
-      uncollabButton: {
+      modalCollabUncollabTEXT: {
         width: 175,
         borderRadius: 20,
         backgroundColor: 'black',
         justifyContent: 'center',
         alignItems: 'center',
       },
-      modalUncollab: {
+      modalCollabUncollab: {
         flex: 1,
         justifyContent: 'flex-end',
         alignItems: 'center',
@@ -354,6 +376,7 @@ const styles = StyleSheet.create({
       cameraIcon: {
         marginLeft: 5, // add space between the text input and camera icon
       },
+      // ------ Question Page w/ Chat  -------- 
 
       // ------ Notification Info -------- 
       NotiContainer: {

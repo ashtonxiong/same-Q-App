@@ -3,43 +3,84 @@ import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback, TextI
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import { supabase } from '../supabase';
+const { parse, getTime } = require('date-fns');
 
 const QuestionPage = ({ route }) => {
   const { question, course, object } = route.params;
   const [isModalVisible, setModalVisible] = useState(false);
   const [bottomMargin, setBottomMargin] = useState(0);
 
-  const [messages, setMessages] = useState([
-    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
-    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
-    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
-    {text: "No Worries! Anytime", color: "gray" },
-    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
-    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
-    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
-    {text: "No Worries! Anytime", color: "gray" },
-    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
-    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
-    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
-    {text: "No Worries! Anytime", color: "gray" },
-    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
-    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
-    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
-    {text: "No Worries! Anytime", color: "gray" },    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
-    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
-    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
-    {text: "No Worries! Anytime", color: "gray" },
-    {text: "Does anyone know how to pick good colors that match but don't conlfict and are friendly for people with color defficiencies", color: "gray" },
-    {text: "Hey Batman, I think if you go through today's lecture, Prof Landay talked about color schemes and different color contrasts", color: "purple" },
-    {text: "Thanks! I'll take a look after I protect gotham tonight", color: "gray" },
-    {text: "No Worries! Anytime", color: "gray" },
+  const questionText = question.question;
+  const courseName = course.course;
+  const [chatsArray, setChatsArray] = useState([]);
+
+  const [collabStatus, setCollabStatus] = useState([
+    "Collaborate"
   ]);
+
+  const getChats = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("sameQ-chats")
+        .select('*')
+        .eq('course', courseName)
+        .eq('question', questionText);
+  
+        if (data) {
+          // 'data' is an array of objects with columns
+          const chatsArray = data.map(item => ({
+            uid: item.uid,
+            sender: item.sender,
+            senderInitials: item.sender_initials,
+            message: item.message,
+            timeSent: item.time,
+          }));
+    
+          setChatsArray(chatsArray);
+        }
+      } catch (error) {
+        console.error('Error fetching data from Supabase:', error.message);
+      }
+    };
+
+    const addCollab = async (course, questionText) => {
+      try {
+        console.log('course to add:', course.course);
+        console.log('question to add:', questionText);
+        const { error } = await supabase
+          .from('sameQ-collab')
+          .insert([
+            { course: course.course, question: questionText }
+          ])
+      } catch (error) {
+        console.error('Error adding data into Supabase:', error.message);
+      }
+    };
+
+    const deleteCollab = async (course, questionText) => {
+      try {
+        console.log('course to delete:', course.course);
+        console.log('question to delete:', questionText);
+        const { error } = await supabase
+          .from('sameQ-collab')
+          .delete()
+          .eq('course', course.course)
+          .eq('question', questionText);
+      } catch (error) {
+        console.error('Error deleting data from Supabase:', error.message);
+      }
+    };
+
+  useEffect(() => {
+    getChats();
+  }, [])
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
-        setBottomMargin(Platform.OS === 'ios' ? 0 : 0); // Adjust this value based on your layout
+        setBottomMargin(Platform.OS === 'ios' ? 0 : 0); // make keyboard and input box smooth
       },
     );
     const keyboardDidHideListener = Keyboard.addListener(
@@ -58,29 +99,64 @@ const QuestionPage = ({ route }) => {
   const navigation = useNavigation();
 
   const renderMessages = () => {
-    return messages.map((message, index) => {
-      console.log("question:", question)
-      console.log("course:", course)
+    if (chatsArray.length === 0) {
+      return (
+        <Text style={styles.emptyChat}>Be the first one to send a message!</Text>
+      )
+    }
 
-      if (message.color === "gray") {
+    // sort chats based on date/time sent
+    const sortedChatsArray = [...chatsArray].sort((a, b) => {
+      const dateStringA = a.timeSent;
+      const dateStringB = b.timeSent;
+      const parsedDataA = parse(dateStringA, 'MMMM d, yyyy, h:mm a', new Date());
+      const parsedDataB = parse(dateStringB, 'MMMM d, yyyy, h:mm a', new Date());
+      const timeA = getTime(parsedDataA);
+      const timeB = getTime(parsedDataB);
+      return timeA - timeB;
+    });
+  
+    return sortedChatsArray.map((chat) => {
+  
+      if (chat.sender !== "You") {
         return (
-          <View key={index} style={[styles.grayTextMessageContainer]}>
-            <Text style={{ marginRight: '2%' }}>PFP</Text>
+          <View key={chat.uid} style={styles.messageAndTimeContainer}>
+          <View style={[styles.grayTextMessageContainer]}>
+            <Text style={styles.grayMessageInitials}>{chat.senderInitials}</Text>
             <View style={styles.grayMessage}>
-              <Text>{message.text}</Text>
+              <Text>{chat.message}</Text>
             </View>
+          </View>
+            <Text style={styles.grayTextMessageTime}>{chat.timeSent}</Text>
           </View>
         );
       } else {
         return (
-          <View key={index} style={[styles.purpleTextMessageContainer]}>
+          <View key={chat.uid} style={styles.messageAndTimeContainer}>
+          <View style={[styles.purpleTextMessageContainer]}>
             <View style={styles.purpleMessage}>
-              <Text>{message.text}</Text>
+              <Text>{chat.message}</Text>
             </View>
-            <Text style={{ marginRight: '2%' }}>PFP</Text>
+          </View>
+          <Text style={styles.purpleTextMessageTime}>{chat.timeSent}</Text>
           </View>
         );
       }
+    });
+  };
+  
+  const handleCollabUncollabPress = ( course, questionText ) => {
+    setCollabStatus((prevStatus) => {
+      // toggle between "Collaborate" and "Uncollaborate"
+      const newStatus = prevStatus[0] === "Collaborate" ? ["Uncollaborate"] : ["Collaborate"];
+
+      console.log('newStatus:', newStatus);
+
+      if (newStatus[0] === 'Collaborate') {
+        deleteCollab(course, questionText);
+      } else {
+        addCollab(course, questionText);
+      } return newStatus;
     });
   };
 
@@ -113,7 +189,7 @@ const QuestionPage = ({ route }) => {
             <TouchableOpacity onPress={clickMoreModal}>
               <View style={styles.backArrow}>
                 <Icon name="exclamation" size={20} color="#000" />
-                <Text style={styles.backTEXT}>More</Text>
+                <Text style={styles.backTEXT}>More Info</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -123,7 +199,7 @@ const QuestionPage = ({ route }) => {
                 <Icon name="people" size={25} color="#000" style={styles.emojiIcon} />
                 <Text style={{fontSize: 20}}> {question.num_collab} </Text>
             </View>
-            <Text style={[styles.questionHost, { fontWeight: 'Bold' }]} >Asked by: {question.author}</Text>
+            <Text style={[styles.questionHost, { fontWeight: 'bold' }]} >Asked by: {question.author}</Text>
             <View style={styles.numInHuddle}>
                 <Text style={{fontSize: 20}}> {question.num_huddle}  </Text>
                 <Icon name="earphones" size={25} color="#000" style={styles.emojiIcon} />
@@ -165,21 +241,21 @@ const QuestionPage = ({ route }) => {
                 <Text style={styles.modalHeaderTEXT}>Question Information</Text>
                 <Text style={styles.modalHeaderTEXT2}>
                     Course: {course.course} {'\n'}
-                    Asked by: {question.author}
-                    Created on: XXX {'\n'} {'\n'}
+                    Asked by: {question.author} {'\n'}
+                    Posted: {question.created} {'\n'} {'\n'}
 
-                    Current Collaborators: {question.numPeople} {'\n'}
-                    Total Collaborators: {question.numPeople + question.earphone} {'\n'} {'\n'}
+                    Current Collaborators: {question.num_collab} {'\n'} {'\n'}
+                    {/* Total Collaborators: {question.num_collab} {'\n'} {'\n'} */}
 
                     Last Active: XXX
                 </Text>
 
-                <View style={styles.modalUncollab}>
+                <View style={styles.modalCollabUncollab}>
                     <TouchableOpacity
-                        style={styles.uncollabButton}
-                        // onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}
+                        style={styles.modalCollabUncollabTEXT}
+                        onPress={() => handleCollabUncollabPress( course, questionText )}
                         >
-                        <Text style={styles.courseCollabButtonText}>Uncollaborate</Text>
+                        <Text style={styles.courseCollabButtonText}>{collabStatus}</Text>
                     </TouchableOpacity>
                 </View>
 

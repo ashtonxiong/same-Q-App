@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, Dimensions} from 'react-nativ
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import { supabase } from '../supabase';
 
 const CollabPage = () => {
     const [pages, setPages] = useState([

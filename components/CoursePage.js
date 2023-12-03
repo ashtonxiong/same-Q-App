@@ -23,22 +23,21 @@ const CoursePage = ({ route }) => {
         .select('*')
         .eq('course', courseName);
   
-      console.log('data: ', data);
-      console.log('error: ', error);
-  
       if (data) {
-        // Now 'data' is an array of objects with 'id' and 'course' columns
-        const coursesArray = data.map(item => ({
-          id: item.id,
+        // 'data' is an array of objects with 'id' and 'course' columns
+        const questionInfoArray = data.map(item => ({
+          uid: item.uid,
           course: item.course,
           question: item.question,
+          created: item.created,
           author: item.author,
           num_collab: item.num_collaborators,
           num_huddle: item.num_huddle,
+          chats: item.chats,
           help: item.expected_help,
         }));
   
-        setQuestions(coursesArray);
+        setQuestions(questionInfoArray);
       }
     } catch (error) {
       console.error('Error fetching data from Supabase:', error.message);
@@ -49,47 +48,18 @@ const CoursePage = ({ route }) => {
     getQuestions();
   }, [])
 
-  // const [times, setTimes] = useState([
-  //   { numPeople: 2, time: "2:15", earphone: 0, 
-  //   text: "How do I my highlight reel to the AFS Directory?", 
-  //   askedBy: 'LeBron James', id: 1 },
-  //   { numPeople: 3, time: "2:30", earphone: 2, 
-  //   text: "Where should I conduct Interviews for my needfinding?", askedBy: 'Donald Glover',id: 2 },
-  //   { numPeople: 2, time: "2:45", earphone: 2, 
-  //   text: "How do I add audio and a pulsing effect to the medium-fi prototype?", askedBy: 'Sally Ride', id: 3 },
-  //   { numPeople: 10, time: "3:00", earphone: 5, 
-  //   text: "How do I add my songs to the hi-fi prototype?", askedBy: 'Taylor Swift', id: 4 },
-  //   { numPeople: 3, time: "3:15", earphone: 2, 
-  //   text: "How can I align our app's theme with my nocturnal aesthetic without disrupting existing color schemes?", askedBy: "Batman",id: 5 },
-  // ]);
-
   const handleCollabPress = (course, question) => {
-    // navigate to QuestionPage with the question parameter
-    console.log(`Navigating to QuestionPage with question: ${course.question}`);
+    console.log(`Navigating to QuestionPage with question: ${question.question}`);
     navigation.navigate('QuestionPage', { course, question });
   };  
 
   const handleBackHome = (home) => {
-    // navigate back to HomePage
     console.log(`Navigating to HomePage`);
     navigation.navigate('HomePage');
   };  
 
   return (
     <View style={styles.container}>
-
-      {/* <View style={styles.appBar}>
-        <TouchableOpacity
-          onPress={handleBackHome}>
-        <View style={styles.backArrow}>
-          <Icon name="arrow-left" size={20} color="#000"/>
-          <Text style={styles.backTEXT}>Home</Text>
-        </View>
-        </TouchableOpacity>
-        <View style={styles.className}>
-          <Text style={styles.classNameText}> CLASS NAME </Text>
-        </View>
-      </View> */}
 
       <View style={styles.appBar}>
         <TouchableOpacity
@@ -139,7 +109,7 @@ const CoursePage = ({ route }) => {
         <ScrollView contentContainerStyle={styles.scrollContainer}>
 
           {questions.map((question) => (
-            <View key={question.id} style={styles.queueBox}>
+            <View key={question.uid} style={styles.queueBox}>
             {/* top row */}
             <View style={styles.queueTopRow}>
               <View style={styles.queuePeopleIcon} >
@@ -164,7 +134,7 @@ const CoursePage = ({ route }) => {
               style={styles.queueButton}
               onPress={() => handleCollabPress(course, question)}
             >
-              <Text style={styles.queueButtonText}> Collaborate </Text>
+              <Text style={styles.queueButtonText}> View </Text>
             </TouchableOpacity>
             </View>
         </View>
