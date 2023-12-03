@@ -15,38 +15,6 @@ const styles = StyleSheet.create({
       // borderColor: 'red',
       // borderWidth: 2,
     },
-    // ----------Top Header----------
-    // appBar: {
-    //   borderColor: "green",
-    //   borderWidth: 2,
-    //   backgroundColor: "#9F6FDD",
-    //   height: 115 * scaleFactor,
-    //   flexDirection: 'row',
-    //   // justifyContent: 'space-between',
-    //   alignItems: 'center',
-    //   paddingHorizontal: '5%'
-    // },
-    // backArrow: {
-    //   borderColor: "blue",
-    //   borderWidth: 2,
-    //   flexDirection: 'row',
-    //   justifyContent: 'left',
-    //   // marginLeft: '5%',
-    //   // marginTop: '17%',
-    // },
-    // className: {
-    //   // flex: 1,
-    //   borderColor: 'yellow',
-    //   borderWidth: 2,
-    //   marginLeft: '5%',
-    //   // alignItems: 'center', // Center text vertically
-    //   justifyContent: 'center',
-    //   paddingLeft: '10%',
-    //   paddingRight: '10%'
-    // },
-    // classNameText: {
-    //   fontSize: 20 * scaleFactor,
-    // },
     appBar: {
       // backgroundColor: '#9F6FDD',
       //height: 80 * scaleFactor,
@@ -109,9 +77,6 @@ const styles = StyleSheet.create({
     courseDetailBottom: {
       flexDirection: 'row',
     },
-    // courseHeaderContainer: {
-    //   marginTop: -50 * scaleFactor, // Moves the title up into header
-    // },
     pageHeader: {
       textAlign: 'center',
       fontSize: 40,
@@ -135,11 +100,6 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-start',
       alignItems: 'left',
     },
-    bottomSection: {
-      justifyContent: 'flex-end',
-      height: '100%',
-      marginBottom: '40%', // adjust space from bottom of screen
-    },
     courseContainer: {
       marginTop: 5,
     },
@@ -154,34 +114,12 @@ const styles = StyleSheet.create({
       backgroundColor: '#FFFFFF',
       justifyContent: 'space-between', // align items along the row
       alignItems: 'center'
-
-      // padding: 10,
-      // margin: 10,
-      // width: screenWidth * 0.95,
-      // borderWidth: 2,
-      // borderColor: 'darkgrey',
-      // borderRadius: 10,
-      // backgroundColor: '#FFFFFF',
-      // justifyContent: 'space-between',
-      // maxHeight: '35%',
     },
     courseBoxTEXT: {
       fontSize: 24,
       fontWeight: 'bold',
       color: 'black',
       textAlign: 'left',
-    },
-    joinButton: {
-      width: 70,
-      borderRadius: 20,
-      backgroundColor: 'black',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    joinButtonTEXT: {
-      color: 'white',
-      fontSize: 24,
-      fontWeight: 'bold',
     },
     askButton: {
       width: 70,
@@ -256,20 +194,6 @@ const styles = StyleSheet.create({
         flex: 1,
       },
       // ----------QuestionPage----------
-      questionContainer: {
-        flex: 1,
-      },
-      questionPageBox: {
-        backgroundColor: "lightgrey",
-        height: screenHeight * 0.23,
-      },
-      questionPageBoxHeader: {
-        flexDirection: 'row',
-        marginTop: 45,
-        marginLeft: 15,
-        marginRight: 15,
-        justifyContent: 'space-between',
-      },
       chatArea: {
         flex: 1,
         height: 0,
@@ -285,30 +209,6 @@ const styles = StyleSheet.create({
         padding: 10
       },
       // ------ Text Message Styling  -------- 
-      grayTextMessageContainer: {
-        width: '100%',
-        flexDirection: 'row',
-        padding: 5,     
-      },
-      grayMessage: {
-        borderRadius: 10,
-        padding: 10,
-        backgroundColor: 'gray',
-        maxWidth: '50%',
-      },
-      purpleTextMessageContainer: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        padding: 5,     
-      },
-      purpleMessage: {
-        borderRadius: 10,
-        padding: 10,
-        backgroundColor: '#b986ee',
-        maxWidth: '50%',
-        marginRight: 5,
-      },
       senderStyle: {
         color: 'rgb(76, 77, 77)',
         marginLeft: 10,
@@ -358,13 +258,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         justifyContent: 'center'
       },
-      uncollabButton: {
-        borderRadius: 20,
-        paddingHorizontal: 5,
-        backgroundColor: '#5e42a6',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
       modalUncollab: {
         flex: 0,
         justifyContent: 'flex-end',
@@ -374,26 +267,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 0,
         top: 0,
-      },
-      cancelTEXT: {
-        fontSize: 18,
-        marginLeft: 5,
-      },
-      questionInfoHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 15,
-        marginTop: 5,
-      },
-      questionHost: {
-        fontSize: 18,
-        fontWeight: '200',
-      },
-      numCollaborators: {
-        flexDirection: 'row',
-      },
-      numInHuddle: {
-        flexDirection: 'row'
       },
       inputContainer: {
         // borderColor: 'red',
@@ -454,19 +327,7 @@ const styles = StyleSheet.create({
         // marginRight: '60%',
       },
 
-      // ------ Notification Info -------- 
-
       // ------ Collab Info -------- 
-      collabScroll: {
-        // borderBlockColor: "red",
-        // borderWidth: 2,
-        // flex: 1,
-        // flexDirection: 'column',
-        marginLeft: 5,
-        marginRight: 5,
-        marginTop: '10%',
-        // alignItems: 'center'
-      },
       collabContainer: {
         marginTop: '20%',
         height: '100%',
@@ -551,15 +412,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         maxHeight: '35%',
       },
-      // queueBox: {
-      //   padding: 10,
-      //   margin: 10,
-      //   width: screenWidth * 0.95,
-      //   borderBottomWidth: 1,
-      //   borderColor: 'darkgrey',
-      //   justifyContent: 'space-between',
-      //   maxHeight: '35%',
-      // },
       queueTopRow: {
         // borderBlockColor: "green",
         // borderWidth: 2,
@@ -579,15 +431,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center', // align items along the row
         // flex: 1,
       },
-      queuebMid: {
-        // borderBlockColor: "red",
-        // borderWidth: 2,
-        // flex: 1,
-        flexWrap: 'wrap', // Allow text to wrap
-        overflow: 'hidden', // Hide overflow content
-        flexDirection: "row",
-        justifyContent: 'center', // align items along the row
-      },
       queueBot: {
         // borderBlockColor: "white",
         // borderWidth: 2,
@@ -597,12 +440,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: 'center', // align items along the row
       }
-
-      // ------ Queue Box Scrolling Info -------- 
-
-
-
-
   });
 
 export default styles;
