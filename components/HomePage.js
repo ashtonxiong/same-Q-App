@@ -94,8 +94,8 @@ const HomePage = () => {
       </View>
 
       {/*  ------- active office hours --------- */}
-      <View style={[styles.courseSection, { marginTop: '10%' }]}>
-        <Text style={styles.sectionHeader}>Active Office Hours</Text>
+      <View style={[styles.courseSection, { marginTop: '20%' }]}>
+        <Text style={[styles.sectionHeader ]}>Active Office Hours</Text>
         <View style={styles.courseContainer}>
           {activeClasses.map((course) => (
             <View key={course.id} style={styles.courseBox}>

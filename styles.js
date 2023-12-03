@@ -1,5 +1,7 @@
 import { ScreenWidth } from '@freakycoder/react-native-helpers';
 import { StyleSheet, Dimensions } from 'react-native';
+// import {useFonts, Comfortaa_400Regular} from "@expo-google-fonts/dev"
+
 
 const { width, height } = Dimensions.get('window');
 const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
@@ -7,14 +9,22 @@ const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your d
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
+
+
+// const fetchFonts = () => {
+//   return Font.loadAsync({
+//     'Comfortaa-Regular': require('../Comfortaa/static/Comfortaa-Regular.ttf'),
+//   });
+// };
+
 const styles = StyleSheet.create({
     // ----------ALL----------
     container: {
       flex: 1,
-      backgroundColor: 'white',
+      backgroundColor: '#DDCFFF',
     },
     appBar: {
-      backgroundColor: '#9F6FDD',
+      backgroundColor: 'white',
       height: 115 * scaleFactor,
       flexDirection: 'row',
       alignItems: 'center',
@@ -68,6 +78,10 @@ const styles = StyleSheet.create({
 
     // ----------HomePage----------
     courseSection: {
+      // marginBottom: 10,
+      marginTop: 30,
+      borderColor: 'red',
+      borderWidth: 2,
       flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'left',
@@ -90,6 +104,7 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between', // align items along the row
     },
     courseBoxTEXT: {
+      // fontFamily:"Comfortaa-Medium",
       fontSize: 24,
       fontWeight: 'bold',
       color: 'black',

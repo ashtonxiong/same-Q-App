@@ -38,7 +38,7 @@ const App = () => {
           tabBarStyle: [
             {
               display: "flex",
-              backgroundColor: '#cfb8e9',
+              backgroundColor: 'white',
               height: '10%',
             },
             null
