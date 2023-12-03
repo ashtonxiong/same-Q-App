@@ -33,16 +33,16 @@ const HomePage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={clickMenuModal}>
+        <TouchableOpacity style={styles.backButton} onPress={clickMenuModal}>
           <View style={styles.backArrow}>
             <Icon name="menu" size={20} color="#000" />
           </View>
         </TouchableOpacity>
-      </View>
-      <View style={styles.courseHeaderContainer}>
         <Text style={styles.pageHeader}>Courses</Text>
       </View>
-
+      
+        
+      
       {/*  ------- active office hours --------- */}
       <View style={[styles.courseSection, { marginTop: '10%' }]}>
         <Text style={styles.sectionHeader}>Active Office Hours</Text>
@@ -51,10 +51,10 @@ const HomePage = () => {
             <View key={course.id} style={styles.courseBox}>
               <Text style={styles.courseBoxTEXT}>{course.name}</Text>
               <TouchableOpacity
-                style={styles.joinButton}
+                style={styles.queueButton}
                 onPress={() => handleJoinPress(course)}
               >
-                <Text style={styles.joinButtonTEXT}>Join</Text>
+                <Text style={styles.askButtonTEXT}>Join</Text>
               </TouchableOpacity>
             </View>
           ))}
@@ -67,10 +67,10 @@ const HomePage = () => {
         <Text style={styles.sectionHeader}>Inactive Office Hours</Text>
         <View style={styles.courseContainer}>
           {inactiveCourses.map((course) => (
-            <View key={course.id} style={styles.courseBox}>
+            <View key={course.id} style={[styles.courseBox]}>
               <Text style={styles.courseBoxTEXT}>{course.name}</Text>
               <TouchableOpacity
-                style={styles.askButton}
+                style={styles.queueButton}
                 onPress={() => handleJoinPress(course)}
               >
                 <Text style={styles.askButtonTEXT}>Ask</Text>

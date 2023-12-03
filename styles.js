@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     // ----------ALL----------
     container: {
       flex: 1,
+      backgroundColor: 'white'
       // borderColor: 'red',
       // borderWidth: 2,
     },
@@ -47,15 +48,22 @@ const styles = StyleSheet.create({
     //   fontSize: 20 * scaleFactor,
     // },
     appBar: {
-      backgroundColor: '#9F6FDD',
-      height: 115 * scaleFactor,
-      flexDirection: 'row',
+      // backgroundColor: '#9F6FDD',
+      //height: 80 * scaleFactor,
+      flexDirection: 'column',
       alignItems: 'center',
       paddingHorizontal: '5%',
+      marginTop: 40 * scaleFactor,
+      justifyContent: 'center',
+      borderBottomWidth: 1,
+      borderBottomColor: 'darkgrey',
+      paddingBottom: 5,
     },
     backArrow: {
       flexDirection: 'row',
       justifyContent: 'left',
+      paddingBottom: 20,
+      paddingRight: 50
     },
     headerContainer: {
       flex: 1,
@@ -63,6 +71,11 @@ const styles = StyleSheet.create({
     },
     classNameText: {
       fontSize: 20 * scaleFactor,
+    },
+    backButton: {
+      position: 'absolute',
+      left: 15,
+      top: 10,
     },
     // ---------- ^^ Top Header ^^ ----------
     classInfo: {
@@ -78,20 +91,20 @@ const styles = StyleSheet.create({
     courseDetailBottom: {
       flexDirection: 'row',
     },
-    courseHeaderContainer: {
-      marginTop: -50 * scaleFactor, // Moves the title up into header
-    },
+    // courseHeaderContainer: {
+    //   marginTop: -50 * scaleFactor, // Moves the title up into header
+    // },
     pageHeader: {
       textAlign: 'center',
       fontSize: 40,
       fontWeight: 'bold',
-
       // marginTop: -50 * scaleFactor, // Moves the title/course/class up into header
     },
     sectionHeader: {
       color: 'black',
       fontSize: 30,
       fontWeight: 'normal',
+      marginLeft: 10
     },
     backTEXT: {
       fontSize: 18,
@@ -117,9 +130,22 @@ const styles = StyleSheet.create({
       padding: 30,
       margin: 10,
       width: screenWidth * 0.95,
-      borderRadius: 20,
-      backgroundColor: '#b986ee',
+      borderWidth: 2,
+      borderColor: 'darkgrey',
+      borderRadius: 10,
+      backgroundColor: '#FFFFFF',
       justifyContent: 'space-between', // align items along the row
+      alignItems: 'center'
+
+      // padding: 10,
+      // margin: 10,
+      // width: screenWidth * 0.95,
+      // borderWidth: 2,
+      // borderColor: 'darkgrey',
+      // borderRadius: 10,
+      // backgroundColor: '#FFFFFF',
+      // justifyContent: 'space-between',
+      // maxHeight: '35%',
     },
     courseBoxTEXT: {
       fontSize: 24,
@@ -150,6 +176,8 @@ const styles = StyleSheet.create({
       color: 'white',
       fontSize: 24,
       fontWeight: 'bold',
+      marginRight: 5,
+      marginLeft: 5
     },
     menuModalOverlay: {
       ...StyleSheet.absoluteFillObject, // apply fill to custom modal
@@ -179,7 +207,10 @@ const styles = StyleSheet.create({
         borderRadius: 20,
       },
       questionTEXT: {
-        fontSize: 22,
+        fontSize: 17,
+        marginRight: 20,
+        marginLeft: 20,
+        marginTop: 5
       },
       courseCollabButton: {
         width: 145,
@@ -198,13 +229,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingBottom: '60%',
       },
-
+      OHInfo: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent: 'center'
+      },
+      OHText: {
+        flex: 1,
+      },
       // ----------QuestionPage----------
       questionContainer: {
         flex: 1,
       },
       questionPageBox: {
-        backgroundColor: "#9F6FDD",
+        backgroundColor: "lightgrey",
         height: screenHeight * 0.23,
       },
       questionPageBoxHeader: {
@@ -220,7 +258,11 @@ const styles = StyleSheet.create({
         // borderColor: "green",
         // borderWidth: 5,
       },
-
+      infoButton: {
+        position: 'absolute',
+        top: 10,
+        right: 15
+      },
       // ------ Text Message Styling  -------- 
       grayTextMessageContainer: {
         width: '100%',
@@ -466,12 +508,21 @@ const styles = StyleSheet.create({
         margin: 10,
         width: screenWidth * 0.95,
         borderWidth: 2,
-        borderColor: '#b986ee',
+        borderColor: 'darkgrey',
         borderRadius: 10,
         backgroundColor: '#FFFFFF',
         justifyContent: 'space-between',
         maxHeight: '35%',
       },
+      // queueBox: {
+      //   padding: 10,
+      //   margin: 10,
+      //   width: screenWidth * 0.95,
+      //   borderBottomWidth: 1,
+      //   borderColor: 'darkgrey',
+      //   justifyContent: 'space-between',
+      //   maxHeight: '35%',
+      // },
       queueTopRow: {
         // borderBlockColor: "green",
         // borderWidth: 2,
@@ -512,7 +563,7 @@ const styles = StyleSheet.create({
       queueButton: {
         height: "100%",
         borderRadius: 20,
-        backgroundColor: 'black',
+        backgroundColor: '#5052b5',
         padding: 5,
         // justifyContent: 'center',
         // alignItems: 'center',

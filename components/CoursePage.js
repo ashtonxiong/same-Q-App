@@ -60,10 +60,10 @@ const CoursePage = ({ route }) => {
 
       <View style={styles.appBar}>
         <TouchableOpacity
+          style={styles.backButton}
           onPress={handleBackHome}>
           <View style={styles.backArrow}>
           <Icon name="arrow-left" size={20} color="#000"/>
-          <Text style={styles.backTEXT}>Home</Text>
           </View>
         </TouchableOpacity>
         {/* <View style={styles.headerContainer}>
@@ -71,16 +71,32 @@ const CoursePage = ({ route }) => {
             LOGO
           </Text>
         </View> */}
+          <Text style={styles.pageHeader}>
+            {course.name}
+          </Text>
+          <Text>
+            2:15-4:00 • Mariah Carey
+          </Text>
+
+          {/* <View style={styles.OHInfo}>
+            <View style={[styles.OHText, {alignItems: "flex-end"}]}>
+              <Text>Duration</Text>
+            </View>
+            <View style={{flex: '0 0 auto', alignItems: "center", width: 'auto'}}>
+              <Text> • </Text>
+            </View>
+            <View style={[styles.OHText, alignItems="flex-start"]}>
+              <Text>Instructor Name</Text>
+            </View>
+
+          </View> */}
+        
       </View>
 
       <View>
 
-        <View style={styles.classInfo}>
-          <View style={styles.courseHeaderContainer}>
-            <Text style={styles.pageHeader}>
-              {course.name}
-            </Text>
-          </View>
+        {/* <View style={styles.classInfo}>
+          
 
           <View style={styles.courseDetails}>
             <View style={styles.courseDetailTop}>
@@ -98,10 +114,10 @@ const CoursePage = ({ route }) => {
               <Text style={{marginLeft: 'auto'}}> TEMP</Text>
             </View>
           </View>
-          <View style={{alignItems: 'center'}}>
+          {/* <View style={{alignItems: 'center'}}>
             <Text style={styles.sectionHeader}>Queue</Text>
           </View>
-        </View>
+        </View> */}
 
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           {/* <View style={styles.questionBox}>

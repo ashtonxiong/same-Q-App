@@ -93,13 +93,30 @@ const QuestionPage = ({ route }) => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
       enabled
       style={{ flex: 1 }}
     >
-
       <View style={[styles.container, { marginBottom: bottomMargin }]}>
-        <View style={styles.questionPageBox}>
+        <View style={styles.appBar}>
+          <TouchableOpacity style={styles.infoButton} onPress={clickMoreModal}>
+            <View>
+              <Icon name="exclamation" size={20} color="#000" />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={handleBackCourse}>
+            <View style={styles.info}>
+              <Icon name="arrow-left" size={20} color="#000" />
+            </View>
+          </TouchableOpacity>
+          <Text style={styles.questionTEXT}>
+              {question.text} Blah blah Blah blahBlah blahBlah blahBlah blahBlah blahBlah blah Blah blah
+          </Text>
+        </View>
+
+        {/* <View style={styles.questionPageBox}>
           <View style={styles.questionPageBoxHeader}>
             <TouchableOpacity onPress={handleBackCourse}>
               <View style={styles.backArrow}>
@@ -115,41 +132,66 @@ const QuestionPage = ({ route }) => {
             </TouchableOpacity>
           </View>
 
-         <View style={styles.questionInfoHeader}>
+          <View style={styles.questionInfoHeader}>
             <View style={styles.numCollaborators}>
-                <Icon name="people" size={25} color="#000" style={styles.emojiIcon} />
-                <Text style={{fontSize: 20}}> {question.numPeople} </Text>
+              <Icon
+                name="people"
+                size={25}
+                color="#000"
+                style={styles.emojiIcon}
+              />
+              <Text style={{ fontSize: 20 }}> {question.numPeople} </Text>
             </View>
-            <Text style={[styles.questionHost, { fontWeight: 'Bold' }]} >Asked by: {question.askedBy}</Text>
+            <Text style={[styles.questionHost, { fontWeight: "Bold" }]}>
+              Asked by: {question.askedBy}
+            </Text>
             <View style={styles.numInHuddle}>
-                <Text style={{fontSize: 20}}> {question.earphone}  </Text>
-                <Icon name="earphones" size={25} color="#000" style={styles.emojiIcon} />
+              <Text style={{ fontSize: 20 }}> {question.earphone} </Text>
+              <Icon
+                name="earphones"
+                size={25}
+                color="#000"
+                style={styles.emojiIcon}
+              />
             </View>
           </View>
-            <View style={{alignItems: 'center'}}>
-              <Text style={{fontSize: 17}}>{question.text}</Text>
+          <View style={{ alignItems: "center" }}>
+            <Text style={{ fontSize: 17 }}>{question.text}</Text>
           </View>
-    </View>
+        </View> */}
 
-        <ScrollView style={[styles.chatArea, {paddingBottom: '60%'}]}>
+        <ScrollView style={[styles.chatArea, { paddingBottom: "60%" }]}>
           {renderMessages()}
         </ScrollView>
 
         <View style={styles.inputContainer}>
-            <Icon name="emotsmile" size={25} color="#000" style={styles.emojiIcon} />
-            <Icon name="camera" size={26} color="#000" style={styles.emojiIcon} />
-            <TextInput
+          <Icon
+            name="emotsmile"
+            size={25}
+            color="#000"
+            style={styles.emojiIcon}
+          />
+          <Icon name="camera" size={26} color="#000" style={styles.emojiIcon} />
+          <TextInput
             style={styles.input}
             placeholder="Click to start typing…"
             // value={text}
             // onChangeText={(newText) => setText(newText)}
-            />
-            <Icon name="paper-plane" size={25} color="#000" style={styles.cameraIcon} />
+          />
+          <Icon
+            name="paper-plane"
+            size={25}
+            color="#000"
+            style={styles.cameraIcon}
+          />
         </View>
 
         {isModalVisible && (
           <View style={styles.customModalOverlay}>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+            <TouchableWithoutFeedback
+              onPress={Keyboard.dismiss}
+              accessible={false}
+            >
               <View style={styles.modalContent}>
                 <View style={styles.modalHeader}>
                   <TouchableOpacity onPress={clickMoreModal}>
@@ -161,30 +203,30 @@ const QuestionPage = ({ route }) => {
                 </View>
                 <Text style={styles.modalHeaderTEXT}>Question Information</Text>
                 <Text style={styles.modalHeaderTEXT2}>
-                    Course: {course.name} {'\n'}
-                    Asked by: {question.askedBy}
-                    Created on: XXX {'\n'} {'\n'}
-
-                    Current Collaborators: {question.numPeople} {'\n'}
-                    Total Collaborators: {question.numPeople + question.earphone} {'\n'} {'\n'}
-
-                    Last Active: XXX
+                  Course: {course.name} {"\n"}
+                  Asked by: {question.askedBy}
+                  Created on: XXX {"\n"} {"\n"}
+                  Current Collaborators: {question.numPeople} {"\n"}
+                  Total Collaborators: {question.numPeople +
+                    question.earphone}{" "}
+                  {"\n"} {"\n"}
+                  Last Active: XXX
                 </Text>
 
                 <View style={styles.modalUncollab}>
-                    <TouchableOpacity
-                        style={styles.uncollabButton}
-                        // onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}
-                        >
-                        <Text style={styles.courseCollabButtonText}>Uncollaborate</Text>
-                    </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.uncollabButton}
+                    // onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}
+                  >
+                    <Text style={styles.courseCollabButtonText}>
+                      Uncollaborate
+                    </Text>
+                  </TouchableOpacity>
                 </View>
-
               </View>
             </TouchableWithoutFeedback>
           </View>
         )}
-
       </View>
     </KeyboardAvoidingView>
   );

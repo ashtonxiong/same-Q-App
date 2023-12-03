@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { StatusBar, View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomePage from './components/HomePage';
 import CoursePage from './components/CoursePage';
@@ -10,9 +10,9 @@ import QuestionPage from './components/QuestionPage';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import CollabPage from './components/CollabPage';
 
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
 
 const MainStack = () => {
   return (
@@ -29,6 +29,20 @@ const MainStack = () => {
 };
 
 const App = () => {
+
+  useEffect(() => {
+    // Change the status bar text color (light or dark)
+    StatusBar.setBarStyle('dark-content');
+
+    // Cleanup function
+    return () => {
+      // Reset status bar color and style when the component is unmounted
+      StatusBar.setBackgroundColor('default_color');
+      StatusBar.setBarStyle('default_style');
+    };
+  }, []);
+
+
   return (
     <NavigationContainer>
       <Tab.Navigator
