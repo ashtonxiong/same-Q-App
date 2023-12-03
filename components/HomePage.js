@@ -3,15 +3,24 @@ import { Text, View, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'r
 import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 import { supabase } from '../supabase';
+import { useDeviceIdentifier } from './deviceID';
 
 const HomePage = () => {
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
+  // const [deviceIdentifier, setDeviceIdentifier] = useState('');
 
-  const handleJoinPress = (course) => {
-    console.log(`Navigating to CoursePage with course: ${course.course}`);
-    navigation.navigate('CoursePage', { course });
+  const handleJoinPress = (course, deviceIdentifier) => {
+    console.log(`Navigating to CoursePage with course: ${course.course}`);    
+    navigation.navigate('CoursePage', { course, deviceIdentifier });
+  };
+
+  const navigateToCollabPage = () => {
+    console.log('device id in navigateToCollab:', deviceIdentifier)
+    navigation.navigate('CollabPage', { deviceIdentifier });
   };
 
   const clickMenuModal = () => {
@@ -75,13 +84,19 @@ const HomePage = () => {
     }
   };
 
+  const deviceIdentifier = useDeviceIdentifier();
+
   useEffect(() => {
+    // const generatedDeviceId = uuidv4();
+    // setDeviceIdentifier(generatedDeviceId);
+
     getActive();
     getInactive();
   }, [])
 
   return (
     <View style={styles.container}>
+          <Text>Device identifier: {deviceIdentifier}</Text>
       <View style={styles.appBar}>
         <TouchableOpacity onPress={clickMenuModal}>
           <View style={styles.backArrow}>
@@ -102,7 +117,7 @@ const HomePage = () => {
               <Text style={styles.courseBoxTEXT}>{course.course}</Text>
               <TouchableOpacity
                 style={styles.joinButton}
-                onPress={() => handleJoinPress(course)}
+                onPress={() => handleJoinPress(course, deviceIdentifier)}
               >
                 <Text style={styles.joinButtonTEXT}>Join</Text>
               </TouchableOpacity>
@@ -121,7 +136,7 @@ const HomePage = () => {
               <Text style={styles.courseBoxTEXT}>{course.course}</Text>
               <TouchableOpacity
                 style={styles.askButton}
-                onPress={() => handleJoinPress(course)}
+                onPress={() => handleJoinPress(course, deviceIdentifier)}
               >
                 <Text style={styles.askButtonTEXT}>Ask</Text>
               </TouchableOpacity>

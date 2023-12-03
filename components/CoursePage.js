@@ -4,10 +4,10 @@ import { useNavigation } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { supabase } from '../supabase';
-const { parse, getTime } = require('date-fns');
+import { de } from 'date-fns/locale';
 
 const CoursePage = ({ route }) => {
-  const { course } = route.params;
+  const { course, deviceIdentifier } = route.params;
   const courseName = course.course;
 
 
@@ -18,11 +18,17 @@ const CoursePage = ({ route }) => {
   const [questions, setQuestions] = useState([]);
 
   const getQuestions = async () => {
+    console.log('device id in getQuestions:', deviceIdentifier);
     try {
       const { data, error } = await supabase
         .from("sameQ-app-questions")
         .select('*')
-        .eq('course', courseName);
+        .eq('course', courseName)
+        .or('device_id.eq.000', 'device_id.eq.', deviceIdentifier);
+
+        if (error) {
+          throw new Error(error.message);
+        }
   
       if (data) {
         // 'data' is an array of objects with 'id' and 'course' columns
@@ -37,6 +43,7 @@ const CoursePage = ({ route }) => {
           chats: item.chats,
           expected_help: item.expected_help,
         }));
+        console.log('in getQuestions 3')
   
         setQuestions(questionInfoArray);
       }
@@ -49,9 +56,9 @@ const CoursePage = ({ route }) => {
     getQuestions();
   }, [])
 
-  const handleCollabPress = (course, question) => {
+  const handleCollabPress = (course, question, deviceIdentifier) => {
     console.log(`Navigating to QuestionPage with question: ${question.question}`);
-    navigation.navigate('QuestionPage', { course, question });
+    navigation.navigate('QuestionPage', { course, question, deviceIdentifier });
   };  
 
   const handleBackHome = (home) => {
@@ -105,7 +112,7 @@ const CoursePage = ({ route }) => {
         <View style={styles.queueBot}>
           <TouchableOpacity
             style={styles.queueButton}
-            onPress={() => handleCollabPress(course, question)}
+            onPress={() => handleCollabPress(course, question, deviceIdentifier)}
           >
             <Text style={styles.queueButtonText}> View </Text>
           </TouchableOpacity>
@@ -117,7 +124,7 @@ const CoursePage = ({ route }) => {
 
   return (
     <View style={styles.container}>
-
+      <Text>Device identifier: {deviceIdentifier}</Text>
       <View style={styles.appBar}>
         <TouchableOpacity
           onPress={handleBackHome}>

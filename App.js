@@ -8,6 +8,7 @@ import Notifications from './components/Notifications';
 import QuestionPage from './components/QuestionPage';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import CollabPage from './components/CollabPage';
+import { DeviceIdentifierProvider } from './components/deviceID';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -15,20 +16,20 @@ const Tab = createBottomTabNavigator();
 
 const MainStack = () => {
   return (
-    // <View>
       <Stack.Navigator initialRouteName="Home"
       screenOptions={{headerShown: false}}>
         <Stack.Screen name="HomePage" component={HomePage} />
         <Stack.Screen name="CoursePage" component={CoursePage} />
         <Stack.Screen name="Notifications" component={Notifications} />
         <Stack.Screen name="QuestionPage" component={QuestionPage} />
+        <Stack.Screen name="CollabPage" component={CollabPage}/>
       </Stack.Navigator>
-    // </View>
   );
 };
 
 const App = () => {
   return (
+    <DeviceIdentifierProvider>
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
@@ -78,6 +79,7 @@ const App = () => {
           }}/>
       </Tab.Navigator>
     </NavigationContainer>
+    </DeviceIdentifierProvider>
   );
 };
 

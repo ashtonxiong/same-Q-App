@@ -6,12 +6,15 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { supabase } from '../supabase';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 const { parse, getTime } = require('date-fns');
+import { useDeviceIdentifier } from './deviceID';
 
 const CollabPage = () => {
     const navigation = useNavigation();
     const [collabQuestions, setCollabQuestions] = useState([]);
     const [coursesArray, setCourses] = useState([]);
     const isFocused = useIsFocused();
+
+    const deviceIdentifier = useDeviceIdentifier();
 
     const handleQuestionPress = (course, question) => {
       console.log(`Navigating to QuestionPage with question: ${question.question}`);
@@ -23,7 +26,8 @@ const CollabPage = () => {
         const { data, error } = await supabase
           .from("sameQ-app-questions")
           .select('*')
-          .eq('collab_status', 'TRUE');
+          .eq('collab_status', 'TRUE')
+          .eq('device_id', deviceIdentifier);
     
         if (data) {
           // 'data' is an array of objects with 'id' and 'course' columns
@@ -48,7 +52,6 @@ const CollabPage = () => {
     };
 
     useEffect(() => {
-      console.log('course data: ', coursesArray);
     }, [coursesArray]);
 
     const getCourses = async () => {
@@ -89,6 +92,7 @@ const CollabPage = () => {
     if (collabQuestions.length === 0) {
       return (
         <Text style={styles.emptyChat}>Collaborate on a question!</Text>
+        // <Text>Device id: {deviceIdentifier}</Text>
       )
     }
 
@@ -139,16 +143,21 @@ const CollabPage = () => {
 
   return (
     <View style={styles.collabContainer}>
-      <ScrollView 
+      {/* <ScrollView 
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ alignItems: 'center', paddingBottom: '20%'}} 
         // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
-        >        
+        >         */}
         <View style={styles.collabHeader}>
           <Text style={styles.courseBoxTEXT}> Collaborating </Text>
           <Text> Collaborating on {collabQuestions.length} questions</Text>
         </View>
-
+        
+      <ScrollView 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ alignItems: 'center', paddingBottom: '20%'}} 
+        // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
+        >  
         {renderCollab()}
       </ScrollView>
     </View>

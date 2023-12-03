@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
         padding: 10,
         margin: 10,
         width: screenWidth * 0.95,
-        height: screenHeight * 0.2,
+        // height: screenHeight * 0.2,
         borderWidth: 2,
         borderColor: '#b986ee',
         borderRadius: 10,

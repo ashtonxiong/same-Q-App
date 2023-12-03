@@ -7,7 +7,7 @@ import { supabase } from '../supabase';
 const { parse, getTime } = require('date-fns');
 
 const QuestionPage = ({ route }) => {
-  const { question, course, object } = route.params;
+  const { question, course, deviceIdentifier } = route.params;
   const [isModalVisible, setModalVisible] = useState(false);
   const [bottomMargin, setBottomMargin] = useState(0);
 
@@ -21,11 +21,17 @@ const QuestionPage = ({ route }) => {
 
   const getChats = async () => {
     try {
+      console.log(typeof deviceIdentifier)
       const { data, error } = await supabase
         .from("sameQ-chats")
         .select('*')
         .eq('course', courseName)
-        .eq('question', questionText);
+        .eq('question', questionText)
+        .or('device_id.eq.000, device_id.eq.', deviceIdentifier);
+
+        if (error) {
+          throw new Error(error.message);
+        }
   
         if (data) {
           // 'data' is an array of objects with columns
@@ -46,14 +52,29 @@ const QuestionPage = ({ route }) => {
 
     const addCollab = async (course, question) => {
       try {
+        console.log('device in in addCollab', deviceIdentifier)
         console.log('course to add:', course.course);
         console.log('question to add:', question.question);
         const { error } = await supabase
           .from('sameQ-app-questions')
-          .update([
-            { collab_status: 'TRUE' }
-          ])
-          .eq('uid', question.uid);
+          .upsert([
+            { 
+              course: course.course,
+              question: question.question,
+              author: question.author,
+              num_collaborators: question.num_collab,
+              num_huddle: question.num_huddle,
+              created: question.created,
+              expected_help: question.expected_help,
+              collab_status: 'TRUE',
+              device_id: deviceIdentifier,
+            }
+          ]);
+          // .eq('uid', question.uid);
+
+          if (error) {
+            throw new Error(error.message);
+          }
       } catch (error) {
         console.error('Error adding data into Supabase:', error.message);
       }
@@ -68,7 +89,14 @@ const QuestionPage = ({ route }) => {
           .update([
             { collab_status: 'FALSE' }
           ])
-          .eq('uid', question.uid);
+          // .eq('uid', question.uid);
+          .eq('device_id', deviceIdentifier)
+          .eq('course', course.course)
+          .eq('question', question.question);
+
+          if (error) {
+            throw new Error(error.message);
+          }
       } catch (error) {
         console.error('Error deleting data from Supabase:', error.message);
       }
@@ -79,7 +107,8 @@ const QuestionPage = ({ route }) => {
         const { data, error } = await supabase
           .from("sameQ-app-questions")
           .select('collab_status')
-          .eq('uid', question.uid);
+          .eq('question', question.question)
+          .eq('device_id', deviceIdentifier);
   
         if (data && data.length > 0) {
           setCollabStatus([data[0].collab_status ? 'Uncollaborate' : 'Collaborate']);
@@ -184,9 +213,14 @@ const QuestionPage = ({ route }) => {
     });
   };
 
-  const handleBackCourse = () => {
+  const handleBackCourse = (course, deviceIdentifier) => {
     console.log(`Navigating to CoursePage with course: ${course.course}`);
-    navigation.navigate('CoursePage', { course });
+    navigation.navigate('CoursePage', { course, deviceIdentifier });
+  };
+
+  const handleBackCollab = () => {
+    console.log(`Navigating to Collaborating Page`);
+    navigation.navigate('CollabPage');
   };
 
   const clickMoreModal = () => {
@@ -202,6 +236,7 @@ const QuestionPage = ({ route }) => {
     >
 
       <View style={[styles.container, { marginBottom: bottomMargin }]}>
+        <Text>Device identifier: {deviceIdentifier}</Text>
         <View style={styles.questionPageBox}>
           {/* <View style={styles.questionPageBoxHeader}>
             <TouchableOpacity onPress={handleBackCourse}>
@@ -218,25 +253,30 @@ const QuestionPage = ({ route }) => {
             </TouchableOpacity>
           </View> */}
 
-<View style={styles.questionPageBoxHeader}>
-      {course.course ? ( // Check if course.course is defined
-        <TouchableOpacity onPress={handleBackCourse}>
-          <View style={styles.backArrow}>
-            <Icon name="arrow-left" size={20} color="#000" />
-            <Text style={styles.backTEXT}>{course.course}</Text>
-          </View>
-        </TouchableOpacity>
-      ) : (
-        // Render alternative content if course.course is undefined
-        <Text style={styles.backTEXT}>No Course Available</Text>
-      )}
-      <TouchableOpacity onPress={clickMoreModal}>
-        <View style={styles.backArrow}>
-          <Icon name="exclamation" size={20} color="#000" />
-          <Text style={styles.backTEXT}>More Info</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
+          <View style={styles.questionPageBoxHeader}>
+                {course.course ? ( // Check if course.course is defined
+                  <TouchableOpacity onPress={() => handleBackCourse(course, deviceIdentifier)}>
+                    <View style={styles.backArrow}>
+                      <Icon name="arrow-left" size={20} color="#000" />
+                      <Text style={styles.backTEXT}>{course.course}</Text>
+                    </View>
+                  </TouchableOpacity>
+                ) : (
+                  // Render alternative content if course.course is undefined
+                  <TouchableOpacity onPress={handleBackCollab}>
+                  <View style={styles.backArrow}>
+                    <Icon name="arrow-left" size={20} color="#000" />
+                    <Text style={styles.backTEXT}>Collaborating</Text>
+                  </View>
+                </TouchableOpacity>
+                )}
+                <TouchableOpacity onPress={clickMoreModal}>
+                  <View style={styles.backArrow}>
+                    <Icon name="exclamation" size={20} color="#000" />
+                    <Text style={styles.backTEXT}>More Info</Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
 
          <View style={styles.questionInfoHeader}>
             <View style={styles.numCollaborators}>
