@@ -51,7 +51,7 @@ const HomePage = () => {
             <View key={course.id} style={styles.courseBox}>
               <Text style={styles.courseBoxTEXT}>{course.name}</Text>
               <TouchableOpacity
-                style={styles.queueButton}
+                style={styles.button}
                 onPress={() => handleJoinPress(course)}
               >
                 <Text style={styles.askButtonTEXT}>Join</Text>
@@ -70,7 +70,7 @@ const HomePage = () => {
             <View key={course.id} style={[styles.courseBox]}>
               <Text style={styles.courseBoxTEXT}>{course.name}</Text>
               <TouchableOpacity
-                style={styles.queueButton}
+                style={styles.button}
                 onPress={() => handleJoinPress(course)}
               >
                 <Text style={styles.askButtonTEXT}>Ask</Text>

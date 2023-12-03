@@ -152,10 +152,10 @@ const CoursePage = ({ route }) => {
             {/* bottom row */}
             <View style={styles.queueBot}>
             <TouchableOpacity
-              style={styles.queueButton}
+              style={styles.button}
               onPress={() => handleCollabPress(time)}
             >
-              <Text style={styles.queueButtonText}> Collaborate </Text>
+              <Text style={styles.buttonText}> Collaborate </Text>
             </TouchableOpacity>
             </View>
         </View>

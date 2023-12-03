@@ -74,8 +74,26 @@ const styles = StyleSheet.create({
     },
     backButton: {
       position: 'absolute',
-      left: 15,
-      top: 10,
+      left: 5,
+      top: 0,
+      padding: 10
+    },
+    overlay: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black color
+    },
+    button: {
+      //height: "100%",
+      borderRadius: 20,
+      backgroundColor: '#5e42a6',
+      padding: 5,
+      // justifyContent: 'center',
+      // alignItems: 'center',
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 20 * scaleFactor,
+      fontWeight: 'bold',
     },
     // ---------- ^^ Top Header ^^ ----------
     classInfo: {
@@ -255,13 +273,16 @@ const styles = StyleSheet.create({
       chatArea: {
         flex: 1,
         height: 0,
+        paddingLeft: 5,
+        paddingRight: 5,
         // borderColor: "green",
         // borderWidth: 5,
       },
       infoButton: {
         position: 'absolute',
-        top: 10,
-        right: 15
+        top: 0,
+        right: 5,
+        padding: 10
       },
       // ------ Text Message Styling  -------- 
       grayTextMessageContainer: {
@@ -288,6 +309,19 @@ const styles = StyleSheet.create({
         maxWidth: '50%',
         marginRight: 5,
       },
+      senderStyle: {
+        color: 'rgb(76, 77, 77)',
+        marginLeft: 10,
+        fontSize: 13,
+        marginRight: 10,
+        marginTop: 5
+      },
+      message: {
+        maxWidth: '80%',
+        padding: 10,
+        borderRadius: 10,
+        marginBottom: 5,
+      },
       // ------ Text Message Styling  -------- 
 
 
@@ -300,43 +334,46 @@ const styles = StyleSheet.create({
       modalContent: {
         width: screenWidth * 0.8, 
         height: 500,
-        padding: 25,
-        backgroundColor: "#CFB8E9",
+        padding: 10,
+        backgroundColor: "#FFFFFF",
         borderRadius: 20, // round corners
         borderColor: 'black',
         borderWidth: 2,
       },
       modalHeader: {
-        alignItems: 'flex-end',
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'center'
       },
       modalHeaderTEXT: {
-        margin: 20,
+        // margin: 20,
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
+        marginBottom: 20
       },
       modalHeaderTEXT2: {
-        margin: 20,
+        // margin: 5,
         fontSize: 20,
         textAlign: 'center',
+        justifyContent: 'center'
       },
       uncollabButton: {
-        width: 175,
         borderRadius: 20,
-        backgroundColor: 'black',
+        paddingHorizontal: 5,
+        backgroundColor: '#5e42a6',
         justifyContent: 'center',
         alignItems: 'center',
       },
       modalUncollab: {
-        flex: 1,
+        flex: 0,
         justifyContent: 'flex-end',
         alignItems: 'center',
       },
       cancelButton: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        marginLeft: '5%',
-        marginTop: 10,
+        position: 'absolute',
+        right: 0,
+        top: 0,
       },
       cancelTEXT: {
         fontSize: 18,
@@ -365,9 +402,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#D9D9D9',
         paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingVertical: 7,
         justifyContent: 'space-between',
-        height: 55,
+        // height: 55,
       },
       emojiIcon: {
         marginRight: 5, // add space between the emoji and text input
@@ -559,20 +596,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden', // Hide overflow content
         flexDirection: "row",
         justifyContent: 'center', // align items along the row
-      },
-      queueButton: {
-        height: "100%",
-        borderRadius: 20,
-        backgroundColor: '#5052b5',
-        padding: 5,
-        // justifyContent: 'center',
-        // alignItems: 'center',
-      },
-      queueButtonText: {
-        color: 'white',
-        fontSize: 20 * scaleFactor,
-        fontWeight: 'bold',
-      },
+      }
 
       // ------ Queue Box Scrolling Info -------- 
 
