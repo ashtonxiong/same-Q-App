@@ -508,7 +508,57 @@ const styles = StyleSheet.create({
   // ------ Collab Info --------
 
   // ------ Ask Page  --------
-
+  tagsContainer: {
+    height: 0.15 * screenHeight,
+    justifyContent: "flex-end",
+    flexWrap: "wrap",
+  },
+  tags: {
+    marginLeft: "10%",
+    // maxWidth: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  tagButton: {
+    borderRadius: 30,
+    backgroundColor: "white",
+    borderColor: "#5E42A6",
+    padding: 3,
+    paddingHorizontal: 10,
+    borderWidth: 2,
+    margin: 2,
+  },
+  questionBoxContainer: {
+    height: 0.35 * screenHeight,
+  },
+  questionInput: {
+    backgroundColor: "white",
+    height: "60%",
+    margin: "10%",
+    marginBottom: 0,
+    borderColor: "purple",
+    borderWidth: 0.5,
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  submitQuestionButton: {
+    backgroundColor: "#FFFF",
+    paddingHorizontal: "10%",
+    paddingVertical: "1%",
+    borderRadius: 40,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  selectedTag: {
+    backgroundColor: "#5E42A6", // Apply your desired background color for selected tags
+    borderColor: "white",
+  },
   // ------ Ask Page  --------
 });
 
