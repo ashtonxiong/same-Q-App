@@ -1,69 +1,166 @@
-import React, {useState} from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Dimensions} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import styles from '../styles';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
-
-
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  Dimensions,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import styles from "../styles";
+import Icon from "react-native-vector-icons/SimpleLineIcons";
+import { supabase } from "../supabase";
+import { de } from "date-fns/locale";
 
 const CoursePage = ({ route }) => {
-  const { course } = route.params;
-
+  const { course, deviceIdentifier } = route.params;
+  const courseName = course.course;
 
   const navigation = useNavigation();
-  const { width, height } = Dimensions.get('window');
+  const { width, height } = Dimensions.get("window");
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
 
-  
+  const [questions, setQuestions] = useState([]);
 
-  const [times, setTimes] = useState([
-    { numPeople: 2, time: "2:15", earphone: 0, 
-    text: "How do I my highlight reel to the AFS Directory?", 
-    askedBy: 'LeBron James', id: 1 },
-    { numPeople: 3, time: "2:30", earphone: 2, 
-    text: "Where should I conduct Interviews for my needfinding?", askedBy: 'Donald Glover',id: 2 },
-    { numPeople: 2, time: "2:45", earphone: 2, 
-    text: "How do I add audio and a pulsing effect to the medium-fi prototype?", askedBy: 'Sally Ride', id: 3 },
-    { numPeople: 10, time: "3:00", earphone: 5, 
-    text: "How do I add my songs to the hi-fi prototype?", askedBy: 'Taylor Swift', id: 4 },
-    { numPeople: 3, time: "3:15", earphone: 2, 
-    text: "How can I align our app's theme with my nocturnal aesthetic without disrupting existing color schemes?", askedBy: "Batman",id: 5 },
-  ]);
+  const getQuestions = async () => {
+    console.log("device id in getQuestions:", deviceIdentifier);
+    try {
+      const { data, error } = await supabase
+        .from("sameQ-app-questions")
+        .select("*")
+        .eq("course", courseName)
+        .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
 
-  const handleCollabPress = (questionText, object) => {
-    // navigate to QuestionPage with the question parameter
-    console.log(`Navigating to QuestionPage with question: ${questionText}`);
-    navigation.navigate('QuestionPage', { question: questionText, course, object });
-  };  
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (data) {
+        // 'data' is an array of objects with 'id' and 'course' columns
+        const questionInfoArray = data.map((item) => ({
+          uid: item.uid,
+          course: item.course,
+          question: item.question,
+          created: item.created,
+          author: item.author,
+          num_collab: item.num_collaborators,
+          num_huddle: item.num_huddle,
+          chats: item.chats,
+          expected_help: item.expected_help,
+        }));
+        console.log("in getQuestions 3");
+
+        setQuestions(questionInfoArray);
+      }
+    } catch (error) {
+      console.error("Error fetching data from Supabase:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    getQuestions();
+  }, []);
+
+  const handleCollabPress = (course, question, deviceIdentifier) => {
+    console.log(
+      `Navigating to QuestionPage with question: ${question.question}`
+    );
+    navigation.navigate("QuestionPage", { course, question, deviceIdentifier });
+  };
 
   const handleBackHome = (home) => {
-    // navigate back to HomePage
     console.log(`Navigating to HomePage`);
-    navigation.navigate('HomePage');
-  };  
+    navigation.navigate("HomePage");
+  };
+
+  // func to parse "HH:MM a" formatted help times
+  const parseTime = (timeString) => {
+    const [time, period] = timeString.split(" ");
+    const [hours, minutes] = time.split(":").map(Number);
+    const hours24 = period === "PM" ? hours + 12 : hours;
+    return [hours24, minutes];
+  };
+
+  const renderQuestions = () => {
+    if (questions.length === 0) {
+      return (
+        <Text style={styles.emptyChat}>
+          Be the first one to ask a question!
+        </Text>
+      );
+    }
+
+    // sort the questions based on expected help time
+    const sortedQuestionsArray = [...questions].sort((a, b) => {
+      const timeA = new Date(2000, 0, 1, ...parseTime(a.expected_help));
+      const timeB = new Date(2000, 0, 1, ...parseTime(b.expected_help));
+      return timeA - timeB;
+    });
+
+    return sortedQuestionsArray.map((question) => (
+      <View key={question.uid} style={styles.queueBox}>
+        {/* top row */}
+        <View style={styles.queueTopRow}>
+          <View style={styles.queuePeopleIcon}>
+            <Text style={{ fontSize: 17 * scaleFactor, fontWeight: "bold" }}>
+              {question.num_collab}
+            </Text>
+            <Icon name="people" size={20 * scaleFactor} />
+          </View>
+          <Text
+            style={{
+              fontSize: 20 + scaleFactor,
+              marginLeft: 5 * scaleFactor,
+              marginRight: 5 * scaleFactor,
+            }}
+          >
+            Expected Help at{" "}
+            <Text style={{ fontWeight: "bold" }}>{question.expected_help}</Text>
+          </Text>
+          <View style={styles.queueEarphone}>
+            <Icon name="earphones" size={20 * scaleFactor} />
+            <Text
+              style={{
+                fontSize: 20 * scaleFactor,
+                fontWeight: "bold",
+                marginLeft: 3,
+              }}
+            >
+              {question.num_huddle}
+            </Text>
+          </View>
+        </View>
+
+        {/* middle row */}
+        <View style={styles.queueMid}>
+          <Text style={{ fontSize: 17 * scaleFactor, color: "#000000" }}>
+            {question.question}
+          </Text>
+        </View>
+
+        {/* bottom row */}
+        <View style={styles.queueBot}>
+          <TouchableOpacity
+            style={styles.queueButton}
+            onPress={() =>
+              handleCollabPress(course, question, deviceIdentifier)
+            }
+          >
+            <Text style={styles.queueButtonText}> View </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    ));
+  };
 
   return (
     <View style={styles.container}>
-
-      {/* <View style={styles.appBar}>
-        <TouchableOpacity
-          onPress={handleBackHome}>
-        <View style={styles.backArrow}>
-          <Icon name="arrow-left" size={20} color="#000"/>
-          <Text style={styles.backTEXT}>Home</Text>
-        </View>
-        </TouchableOpacity>
-        <View style={styles.className}>
-          <Text style={styles.classNameText}> CLASS NAME </Text>
-        </View>
-      </View> */}
-
+      {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
       <View style={styles.appBar}>
-        <TouchableOpacity
-          onPress={handleBackHome}>
+        <TouchableOpacity onPress={handleBackHome}>
           <View style={styles.backArrow}>
-          <Icon name="arrow-left" size={20} color="#000"/>
-          <Text style={styles.backTEXT}>Home</Text>
+            <Icon name="arrow-left" size={20} color="#000" />
+            <Text style={styles.backTEXT}>Home</Text>
           </View>
         </TouchableOpacity>
         {/* <View style={styles.headerContainer}>
@@ -74,77 +171,34 @@ const CoursePage = ({ route }) => {
       </View>
 
       <View>
-
         <View style={styles.classInfo}>
           <View style={styles.courseHeaderContainer}>
-            <Text style={styles.pageHeader}>
-              {course.name}
-            </Text>
+            <Text style={styles.pageHeader}>{course.course}</Text>
           </View>
 
           <View style={styles.courseDetails}>
             <View style={styles.courseDetailTop}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{fontWeight: 'bold'}}>Instructor: </Text>
-                <Text> Instructor Name </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ fontWeight: "bold" }}>Instructor: </Text>
+                <Text> {course.instructor} </Text>
               </View>
-              <Text style={{marginLeft: 'auto'}}> TEMP</Text>
+              <Text style={{ marginLeft: "auto" }}> 5 Questions in Queue</Text>
             </View>
             <View style={styles.courseDetailBottom}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{fontWeight: 'bold'}}>Duration: </Text>
-                <Text> Duration Time </Text>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={{ fontWeight: "bold" }}>Duration: </Text>
+                <Text> {course.duration} </Text>
               </View>
-              <Text style={{marginLeft: 'auto'}}> TEMP</Text>
+              <Text style={{ marginLeft: "auto" }}> 20 Active </Text>
             </View>
           </View>
-          <View style={{alignItems: 'center'}}>
+          <View style={{ alignItems: "center" }}>
             <Text style={styles.sectionHeader}>Queue</Text>
           </View>
         </View>
 
         <ScrollView contentContainerStyle={styles.scrollContainer}>
-          {/* <View style={styles.questionBox}>
-            <Text style={styles.questionTEXT}>FIRST TWO LINES OF QUESTION</Text>
-              <TouchableOpacity
-              style={styles.courseCollabButton}
-              onPress={() => handleCollabPress('FIRST TWO LINES OF QUESTION')}>
-                <Text style={styles.courseCollabButtonText}>Collaborate</Text>
-            </TouchableOpacity>
-          </View> */}
-
-          {times.map(time => (
-            <View key={time.id} style={styles.queueBox}>
-            {/* top row */}
-            <View style={styles.queueTopRow}>
-              <View style={styles.queuePeopleIcon} >
-                <Text style={{fontSize: 17 * scaleFactor, fontWeight: 'bold'}}>{time.numPeople}</Text>
-                <Icon name="people" size={20 * scaleFactor} />
-              </View>
-              <Text style={{ fontSize: 20 + scaleFactor, marginLeft: 5 * scaleFactor, marginRight: 5 * scaleFactor}} >Expected Help at <Text style={{fontWeight: 'bold'}}>{time.time}</Text></Text>
-              <View style={styles.queueEarphone}>
-                <Icon  name="earphones" size={20 * scaleFactor} />
-                <Text style={{fontSize: 20 * scaleFactor, fontWeight: 'bold', marginLeft: 3}}>{time.earphone}</Text>
-              </View>
-            </View>
-
-            {/* middle row */}
-            <View style={styles.queueMid}>
-              <Text style={{fontSize: 17 * scaleFactor, color: '#000000'}}>{time.text}</Text>
-            </View>
-
-            {/* bottom row */}
-            <View style={styles.queueBot}>
-            <TouchableOpacity
-              style={styles.queueButton}
-              onPress={() => handleCollabPress(time)}
-            >
-              <Text style={styles.queueButtonText}> Collaborate </Text>
-            </TouchableOpacity>
-            </View>
-        </View>
-))}
-
+          {renderQuestions()}
         </ScrollView>
       </View>
     </View>
