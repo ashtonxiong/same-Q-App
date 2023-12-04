@@ -11,6 +11,7 @@ import styles from "../styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { supabase } from "../supabase";
 import { de } from "date-fns/locale";
+import FontIcon from "react-native-vector-icons/FontAwesome";
 
 const CoursePage = ({ route }) => {
   const { course, deviceIdentifier } = route.params;
@@ -192,8 +193,37 @@ const CoursePage = ({ route }) => {
               <Text style={{ marginLeft: "auto" }}> 20 Active </Text>
             </View>
           </View>
-          <View style={{ alignItems: "center" }}>
-            <Text style={styles.sectionHeader}>Queue</Text>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+            }}
+          >
+            <Text
+              style={[
+                styles.sectionHeader,
+                { marginRight: "auto", marginLeft: "auto" },
+              ]}
+            >
+              Queue
+            </Text>
+            {/* <TouchableOpacity style={{ justifyContent: "flex-end" }}>
+              <FontIcon
+                name="filter"
+                size={30}
+                style={{ borderWidth: 2 }}
+              ></FontIcon>
+            </TouchableOpacity> */}
+          </View>
+          <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+            <TouchableOpacity style={{ justifyContent: "flex-end" }}>
+              <FontIcon
+                name="filter"
+                size={40}
+                style={{ marginTop: -110 * scaleFactor }}
+              ></FontIcon>
+            </TouchableOpacity>
           </View>
         </View>
 

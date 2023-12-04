@@ -9,8 +9,7 @@ import {
   Keyboard,
   Dimensions,
 } from "react-native";
-import Picker from "react-native-picker";
-import Dropdown from "react-native-element-dropdown";
+import DropDownPicker from "react-native-dropdown-picker";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -18,15 +17,23 @@ import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
 import "react-native-get-random-values";
 
 const AskPage = () => {
+  // TESTING CLASS DROPDOWN
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    { label: "Apple", value: "apple" },
+    { label: "Banana", value: "banana" },
+  ]);
+  // TESTING CLASS DROPDOWN
   const { width, height } = Dimensions.get("window");
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
   const [isModalVisible, setModalVisible] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [text, setText] = useState("");
-  const [isLimitReachedModalVisible, setLimitReachedModalVisible] =
-    useState(false);
-  const [selectedItem, setSelectedItem] = useState("");
+  // const [isLimitReachedModalVisible, setLimitReachedModalVisible] =
+  //   useState(false);
+  // const [selectedItem, setSelectedItem] = useState("");
   const [classes, setClasses] = useState([
     { name: "CS 147", isChecked: false },
     { name: "CS 161", isChecked: false },
@@ -244,7 +251,7 @@ const AskPage = () => {
               justifyContent: "center",
             }}
           >
-            {classCheckBoxes()}
+            {/* {classCheckBoxes()} */}
           </View>
         </View>
         <View
