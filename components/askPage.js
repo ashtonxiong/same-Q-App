@@ -9,31 +9,69 @@ import {
   Keyboard,
   Dimensions,
 } from "react-native";
-import { CheckBox } from "react-native-elements";
+import Picker from "react-native-picker";
+import Dropdown from "react-native-element-dropdown";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/FontAwesome";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
 import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
-import { supabase } from "../supabase";
-import { useDeviceIdentifier } from "./deviceID";
-// import Modal from "react-native-modal";
-// import { TextInput } from "react-native-gesture-handler";
 
 const AskPage = () => {
   const { width, height } = Dimensions.get("window");
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
-
   const [isModalVisible, setModalVisible] = useState(false);
-
   const [isChecked, setIsChecked] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [text, setText] = useState("");
   const [isLimitReachedModalVisible, setLimitReachedModalVisible] =
     useState(false);
-
+  const [selectedItem, setSelectedItem] = useState("");
+  const [classes, setClasses] = useState([
+    { name: "CS 147", isChecked: false },
+    { name: "CS 161", isChecked: false },
+    { name: "English 9CE", isChecked: false },
+    // ... other classes
+  ]);
   const characterLimit = 150;
+  const navigation = useNavigation();
+
+  //----------check box classes
+  const [isCheckedClasses, setIsCheckedClasses] = useState(false);
+
+  const handleCheckboxToggleClass = (classItem) => {};
+
+  const classCheckBoxes = () => {
+    return classes.map((classItem) => (
+      <View>
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 10,
+          }}
+          onPress={handleCheckboxToggleClass}
+        >
+          <Text
+            style={{
+              fontSize: 13,
+              fontWeight: "bold",
+              marginRight: "5%",
+            }}
+          >
+            {classItem.name}
+          </Text>
+          {classItem.isChecked ? (
+            <Icon name="check" size={18} color="green" />
+          ) : (
+            <Icon name="square-o" size={20} color="#5E42A6" />
+          )}
+        </TouchableOpacity>
+      </View>
+    ));
+  };
+  //----------check box classes
 
   const handleCheckboxToggle = () => {
     setIsChecked(!isChecked);
@@ -132,14 +170,7 @@ const AskPage = () => {
           </TouchableOpacity>
         </View>
         <View style={styles.courseHeaderContainer}>
-          <Text
-            style={[
-              styles.pageHeader,
-              // { borderColor: "green", borderWidth: 2 },
-            ]}
-          >
-            Create Question
-          </Text>
+          <Text style={[styles.pageHeader]}>Create Question</Text>
         </View>
 
         <View style={styles.tagsContainer}>
@@ -180,6 +211,7 @@ const AskPage = () => {
                 {/* Character Limit: {text.length}/{characterLimit} */}
               </Text>
             </View>
+            {/* ------ Private Question ----- */}
             <TouchableOpacity
               style={{
                 flexDirection: "row",
@@ -194,27 +226,25 @@ const AskPage = () => {
                   fontSize: 13,
                   fontWeight: "bold",
                   marginRight: "5%",
-                  // marginLeft: "auto",
                 }}
               >
                 Make Question Private:
               </Text>
               {isChecked ? (
-                <Icon
-                  name="check"
-                  size={18}
-                  color="green"
-                  // style={{ marginLeft: 20 }}
-                />
+                <Icon name="check" size={18} color="green" />
               ) : (
-                <Icon
-                  name="square-o"
-                  size={20}
-                  color="#5E42A6"
-                  // style={{ marginLeft: 20 }}
-                />
+                <Icon name="square-o" size={20} color="#5E42A6" />
               )}
             </TouchableOpacity>
+            {/* ------ Private Question ----- */}
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
+          >
+            {classCheckBoxes()}
           </View>
         </View>
         <View
@@ -225,7 +255,11 @@ const AskPage = () => {
             paddingBottom: "7%",
           }}
         >
-          <TouchableOpacity style={styles.submitQuestionButton}>
+          <TouchableOpacity
+            style={styles.submitQuestionButton}
+            //----- NEED TO ADD NAVIGATING TO A CLASSES OFFICE HOURS
+            //----- CREATE CLASSES DROPDOWN FOR WHICH QUESTION TO ASK
+          >
             <Text style={{ fontSize: 30 }}>Submit</Text>
           </TouchableOpacity>
         </View>
