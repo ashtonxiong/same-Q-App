@@ -18,6 +18,7 @@ import "react-native-get-random-values";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "../supabase";
 import { useDeviceIdentifier } from "./deviceID";
+// import Modal from "react-native-modal";
 // import { TextInput } from "react-native-gesture-handler";
 
 const AskPage = () => {
@@ -25,11 +26,14 @@ const AskPage = () => {
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
 
   const [isModalVisible, setModalVisible] = useState(false);
+
   const [isChecked, setIsChecked] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [text, setText] = useState("");
+  const [isLimitReachedModalVisible, setLimitReachedModalVisible] =
+    useState(false);
 
-  const characterLimit = 250;
+  const characterLimit = 150;
 
   const handleCheckboxToggle = () => {
     setIsChecked(!isChecked);
@@ -37,7 +41,18 @@ const AskPage = () => {
 
   const handleTextChange = (inputText) => {
     // Update the text and apply character limit
-    setText(inputText);
+    if (inputText.length > characterLimit) {
+      // Show the modal when the character limit is reached
+      setLimitReachedModalVisible(true);
+    } else {
+      // Update the text state with the inputText
+      setText(inputText);
+    }
+  };
+
+  const handleCloseModal = () => {
+    // Close the modal
+    setLimitReachedModalVisible(false);
   };
 
   const [tags, setTags] = useState([
@@ -96,6 +111,16 @@ const AskPage = () => {
     ));
   };
 
+  const borderColor = text.length >= characterLimit ? "red" : "black";
+  const errorMessage =
+    text.length >= characterLimit ? (
+      "Error: Character Limit has been reached"
+    ) : (
+      <Text>
+        Character Limit: {text.length} / {characterLimit}{" "}
+      </Text>
+    );
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -125,7 +150,7 @@ const AskPage = () => {
         </View>
 
         <View style={styles.questionBoxContainer}>
-          <View style={styles.questionInput}>
+          <View style={[styles.questionInput, { borderColor: borderColor }]}>
             <TextInput
               multiline
               style={{
@@ -151,7 +176,8 @@ const AskPage = () => {
               }}
             >
               <Text style={{ fontSize: 15 * scaleFactor, marginTop: "5%" }}>
-                Character Limit: {text.length}/250
+                {errorMessage}
+                {/* Character Limit: {text.length}/{characterLimit} */}
               </Text>
             </View>
             <TouchableOpacity
