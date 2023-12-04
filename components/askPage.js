@@ -9,12 +9,12 @@ import {
   Keyboard,
   Dimensions,
 } from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+// import DropDownPicker from "react-native-dropdown-picker";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/FontAwesome";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
-import "react-native-get-random-values";
+// import "react-native-get-random-values";
 import { supabase } from "../supabase";
 
 const AskPage = () => {
