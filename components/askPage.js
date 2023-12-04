@@ -21,18 +21,23 @@ import { useDeviceIdentifier } from "./deviceID";
 // import { TextInput } from "react-native-gesture-handler";
 
 const AskPage = () => {
-  // import {useFonts, Comfortaa_400Regular} from "@expo-google-fonts/dev"
-
   const { width, height } = Dimensions.get("window");
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-
   const [selectedTags, setSelectedTags] = useState([]);
+  const [text, setText] = useState("");
+
+  const characterLimit = 250;
 
   const handleCheckboxToggle = () => {
     setIsChecked(!isChecked);
+  };
+
+  const handleTextChange = (inputText) => {
+    // Update the text and apply character limit
+    setText(inputText);
   };
 
   const [tags, setTags] = useState([
@@ -135,6 +140,8 @@ const AskPage = () => {
               }}
               placeholder="Press to start typing…"
               placeholderTextColor={"black"}
+              value={text}
+              onChangeText={handleTextChange} // Use onChangeText instead of onChange
             />
           </View>
           <View>
@@ -144,7 +151,7 @@ const AskPage = () => {
               }}
             >
               <Text style={{ fontSize: 15 * scaleFactor, marginTop: "5%" }}>
-                Character Limit: {}/300
+                Character Limit: {text.length}/250
               </Text>
             </View>
             <TouchableOpacity
