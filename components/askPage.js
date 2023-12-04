@@ -15,16 +15,24 @@ import styles from "../styles";
 import Icon from "react-native-vector-icons/FontAwesome";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
 import "react-native-get-random-values";
+import { supabase } from "../supabase";
 
 const AskPage = () => {
-  // TESTING CLASS DROPDOWN
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "Apple", value: "apple" },
-    { label: "Banana", value: "banana" },
-  ]);
-  // TESTING CLASS DROPDOWN
+  // TESTING SAVING QUESTION INFO
+  const [questionInfo, setQuestionInfo] = useState({
+    question: "",
+    author: "",
+    num_collaborators: 0,
+    num_collaborators: 0,
+    num_huddle: 0,
+    expected_help: "",
+    created: "",
+    collab_status: "",
+    device_id: "",
+    course: "",
+  });
+
+  // TESTING SAVING QUESTION INFO
   const { width, height } = Dimensions.get("window");
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
   const [isModalVisible, setModalVisible] = useState(false);
