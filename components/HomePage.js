@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import styles from '../styles';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import { supabase } from '../supabase';
+import React, { useState, useEffect } from "react";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Modal,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import styles from "../styles";
+import Icon from "react-native-vector-icons/SimpleLineIcons";
+import { supabase } from "../supabase";
 
 const HomePage = () => {
   const navigation = useNavigation();
@@ -11,7 +17,7 @@ const HomePage = () => {
 
   const handleJoinPress = (course) => {
     console.log(`Navigating to CoursePage with course: ${course.course}`);
-    navigation.navigate('CoursePage', { course });
+    navigation.navigate("CoursePage", { course });
   };
 
   const clickMenuModal = () => {
@@ -29,12 +35,14 @@ const HomePage = () => {
     try {
       const { data, error } = await supabase
         .from("sameQ-app-data")
-        .select("id, course, instructor, duration, num_active_students, num_questions")
-        .eq('status', 'TRUE');
-  
+        .select(
+          "id, course, instructor, duration, num_active_students, num_questions"
+        )
+        .eq("status", "TRUE");
+
       if (data) {
         // Now 'data' is an array of objects with 'id' and 'course' columns
-        const coursesArray = data.map(item => ({
+        const coursesArray = data.map((item) => ({
           id: item.id,
           course: item.course,
           instructor: item.instructor,
@@ -42,11 +50,11 @@ const HomePage = () => {
           num_students: item.num_active_students,
           num_questions: item.num_questions,
         }));
-  
+
         setActive(coursesArray);
       }
     } catch (error) {
-      console.error('Error fetching data from Supabase:', error.message);
+      console.error("Error fetching data from Supabase:", error.message);
     }
   };
 
@@ -54,12 +62,14 @@ const HomePage = () => {
     try {
       const { data, error } = await supabase
         .from("sameQ-app-data")
-        .select("id, course, instructor, duration, num_active_students, num_questions")
-        .eq('status', 'FALSE');
-  
+        .select(
+          "id, course, instructor, duration, num_active_students, num_questions"
+        )
+        .eq("status", "FALSE");
+
       if (data) {
         // 'data' is an array of objects with 'id' and 'course' columns
-        const coursesArray = data.map(item => ({
+        const coursesArray = data.map((item) => ({
           id: item.id,
           course: item.course,
           instructor: item.instructor,
@@ -67,18 +77,18 @@ const HomePage = () => {
           num_students: item.num_active_students,
           num_questions: item.num_questions,
         }));
-  
+
         setInactive(coursesArray);
       }
     } catch (error) {
-      console.error('Error fetching data from Supabase:', error.message);
+      console.error("Error fetching data from Supabase:", error.message);
     }
   };
 
   useEffect(() => {
     getActive();
     getInactive();
-  }, [])
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -94,8 +104,8 @@ const HomePage = () => {
       </View>
 
       {/*  ------- active office hours --------- */}
-      <View style={[styles.courseSection, { marginTop: '20%' }]}>
-        <Text style={[styles.sectionHeader ]}>Active Office Hours</Text>
+      <View style={[styles.courseSection, { marginTop: "20%" }]}>
+        <Text style={[styles.sectionHeader]}>Active Office Hours</Text>
         <View style={styles.courseContainer}>
           {activeClasses.map((course) => (
             <View key={course.id} style={styles.courseBox}>
@@ -112,7 +122,7 @@ const HomePage = () => {
       </View>
       {/*  ------- active office hours --------- */}
 
-       {/* ------- inactive office hours --------- */}
+      {/* ------- inactive office hours --------- */}
       <View style={[styles.courseSection]}>
         <Text style={styles.sectionHeader}>Inactive Office Hours</Text>
         <View style={styles.courseContainer}>
@@ -131,10 +141,7 @@ const HomePage = () => {
       </View>
       {/*  -------inactive office hours --------- */}
 
-      <Modal
-        transparent={true}
-        visible={isModalVisible}
-      >
+      <Modal transparent={true} visible={isModalVisible}>
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.menuModalOverlay}>
             <TouchableWithoutFeedback onPress={() => {}}>
