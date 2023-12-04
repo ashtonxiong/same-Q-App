@@ -5,16 +5,17 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomePage from "./components/HomePage";
 import CoursePage from "./components/CoursePage";
 import Notifications from "./components/Notifications";
+import AskPage from "./components/askPage";
 import QuestionPage from "./components/QuestionPage";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import CollabPage from "./components/CollabPage";
+import { DeviceIdentifierProvider } from "./components/deviceID";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const MainStack = () => {
   return (
-    // <View>
     <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{ headerShown: false }}
@@ -23,13 +24,14 @@ const MainStack = () => {
       <Stack.Screen name="CoursePage" component={CoursePage} />
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="QuestionPage" component={QuestionPage} />
+      <Stack.Screen name="CollabPage" component={CollabPage} />
     </Stack.Navigator>
-    // </View>
   );
 };
 
 const App = () => {
   return (
+    // <DeviceIdentifierProvider>
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
@@ -66,7 +68,7 @@ const App = () => {
         />
         <Tab.Screen
           name="Ask"
-          component={Notifications}
+          component={AskPage}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Icon name="plus" size={size} color={"#000"} />
@@ -93,6 +95,7 @@ const App = () => {
         />
       </Tab.Navigator>
     </NavigationContainer>
+    // {/* </DeviceIdentifierProvider> */}
   );
 };
 
