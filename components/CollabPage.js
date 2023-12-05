@@ -77,7 +77,7 @@ const CollabPage = () => {
           status: item.status,
         }));
         setCourses(courses);
-        console.log("course data: ", coursesArray);
+        console.log("course data collab page: ", coursesArray);
       }
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
