@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, Keyboard, TouchableWithoutFeedback, TextInput, Platform, ScrollView, KeyboardAvoidingView } from 'react-native';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation, useFocusEffect, useIsFocused } from '@react-navigation/native';
 import styles from '../styles';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { supabase } from '../supabase';
@@ -14,6 +14,10 @@ const QuestionPage = ({ route }) => {
   const questionText = question.question;
   const courseName = course.course; 
   const [chatsArray, setChatsArray] = useState([]);
+  const [defaultChatsArray, setDefaultChatsArray] = useState([]);
+  const [message, setText] = useState('');
+  const messagesRef = useRef();
+  const isFocused = useIsFocused(); 
 
   const [collabStatus, setCollabStatus] = useState([
     "Collaborate"
@@ -21,21 +25,22 @@ const QuestionPage = ({ route }) => {
 
   const getChats = async () => {
     try {
-      console.log(typeof deviceIdentifier)
+      console.log('fetching data for device:', deviceIdentifier, 'for question:', question.question, 'for course:', course.course)
       const { data, error } = await supabase
         .from("sameQ-chats")
         .select('*')
-        .eq('course', courseName)
-        .eq('question', questionText)
-        .or('device_id.eq.000, device_id.eq.', deviceIdentifier);
+        .eq('course', course.course)
+        .eq('question', question.question)
+        // .eq('device_id', '000');
+        .eq('device_id', deviceIdentifier);
+        // .or('device_id.eq.000, device_id.eq.', deviceIdentifier);
 
         if (error) {
           throw new Error(error.message);
         }
   
         if (data) {
-          // 'data' is an array of objects with columns
-          const chatsArray = data.map(item => ({
+          const newChats = data.map(item => ({
             uid: item.uid,
             sender: item.sender,
             senderInitials: item.sender_initials,
@@ -43,10 +48,82 @@ const QuestionPage = ({ route }) => {
             timeSent: item.time,
           }));
     
-          setChatsArray(chatsArray);
+          setChatsArray(newChats);
         }
       } catch (error) {
         console.error('Error fetching data from Supabase:', error.message);
+      }
+    };
+
+    const getDefaultChats = async () => {
+      try {
+        console.log('fetching data for device:', deviceIdentifier, 'for question:', question.question, 'for course:', course.course)
+        const { data, error } = await supabase
+          .from("sameQ-chats")
+          .select('*')
+          .eq('course', course.course)
+          .eq('question', question.question)
+          .eq('device_id', '000');
+          // .eq('device_id', deviceIdentifier);
+          // .or('device_id.eq.000, device_id.eq.', deviceIdentifier);
+  
+          if (error) {
+            throw new Error(error.message);
+          }
+    
+          if (data) {
+            const newChats = data.map(item => ({
+              uid: item.uid,
+              sender: item.sender,
+              senderInitials: item.sender_initials,
+              message: item.message,
+              timeSent: item.time,
+            }));
+      
+            setDefaultChatsArray(newChats);
+          }
+        } catch (error) {
+          console.error('Error fetching data from Supabase:', error.message);
+        }
+      };
+
+    const addMessage = async (course, question, message) => {
+      try {
+        console.log('Course to add message to:', course.course);
+        console.log('Question to add message to:', question.question);
+        console.log('New message to send:', message);
+
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.toLocaleString('en-US', { month: 'long' })} ${currentDate.getDate()}, ${currentDate.getFullYear()}, ${currentDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`;
+        
+        const { error } = await supabase
+          .from('sameQ-chats')
+          .insert([
+            {
+              course: course.course,
+              question: question.question,
+              sender: 'You',
+              message: message,
+              time: formattedDate,
+              device_id: deviceIdentifier,
+            },
+          ]);
+    
+        if (error) {
+          throw new Error(error.message);
+        }
+    
+        setChatsArray(prevChatsArray => [
+          ...prevChatsArray,
+          {
+            sender: 'You',
+            message: message,
+            timeSent: formattedDate,
+            senderInitials: null,
+          },
+        ]);
+      } catch (error) {
+        console.error('Error adding data into Supabase:', error.message);
       }
     };
 
@@ -89,7 +166,6 @@ const QuestionPage = ({ route }) => {
           .update([
             { collab_status: 'FALSE' }
           ])
-          // .eq('uid', question.uid);
           .eq('device_id', deviceIdentifier)
           .eq('course', course.course)
           .eq('question', question.question);
@@ -119,15 +195,32 @@ const QuestionPage = ({ route }) => {
     };
 
   useEffect(() => {
+    getDefaultChats();
     getChats();
-    getCollabStatus;
-  }, []);
+    getCollabStatus();
+  }, [isFocused]);
 
+  useEffect(() => {
+    if (isFocused) {
+      getDefaultChats();
+      getChats();
+      getCollabStatus();
+    }
+  }, [isFocused]);
+  
   useFocusEffect(
     React.useCallback(() => {
+      getDefaultChats();
+      getChats();
       getCollabStatus(); // fetch the collaboration status when navigating back into modal
     }, [])
   );
+
+  useEffect(() => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollToEnd({ animated: true });
+    }
+  }, [chatsArray]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -152,14 +245,14 @@ const QuestionPage = ({ route }) => {
   const navigation = useNavigation();
 
   const renderMessages = () => {
-    if (chatsArray.length === 0) {
+    if (defaultChatsArray.length === 0 && chatsArray.length === 0) {
       return (
         <Text style={styles.emptyChat}>Be the first one to send a message!</Text>
       )
     }
 
-    // sort chats based on date/time sent
-    const sortedChatsArray = [...chatsArray].sort((a, b) => {
+    // sort default chats based on date/time sent
+    const sortedChatsArray = [...defaultChatsArray].sort((a, b) => {
       const dateStringA = a.timeSent;
       const dateStringB = b.timeSent;
       const parsedDataA = parse(dateStringA, 'MMMM d, yyyy, h:mm a', new Date());
@@ -168,12 +261,15 @@ const QuestionPage = ({ route }) => {
       const timeB = getTime(parsedDataB);
       return timeA - timeB;
     });
+
+    // combine default and new chats
+    const combinedChats = [...sortedChatsArray, ...chatsArray]
   
-    return sortedChatsArray.map((chat) => {
+    return combinedChats.map((chat) => {
   
       if (chat.sender !== "You") {
         return (
-          <View key={chat.uid} style={styles.messageAndTimeContainer}>
+          <View key={chat.timeSent} style={styles.messageAndTimeContainer}>
           <View style={[styles.grayTextMessageContainer]}>
             <Text style={styles.grayMessageInitials}>{chat.senderInitials}</Text>
             <View style={styles.grayMessage}>
@@ -185,7 +281,7 @@ const QuestionPage = ({ route }) => {
         );
       } else {
         return (
-          <View key={chat.uid} style={styles.messageAndTimeContainer}>
+          <View key={chat.timeSent} style={styles.messageAndTimeContainer}>
           <View style={[styles.purpleTextMessageContainer]}>
             <View style={styles.purpleMessage}>
               <Text>{chat.message}</Text>
@@ -223,6 +319,17 @@ const QuestionPage = ({ route }) => {
     navigation.navigate('CollabPage');
   };
 
+  const handleMessageSend = async (course, question, message) => {
+    try {
+      console.log('Sending new message:', message, 'to course:', course.course, 'in question:', question.question);
+
+      await addMessage(course, question, message);
+    } catch (error) {
+      console.error('Error sending message:', error.message);
+    }
+  };
+  
+
   const clickMoreModal = () => {
     Keyboard.dismiss();
     setModalVisible(!isModalVisible);
@@ -238,23 +345,8 @@ const QuestionPage = ({ route }) => {
       <View style={[styles.container, { marginBottom: bottomMargin }]}>
         <Text>Device identifier: {deviceIdentifier}</Text>
         <View style={styles.questionPageBox}>
-          {/* <View style={styles.questionPageBoxHeader}>
-            <TouchableOpacity onPress={handleBackCourse}>
-              <View style={styles.backArrow}>
-                <Icon name="arrow-left" size={20} color="#000" />
-                <Text style={styles.backTEXT}>{course.course}</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={clickMoreModal}>
-              <View style={styles.backArrow}>
-                <Icon name="exclamation" size={20} color="#000" />
-                <Text style={styles.backTEXT}>More Info</Text>
-              </View>
-            </TouchableOpacity>
-          </View> */}
-
           <View style={styles.questionPageBoxHeader}>
-                {course.course ? ( // Check if course.course is defined
+                {course.course ? ( // check if course.course is defined 
                   <TouchableOpacity onPress={() => handleBackCourse(course, deviceIdentifier)}>
                     <View style={styles.backArrow}>
                       <Icon name="arrow-left" size={20} color="#000" />
@@ -262,7 +354,7 @@ const QuestionPage = ({ route }) => {
                     </View>
                   </TouchableOpacity>
                 ) : (
-                  // Render alternative content if course.course is undefined
+                  // if course.course is undefined, we came from the collab page 
                   <TouchableOpacity onPress={handleBackCollab}>
                   <View style={styles.backArrow}>
                     <Icon name="arrow-left" size={20} color="#000" />
@@ -294,7 +386,7 @@ const QuestionPage = ({ route }) => {
           </View>
     </View>
 
-        <ScrollView style={[styles.chatArea, {paddingBottom: '60%'}]}>
+        <ScrollView ref={messagesRef} style={[styles.chatArea, {paddingBottom: '60%'}]}>
           {renderMessages()}
         </ScrollView>
 
@@ -304,10 +396,12 @@ const QuestionPage = ({ route }) => {
             <TextInput
             style={styles.input}
             placeholder="Click to start typing…"
-            // value={text}
-            // onChangeText={(newText) => setText(newText)}
+            value={message}
+            onChangeText={(newMessage) => setText(newMessage)}
             />
-            <Icon name="paper-plane" size={25} color="#000" style={styles.cameraIcon} />
+            <TouchableOpacity onPress={() => handleMessageSend( course, question, message )}>
+              <Icon name="paper-plane" size={25} color="#000" style={styles.cameraIcon} />
+            </TouchableOpacity>
         </View>
 
         {isModalVisible && (
