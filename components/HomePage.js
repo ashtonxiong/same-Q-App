@@ -106,7 +106,7 @@ const HomePage = () => {
 
   return (
     <View style={styles.container}>
-      {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
+      <Text>Device identifier: {deviceIdentifier}</Text>
       <View style={styles.appBar}>
         <TouchableOpacity onPress={clickMenuModal}>
           <View style={styles.backArrow}>
