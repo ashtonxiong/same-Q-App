@@ -64,8 +64,12 @@ const App = () => {
             name="Home"
             component={MainStack}
             options={{
-              tabBarIcon: ({ color, size }) => (
-                <Icon name="home" size={size} color={"#000"} />
+              tabBarIcon: ({ color, size, focused }) => (
+                <Icon
+                  name="home"
+                  size={size}
+                  color={focused ? "#000" : "#9f6fdd"}
+                />
               ),
             }}
           />
@@ -73,8 +77,12 @@ const App = () => {
             name="Collaborating"
             component={CollabStackScreen}
             options={{
-              tabBarIcon: ({ color, size }) => (
-                <Icon name="people" size={size} color={"#000"} />
+              tabBarIcon: ({ color, size, focused }) => (
+                <Icon
+                  name="people"
+                  size={size}
+                  color={focused ? "#000" : "#9f6fdd"}
+                />
               ),
             }}
           />
@@ -82,8 +90,12 @@ const App = () => {
             name="Ask"
             component={AskPage}
             options={{
-              tabBarIcon: ({ color, size }) => (
-                <Icon name="plus" size={size} color={"#000"} />
+              tabBarIcon: ({ color, size, focused }) => (
+                <Icon
+                  name="plus"
+                  size={size}
+                  color={focused ? "#000" : "#9f6fdd"}
+                />
               ),
             }}
           />
@@ -91,8 +103,12 @@ const App = () => {
             name="Notifications"
             component={Notifications}
             options={{
-              tabBarIcon: ({ color, size }) => (
-                <Icon name="bell" size={size} color={"#000"} />
+              tabBarIcon: ({ color, size, focused }) => (
+                <Icon
+                  name="bell"
+                  size={size}
+                  color={focused ? "#000" : "#9f6fdd"}
+                />
               ),
             }}
           />
@@ -100,8 +116,12 @@ const App = () => {
             name="Account"
             component={Notifications}
             options={{
-              tabBarIcon: ({ color, size }) => (
-                <Icon name="settings" size={size} color={"#000"} />
+              tabBarIcon: ({ color, size, focused }) => (
+                <Icon
+                  name="settings"
+                  size={size}
+                  color={focused ? "#000" : "#9f6fdd"}
+                />
               ),
             }}
           />
