@@ -22,6 +22,7 @@ const CoursePage = ({ route }) => {
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
 
   const [questions, setQuestions] = useState([]);
+  const [defaultQuestions, setDefaultQuestions] = useState([]);
 
   const getQuestions = async () => {
     console.log("device id in getQuestions:", deviceIdentifier);
@@ -30,7 +31,8 @@ const CoursePage = ({ route }) => {
         .from("sameQ-app-questions")
         .select("*")
         .eq("course", courseName)
-        .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
+        // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
+        .eq("device_id", deviceIdentifier);
 
       if (error) {
         throw new Error(error.message);
@@ -49,7 +51,7 @@ const CoursePage = ({ route }) => {
           chats: item.chats,
           expected_help: item.expected_help,
         }));
-        console.log("in getQuestions 3");
+        console.log("in getQuestions 3", questionInfoArray);
 
         setQuestions(questionInfoArray);
       }
@@ -58,7 +60,45 @@ const CoursePage = ({ route }) => {
     }
   };
 
+  const getDefaultQuestions = async () => {
+    console.log("device id in getQuestions:", deviceIdentifier);
+    try {
+      const { data, error } = await supabase
+        .from("sameQ-app-questions")
+        .select("*")
+        .eq("course", courseName)
+        .eq("device_id", "000");
+      // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
+      // .eq("device_id", deviceIdentifier);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (data) {
+        // 'data' is an array of objects with 'id' and 'course' columns
+        const questionInfoArray = data.map((item) => ({
+          uid: item.uid,
+          course: item.course,
+          question: item.question,
+          created: item.created,
+          author: item.author,
+          num_collab: item.num_collaborators,
+          num_huddle: item.num_huddle,
+          chats: item.chats,
+          expected_help: item.expected_help,
+        }));
+        console.log("in getQuestions 3", questionInfoArray);
+
+        setDefaultQuestions(questionInfoArray);
+      }
+    } catch (error) {
+      console.error("Error fetching data from Supabase:", error.message);
+    }
+  };
+
   useEffect(() => {
+    getDefaultQuestions();
     getQuestions();
   }, []);
 
@@ -91,8 +131,9 @@ const CoursePage = ({ route }) => {
       );
     }
 
+    const combinedQuestions = [...questions, ...defaultQuestions];
     // sort the questions based on expected help time
-    const sortedQuestionsArray = [...questions].sort((a, b) => {
+    const sortedQuestionsArray = [...combinedQuestions].sort((a, b) => {
       const timeA = new Date(2000, 0, 1, ...parseTime(a.expected_help));
       const timeB = new Date(2000, 0, 1, ...parseTime(b.expected_help));
       return timeA - timeB;

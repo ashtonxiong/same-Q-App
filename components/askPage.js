@@ -6,9 +6,7 @@ import {
   TextInput,
   Modal,
   TouchableWithoutFeedback,
-  Keyboard,
   Dimensions,
-  TouchableHighlight,
 } from "react-native";
 // import DropDownPicker from "react-native-dropdown-picker";
 import { useNavigation } from "@react-navigation/native";
@@ -17,8 +15,11 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
 // import "react-native-get-random-values";
 import { supabase } from "../supabase";
+import { useDeviceIdentifier } from "./deviceID";
 
-const AskPage = () => {
+const AskPage = ({ route }) => {
+  const deviceIdentifier = useDeviceIdentifier();
+
   // TESTING SAVING QUESTION INFO
   const [questionInfo, setQuestionInfo] = useState({
     question: "",
@@ -32,6 +33,36 @@ const AskPage = () => {
     device_id: "",
     course: "",
   });
+
+  const addQuestion = async () => {
+    try {
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.toLocaleString("en-US", {
+        month: "long",
+      })} ${currentDate.getDate()}, ${currentDate.getFullYear()}, ${currentDate.toLocaleString(
+        "en-US",
+        { hour: "numeric", minute: "numeric", hour12: true }
+      )}`;
+
+      const { error } = await supabase.from("sameQ-app-questions").insert([
+        {
+          question: text,
+          author: "You",
+          num_collaborators: 1,
+          num_huddle: 0,
+          expected_help: "5:00 PM",
+          created: formattedDate,
+          collab_status: "TRUE",
+          device_id: deviceIdentifier,
+          course: selectedClass,
+        },
+      ]);
+
+      // setQuestions(questionInfoArray);
+    } catch (error) {
+      console.error("Error fetching data from Supabase:", error.message);
+    }
+  };
 
   // TESTING SAVING QUESTION INFO
   const { width, height } = Dimensions.get("window");
@@ -75,7 +106,7 @@ const AskPage = () => {
     "Tes2t",
     "Te3st",
   ]);
-  const [classes, setClasses] = useState(["CS 147", "CS 161", "English 9CE"]);
+  const [classes, setClasses] = useState(["CS 147", "CS 161", "ENGLISH 9CE"]);
   const [selectedClass, setSelectedClass] = useState("");
   const handleClassPress = (selectedClass) => {
     setSelectedClass(selectedClass);
@@ -255,33 +286,6 @@ const AskPage = () => {
             </TouchableOpacity>
             {/* ------ Private Question ----- */}
           </View>
-          {/* <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#FFFF",
-              paddingHorizontal: "10%",
-              paddingVertical: "1%",
-              borderRadius: 40,
-            }}
-            onPress={checkCS147}
-          >
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: "bold",
-                marginRight: "5%",
-              }}
-            >
-              CS 147
-            </Text>
-            {isCS147Checked ? (
-              <Icon name="check" size={18} color="green" />
-            ) : (
-              <Icon name="square-o" size={20} color="#5E42A6" />
-            )}
-          </TouchableOpacity> */}
         </View>
         <View
           style={{
@@ -293,6 +297,7 @@ const AskPage = () => {
         >
           <TouchableOpacity
             style={styles.submitQuestionButton}
+            onPress={addQuestion}
             //----- NEED TO ADD NAVIGATING TO A CLASSES OFFICE HOURS
             //----- CREATE CLASSES DROPDOWN FOR WHICH QUESTION TO ASK
           >
@@ -303,7 +308,7 @@ const AskPage = () => {
         <Modal transparent={true} visible={isModalVisible}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.menuModalOverlay}>
-              <TouchableWithoutFeedback onPress={() => {}}>
+              <TouchableWithoutFeedback onPress={() => addQuestion()}>
                 <View style={styles.menuModalContent}>
                   <Text style={styles.menuModalTEXT}>TEST</Text>
                 </View>

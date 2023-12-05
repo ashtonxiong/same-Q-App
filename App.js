@@ -25,6 +25,7 @@ const MainStack = () => {
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="QuestionPage" component={QuestionPage} />
       <Stack.Screen name="CollabPage" component={CollabPage} />
+      <Stack.Screen name="AskPage" component={AskPage} />
     </Stack.Navigator>
   );
 };
