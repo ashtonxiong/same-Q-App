@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Dimensions,
+  TouchableHighlight,
 } from "react-native";
 // import DropDownPicker from "react-native-dropdown-picker";
 import { useNavigation } from "@react-navigation/native";
@@ -37,56 +38,12 @@ const AskPage = () => {
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
   const [isModalVisible, setModalVisible] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [isCS147Checked, setIsCS147Checked] = useState(false);
   const [text, setText] = useState("");
-  // const [isLimitReachedModalVisible, setLimitReachedModalVisible] =
-  //   useState(false);
-  // const [selectedItem, setSelectedItem] = useState("");
-  const [classes, setClasses] = useState([
-    { name: "CS 147", isChecked: false },
-    { name: "CS 161", isChecked: false },
-    { name: "English 9CE", isChecked: false },
-    // ... other classes
-  ]);
+  const [isLimitReachedModalVisible, setLimitReachedModalVisible] =
+    useState(false);
   const characterLimit = 150;
   const navigation = useNavigation();
-
-  //----------check box classes
-  const [isCheckedClasses, setIsCheckedClasses] = useState(false);
-
-  const handleCheckboxToggleClass = (classItem) => {};
-
-  const classCheckBoxes = () => {
-    return classes.map((classItem) => (
-      <View>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: 10,
-          }}
-          onPress={handleCheckboxToggleClass}
-        >
-          <Text
-            style={{
-              fontSize: 13,
-              fontWeight: "bold",
-              marginRight: "5%",
-            }}
-          >
-            {classItem.name}
-          </Text>
-          {classItem.isChecked ? (
-            <Icon name="check" size={18} color="green" />
-          ) : (
-            <Icon name="square-o" size={20} color="#5E42A6" />
-          )}
-        </TouchableOpacity>
-      </View>
-    ));
-  };
-  //----------check box classes
 
   const handleCheckboxToggle = () => {
     setIsChecked(!isChecked);
@@ -108,6 +65,7 @@ const AskPage = () => {
     setLimitReachedModalVisible(false);
   };
 
+  const [selectedTags, setSelectedTags] = useState([]);
   const [tags, setTags] = useState([
     "Homework",
     "Lecture",
@@ -117,7 +75,39 @@ const AskPage = () => {
     "Tes2t",
     "Te3st",
   ]);
-  const [editable, setEditable] = useState(false);
+  const [classes, setClasses] = useState(["CS 147", "CS 161", "English 9CE"]);
+  const [selectedClass, setSelectedClass] = useState("");
+  const handleClassPress = (selectedClass) => {
+    setSelectedClass(selectedClass);
+  };
+
+  const renderClasses = () => {
+    return classes.map((classItem) => (
+      <TouchableOpacity
+        key={classItem}
+        onPress={() => handleClassPress(classItem)}
+      >
+        <View
+          style={[
+            styles.tagButton,
+            selectedClass === classItem && styles.selectedTag, // Apply selectedTag style conditionally
+          ]}
+        >
+          <Text
+            style={[
+              {
+                color: selectedClass.includes(classItem) ? "white" : "black",
+                fontSize: 14,
+                fontWeight: 600,
+              }, // Set text color conditionally
+            ]}
+          >
+            {classItem}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    ));
+  };
 
   const clickMenuModal = () => {
     setModalVisible(!isModalVisible);
@@ -175,7 +165,8 @@ const AskPage = () => {
     );
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <View style={{ backgroundColor: "#DDCFFF", flex: 1 }}>
+      {/* <TouchableHighlight onPress={Keyboard.dismiss} style={{}}> */}
       <View style={styles.container}>
         <View style={styles.appBar}>
           <TouchableOpacity onPress={clickMenuModal}>
@@ -189,13 +180,25 @@ const AskPage = () => {
         </View>
 
         <View style={styles.tagsContainer}>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              alignItems: "center",
+              margin: 10 * scaleFactor,
+              paddingTop: 20 * scaleFactor,
+            }}
+          >
+            <Text style={{ fontSize: 20 * scaleFactor }}>Select Class</Text>
+            <View style={{ flexDirection: "row" }}>{renderClasses()}</View>
+          </View>
           <View style={styles.tags}>
             <Text style={{ paddingRight: "5%", fontSize: 20 }}> Tags:</Text>
             {renderTags()}
           </View>
         </View>
 
-        <View style={styles.questionBoxContainer}>
+        <View style={[styles.questionBoxContainer]}>
           <View style={[styles.questionInput, { borderColor: borderColor }]}>
             <TextInput
               multiline
@@ -223,7 +226,6 @@ const AskPage = () => {
             >
               <Text style={{ fontSize: 15 * scaleFactor, marginTop: "5%" }}>
                 {errorMessage}
-                {/* Character Limit: {text.length}/{characterLimit} */}
               </Text>
             </View>
             {/* ------ Private Question ----- */}
@@ -253,14 +255,33 @@ const AskPage = () => {
             </TouchableOpacity>
             {/* ------ Private Question ----- */}
           </View>
-          <View
+          {/* <TouchableOpacity
             style={{
               flexDirection: "row",
               justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#FFFF",
+              paddingHorizontal: "10%",
+              paddingVertical: "1%",
+              borderRadius: 40,
             }}
+            onPress={checkCS147}
           >
-            {/* {classCheckBoxes()} */}
-          </View>
+            <Text
+              style={{
+                fontSize: 13,
+                fontWeight: "bold",
+                marginRight: "5%",
+              }}
+            >
+              CS 147
+            </Text>
+            {isCS147Checked ? (
+              <Icon name="check" size={18} color="green" />
+            ) : (
+              <Icon name="square-o" size={20} color="#5E42A6" />
+            )}
+          </TouchableOpacity> */}
         </View>
         <View
           style={{
@@ -291,7 +312,8 @@ const AskPage = () => {
           </TouchableWithoutFeedback>
         </Modal>
       </View>
-    </TouchableWithoutFeedback>
+      {/* </TouchableHighlight> */}
+    </View>
   );
 };
 

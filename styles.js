@@ -509,8 +509,9 @@ const styles = StyleSheet.create({
 
   // ------ Ask Page  --------
   tagsContainer: {
-    height: 0.15 * screenHeight,
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
+    height: 0.2 * screenHeight,
+    // justifyContent: "flex-end",
     flexWrap: "wrap",
   },
   tags: {
