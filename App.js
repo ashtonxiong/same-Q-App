@@ -31,71 +31,71 @@ const MainStack = () => {
 
 const App = () => {
   return (
-    // <DeviceIdentifierProvider>
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarActiveTintColor: "#000",
-          tabBarInactiveTintColor: "#9f6fdd",
-          tabBarStyle: [
-            {
-              display: "flex",
-              backgroundColor: "white",
-              height: "10%",
-            },
-            null,
-          ],
-        }}
-      >
-        <Tab.Screen
-          name="Home"
-          component={MainStack}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="home" size={size} color={"#000"} />
-            ),
+    <DeviceIdentifierProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarActiveTintColor: "#000",
+            tabBarInactiveTintColor: "#9f6fdd",
+            tabBarStyle: [
+              {
+                display: "flex",
+                backgroundColor: "white",
+                height: "10%",
+              },
+              null,
+            ],
           }}
-        />
-        <Tab.Screen
-          name="Collaborating"
-          component={CollabPage}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="people" size={size} color={"#000"} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Ask"
-          component={AskPage}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="plus" size={size} color={"#000"} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Notifications"
-          component={Notifications}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="bell" size={size} color={"#000"} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Account"
-          component={Notifications}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="settings" size={size} color={"#000"} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
-    // {/* </DeviceIdentifierProvider> */}
+        >
+          <Tab.Screen
+            name="Home"
+            component={MainStack}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name="home" size={size} color={"#000"} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Collaborating"
+            component={CollabPage}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name="people" size={size} color={"#000"} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Ask"
+            component={AskPage}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name="plus" size={size} color={"#000"} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Notifications"
+            component={Notifications}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name="bell" size={size} color={"#000"} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Account"
+            component={Notifications}
+            options={{
+              tabBarIcon: ({ color, size }) => (
+                <Icon name="settings" size={size} color={"#000"} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </DeviceIdentifierProvider>
   );
 };
 
