@@ -52,6 +52,7 @@ const AskPage = ({ route }) => {
         setIsQuestion(false);
         return;
       }
+      // setIsQuestion(false);
 
       const currentDate = new Date();
       const formattedDate = `${currentDate.toLocaleString("en-US", {
@@ -76,9 +77,9 @@ const AskPage = ({ route }) => {
       ]);
 
       // setQuestions(questionInfoArray);
-      setText("");
-      setSelectedClass("");
-      setSelectedTags([]);
+      await setText("");
+      await setSelectedClass("");
+      await setSelectedTags([]);
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
     }
@@ -98,14 +99,15 @@ const AskPage = ({ route }) => {
       // Show the modal when the character limit is reached
       setLimitReachedModalVisible(true);
     } else {
-      // Update the text state with the inputText
+      setText(inputText);
       if (inputText.length > 0) {
         setIsQuestion(true);
       }
-      if (inputText.length === 0) {
-        setIsQuestion(false);
+      if (inputText.length === 0 && isQuestion) {
+        setIsQuestion(true);
+      } else {
+        setIsCS147Checked(false);
       }
-      setText(inputText);
     }
   };
 
@@ -115,15 +117,7 @@ const AskPage = ({ route }) => {
   };
 
   const [selectedTags, setSelectedTags] = useState([]);
-  const [tags, setTags] = useState([
-    "Homework",
-    "Lecture",
-    "General",
-    "Test",
-    "Test1",
-    "Tes2t",
-    "Te3st",
-  ]);
+  const [tags, setTags] = useState(["Homework", "Lecture", "General"]);
   const [classes, setClasses] = useState(["CS 147", "CS 161", "ENGLISH 9CE"]);
   const [selectedClass, setSelectedClass] = useState("");
   const [isClassSelected, setIsClassSelected] = useState(true);
@@ -218,7 +212,7 @@ const AskPage = ({ route }) => {
     );
 
   const noClassSelected = () => {
-    return !isClassSelected ? (
+    return isClassSelected === false ? (
       <Text style={{ color: "red", fontSize: 20 * scaleFactor }}>
         Please select a class
       </Text>
@@ -228,8 +222,10 @@ const AskPage = ({ route }) => {
   };
 
   const noQuestion = () => {
-    return isQuestion === false ? (
-      <Text style={{ color: "red", fontSize: 20 * scaleFactor }}>
+    return isQuestion === false && text.length === 0 ? (
+      <Text
+        style={{ color: "red", fontSize: 20 * scaleFactor, fontWeight: "bold" }}
+      >
         Please Type a Question
       </Text>
     ) : (
@@ -346,11 +342,19 @@ const AskPage = ({ route }) => {
           style={{
             flex: 1,
             alignItems: "center",
-            justifyContent: "flex-end",
             paddingBottom: "7%",
           }}
         >
-          {noQuestion()}
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "flex-end",
+              paddingBottom: "5%",
+            }}
+          >
+            {noQuestion()}
+          </View>
           <TouchableOpacity
             style={styles.submitQuestionButton}
             onPress={addQuestion}

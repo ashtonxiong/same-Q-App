@@ -6,7 +6,12 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { useNavigation, useIsFocused } from "@react-navigation/native";
+// import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import {
+  useNavigation,
+  useIsFocused,
+  useFocusEffect,
+} from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { supabase } from "../supabase";
@@ -68,6 +73,11 @@ const CollabPage = () => {
       console.error("Error fetching data from Supabase:", error.message);
     }
   };
+
+  useFocusEffect(() => {
+    // Fetch or update data when the component comes into focus
+    getCollabQuestions();
+  });
 
   useEffect(() => {}, [coursesArray]);
 
