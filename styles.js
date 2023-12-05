@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   // ----------ALL----------
   container: {
     flex: 1,
-    backgroundColor: "#DDCFFF",
+    backgroundColor: "#f2ecff",
   },
   tabBarContainer: {
     backgroundColor: "white",
@@ -42,6 +42,10 @@ const styles = StyleSheet.create({
   backArrow: {
     flexDirection: "row",
     justifyContent: "left",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   headerContainer: {
     flex: 1,
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
   menuModalContent: {
     width: screenWidth * 0.7,
     height: screenHeight,
-    backgroundColor: "#9f6fdd",
+    backgroundColor: "#DDCFFF",
     borderRadius: 20, // round corners
   },
   menuModalTEXT: {
@@ -272,6 +276,10 @@ const styles = StyleSheet.create({
     padding: 5,
     width: "30%",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   queueButtonText: {
     color: "white",
@@ -292,7 +300,7 @@ const styles = StyleSheet.create({
   grayMessage: {
     borderRadius: 10,
     padding: 10,
-    backgroundColor: "gray",
+    backgroundColor: "white",
     maxWidth: "50%",
   },
   grayMessageInitials: {
@@ -312,13 +320,16 @@ const styles = StyleSheet.create({
   purpleMessage: {
     borderRadius: 10,
     padding: 10,
-    backgroundColor: "#b986ee",
+    backgroundColor: "#B74E91",
     maxWidth: "50%",
     marginRight: 5,
   },
   purpleTextMessageTime: {
     textAlign: "right",
     paddingRight: "4%",
+  },
+  purpleMessageText: {
+    color: 'white',
   },
   emptyChat: {
     textAlign: "center",
@@ -337,7 +348,7 @@ const styles = StyleSheet.create({
     width: screenWidth * 0.8,
     height: 500,
     padding: 25,
-    backgroundColor: "#CFB8E9",
+    backgroundColor: "white",
     borderRadius: 20, // round corners
     borderColor: "black",
     borderWidth: 2,
@@ -359,9 +370,13 @@ const styles = StyleSheet.create({
   modalCollabUncollabTEXT: {
     width: 175,
     borderRadius: 20,
-    backgroundColor: "black",
+    backgroundColor: "#5E42A6",
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   modalCollabUncollab: {
     flex: 1,
@@ -373,6 +388,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginLeft: "5%",
     marginTop: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   cancelTEXT: {
     fontSize: 18,
@@ -454,20 +473,28 @@ const styles = StyleSheet.create({
   collabContainer: {
     marginTop: "20%",
     height: "100%",
+    borderColor: 'pink',
+    borderWidth: 5,
   },
   collabHeader: {
     marginBottom: 25,
+    borderColor: 'black',
+    borderWidth: 3,
   },
   collabBox: {
-    padding: 10,
+    padding: 5,
     margin: 10,
     width: screenWidth * 0.95,
     borderWidth: 2,
-    borderColor: "#000",
+    borderColor: "#5E42A6",
     borderRadius: 10,
-    backgroundColor: "#b986ee",
+    backgroundColor: "white",
     justifyContent: "space-between",
-    maxHeight: "25%",
+    height: screenWidth * 0.25,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   collabTopRow: {
     flexDirection: "row",

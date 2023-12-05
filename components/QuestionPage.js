@@ -30,7 +30,7 @@ const QuestionPage = ({ route }) => {
   const [chatsArray, setChatsArray] = useState([]);
   const [defaultChatsArray, setDefaultChatsArray] = useState([]);
   const [message, setText] = useState("");
-  const messagesRef = useRef();
+  const messagesRef = useRef(null);
   const isFocused = useIsFocused();
 
   const [collabStatus, setCollabStatus] = useState(["Collaborate"]);
@@ -201,36 +201,7 @@ const QuestionPage = ({ route }) => {
     } catch (error) {
       console.error("Error deleting data from Supabase:", error.message);
     }
-    // } catch (error) {
-    //   console.error("Error fetching data from Supabase:", error.message);
-    // }
   };
-
-  // const addCollab = async (course, questionText) => {
-  //   try {
-  //     console.log("course to add:", course.course);
-  //     console.log("question to add:", questionText);
-  //     const { error } = await supabase
-  //       .from("sameQ-collab")
-  //       .insert([{ course: course.course, question: questionText }]);
-  //   } catch (error) {
-  //     console.error("Error adding data into Supabase:", error.message);
-  //   }
-  // };
-
-  // const deleteCollab = async (course, questionText) => {
-  //   try {
-  //     console.log("course to delete:", course.course);
-  //     console.log("question to delete:", questionText);
-  //     const { error } = await supabase
-  //       .from("sameQ-collab")
-  //       .delete()
-  //       .eq("course", course.course)
-  //       .eq("question", questionText);
-  //   } catch (error) {
-  //     console.error("Error deleting data from Supabase:", error.message);
-  //   }
-  // };
 
   const getCollabStatus = async () => {
     try {
@@ -351,7 +322,7 @@ const QuestionPage = ({ route }) => {
           <View key={chat.timeSent} style={styles.messageAndTimeContainer}>
             <View style={[styles.purpleTextMessageContainer]}>
               <View style={styles.purpleMessage}>
-                <Text>{chat.message}</Text>
+                <Text style={styles.purpleMessageText}>{chat.message}</Text>
               </View>
             </View>
             <Text style={styles.purpleTextMessageTime}>{chat.timeSent}</Text>
@@ -400,27 +371,11 @@ const QuestionPage = ({ route }) => {
       );
 
       await addMessage(course, question, message);
+      setText("");
     } catch (error) {
       console.error("Error sending message:", error.message);
     }
   };
-
-  // const handleMessageSend = async (course, question, message) => {
-  //   try {
-  //     console.log(
-  //       "Sending new message:",
-  //       message,
-  //       "to course:",
-  //       course.course,
-  //       "in question:",
-  //       question.question
-  //     );
-
-  //     await addMessage(course, question, message);
-  //   } catch (error) {
-  //     console.error("Error sending message:", error.message);
-  //   }
-  // };
 
   const clickMoreModal = () => {
     Keyboard.dismiss();
