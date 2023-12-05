@@ -59,6 +59,7 @@ const AskPage = ({ route }) => {
       ]);
 
       // setQuestions(questionInfoArray);
+      setText("");
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
     }
