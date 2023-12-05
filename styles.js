@@ -587,6 +587,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#5E42A6", // Apply your desired background color for selected tags
     borderColor: "white",
   },
+  submissionModal: {
+    ...StyleSheet.absoluteFillObject, // apply fill to custom modal
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // value for transparency
+  },
+  submissionModalContent: {
+    width: screenWidth * 0.7,
+    height: screenHeight * 0.5,
+    backgroundColor: "#DDCFFF",
+    borderRadius: 20, // round corners
+  },
+  submissionModalTEXT: {
+    marginTop: "75%",
+    textAlign: "center",
+  },
   // ------ Ask Page  --------
 });
 

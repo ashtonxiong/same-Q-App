@@ -25,8 +25,8 @@ const QuestionPage = ({ route }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [bottomMargin, setBottomMargin] = useState(0);
 
-  const questionText = question.question;
-  const courseName = course.course;
+  // const questionText = question.question;
+  // const courseName = course.course;
   const [chatsArray, setChatsArray] = useState([]);
   const [defaultChatsArray, setDefaultChatsArray] = useState([]);
   const [message, setText] = useState("");
@@ -34,7 +34,6 @@ const QuestionPage = ({ route }) => {
   const isFocused = useIsFocused();
 
   const [collabStatus, setCollabStatus] = useState(["Collaborate"]);
-  console.log("TEST PARAMS ON QUESTION", prevPage);
 
   const getChats = async () => {
     try {
@@ -212,6 +211,7 @@ const QuestionPage = ({ route }) => {
         .eq("question", question.question)
         .eq("device_id", deviceIdentifier);
 
+      // console.log("TEST DATA ON ASK QUESTION INFO", question.question);
       if (data && data.length > 0) {
         setCollabStatus([
           data[0].collab_status ? "Uncollaborate" : "Collaborate",
@@ -238,9 +238,9 @@ const QuestionPage = ({ route }) => {
 
   useFocusEffect(
     React.useCallback(() => {
+      getCollabStatus(); // fetch the collaboration status when navigating back into modal
       getDefaultChats();
       getChats();
-      getCollabStatus(); // fetch the collaboration status when navigating back into modal
     }, [])
   );
 

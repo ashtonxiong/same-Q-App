@@ -28,8 +28,14 @@ const AskPage = ({ route }) => {
   const [isLimitReachedModalVisible, setLimitReachedModalVisible] =
     useState(false);
 
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [tags, setTags] = useState(["Homework", "Lecture", "General"]);
+  const [classes, setClasses] = useState(["CS 147", "CS 161", "ENGLISH 9CE"]);
+  const [selectedClass, setSelectedClass] = useState("");
+  const [isClassSelected, setIsClassSelected] = useState(true);
+
   // -------- SEND QUESTION TO DATABASE ------
-  const [questionInfo, setQuestionInfo] = useState({
+  const [classObject, setClassObject] = useState({
     question: "",
     author: "",
     num_collaborators: 0,
@@ -76,15 +82,33 @@ const AskPage = ({ route }) => {
         },
       ]);
 
+      const info = {
+        question: text,
+        author: "You",
+        num_collaborators: 1,
+        num_huddle: 0,
+        expected_help: "5:00 PM",
+        created: formattedDate,
+        collab_status: "TRUE",
+        device_id: deviceIdentifier,
+        course: selectedClass,
+      };
+      setClassObject(info);
+
       // setQuestions(questionInfoArray);
-      await setText("");
-      await setSelectedClass("");
-      await setSelectedTags([]);
+      openSubmission();
+      setText("");
+      setSelectedClass("");
+      setSelectedTags([]);
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
     }
   };
   // -------- SEND QUESTION TO DATABASE ------
+
+  useEffect(() => {
+    console.log("Updated CLASS OBJECT", classObject);
+  }, [classObject]);
 
   const characterLimit = 150;
   const navigation = useNavigation();
@@ -111,16 +135,6 @@ const AskPage = ({ route }) => {
     }
   };
 
-  const handleCloseModal = () => {
-    // Close the modal
-    setLimitReachedModalVisible(false);
-  };
-
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [tags, setTags] = useState(["Homework", "Lecture", "General"]);
-  const [classes, setClasses] = useState(["CS 147", "CS 161", "ENGLISH 9CE"]);
-  const [selectedClass, setSelectedClass] = useState("");
-  const [isClassSelected, setIsClassSelected] = useState(true);
   const handleClassPress = (selectedClass) => {
     setSelectedClass(selectedClass);
     if (!isClassSelected) {
@@ -128,6 +142,43 @@ const AskPage = ({ route }) => {
     }
   };
 
+  const clickMenuModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const [isSubmissionVisible, setIsSubmissionVisible] = useState(false);
+
+  const openSubmission = () => {
+    setIsSubmissionVisible(!isSubmissionVisible);
+  };
+  const closeSubmission = () => {
+    setIsSubmissionVisible(false);
+  };
+
+  const handleTagPress = (tag) => {
+    // Check if the tag is already selected
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(
+        selectedTags.filter((selectedTag) => selectedTag !== tag)
+      );
+    } else {
+      // Tag is not selected, add it to the selected tags
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
+
+  const handleViewQuestion = (course, question, deviceIdentifier, prevPage) => {
+    console.log(`Navigating to QuestionPage with question: ${question}`);
+    navigation.navigate("QuestionPage", {
+      course,
+      question,
+      deviceIdentifier,
+      prevPage,
+    });
+  };
   const renderClasses = () => {
     return classes.map((classItem) => (
       <TouchableOpacity
@@ -154,26 +205,6 @@ const AskPage = ({ route }) => {
         </View>
       </TouchableOpacity>
     ));
-  };
-
-  const clickMenuModal = () => {
-    setModalVisible(!isModalVisible);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-
-  const handleTagPress = (tag) => {
-    // Check if the tag is already selected
-    if (selectedTags.includes(tag)) {
-      setSelectedTags(
-        selectedTags.filter((selectedTag) => selectedTag !== tag)
-      );
-    } else {
-      // Tag is not selected, add it to the selected tags
-      setSelectedTags([...selectedTags, tag]);
-    }
   };
 
   const renderTags = () => {
@@ -373,6 +404,77 @@ const AskPage = ({ route }) => {
                   <Text style={styles.menuModalTEXT}>TEST</Text>
                 </View>
               </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+
+        <Modal transparent={true} visible={isSubmissionVisible}>
+          <TouchableWithoutFeedback onPress={closeSubmission}>
+            <View style={styles.submissionModal}>
+              {/* <TouchableWithoutFeedback onPress={() => addQuestion()}> */}
+              <View
+                style={[
+                  styles.submissionModalContent,
+                  { flexDirection: "column" },
+                ]}
+              >
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "50%",
+                  }}
+                >
+                  <Text style={{ fontSize: 20 * scaleFactor }}>
+                    Question addded to Queue
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    height: "100%",
+                    paddingBottom: "10%",
+                  }}
+                  // onPress={navigation.navigate("QuestionPage", {
+                  //   course: classObject.course,
+                  //   question: classObject.question,
+                  //   deviceIdentifier: deviceIdentifier,
+                  //   prevPage: "AskPage",
+                  // })}
+                  onPress={() =>
+                    handleViewQuestion(
+                      classObject,
+                      classObject,
+                      deviceIdentifier,
+                      "CollabPage"
+                    )
+                  }
+                >
+                  <View
+                    style={{
+                      borderColor: "white",
+                      borderWidth: 1,
+                      paddingHorizontal: "5%",
+                      paddingVertical: "1%",
+                      borderRadius: 10,
+                      backgroundColor: "white",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#5E42A6",
+                        fontSize: 15 * scaleFactor,
+                      }}
+                    >
+                      View Question
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              {/* </TouchableWithoutFeedback> */}
             </View>
           </TouchableWithoutFeedback>
         </Modal>
