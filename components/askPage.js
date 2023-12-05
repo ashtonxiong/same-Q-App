@@ -13,14 +13,22 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/FontAwesome";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
-// import "react-native-get-random-values";
 import { supabase } from "../supabase";
 import { useDeviceIdentifier } from "./deviceID";
 
 const AskPage = ({ route }) => {
   const deviceIdentifier = useDeviceIdentifier();
+  const { width, height } = Dimensions.get("window");
+  const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isCS147Checked, setIsCS147Checked] = useState(false);
+  const [text, setText] = useState("");
+  const [isQuestion, setIsQuestion] = useState(true);
+  const [isLimitReachedModalVisible, setLimitReachedModalVisible] =
+    useState(false);
 
-  // TESTING SAVING QUESTION INFO
+  // -------- SEND QUESTION TO DATABASE ------
   const [questionInfo, setQuestionInfo] = useState({
     question: "",
     author: "",
@@ -36,6 +44,15 @@ const AskPage = ({ route }) => {
 
   const addQuestion = async () => {
     try {
+      if (selectedClass === "") {
+        setIsClassSelected(false);
+        return;
+      }
+      if (text.length === 0) {
+        setIsQuestion(false);
+        return;
+      }
+
       const currentDate = new Date();
       const formattedDate = `${currentDate.toLocaleString("en-US", {
         month: "long",
@@ -60,20 +77,14 @@ const AskPage = ({ route }) => {
 
       // setQuestions(questionInfoArray);
       setText("");
+      setSelectedClass("");
+      setSelectedTags([]);
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
     }
   };
+  // -------- SEND QUESTION TO DATABASE ------
 
-  // TESTING SAVING QUESTION INFO
-  const { width, height } = Dimensions.get("window");
-  const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [isCS147Checked, setIsCS147Checked] = useState(false);
-  const [text, setText] = useState("");
-  const [isLimitReachedModalVisible, setLimitReachedModalVisible] =
-    useState(false);
   const characterLimit = 150;
   const navigation = useNavigation();
 
@@ -88,6 +99,12 @@ const AskPage = ({ route }) => {
       setLimitReachedModalVisible(true);
     } else {
       // Update the text state with the inputText
+      if (inputText.length > 0) {
+        setIsQuestion(true);
+      }
+      if (inputText.length === 0) {
+        setIsQuestion(false);
+      }
       setText(inputText);
     }
   };
@@ -109,8 +126,12 @@ const AskPage = ({ route }) => {
   ]);
   const [classes, setClasses] = useState(["CS 147", "CS 161", "ENGLISH 9CE"]);
   const [selectedClass, setSelectedClass] = useState("");
+  const [isClassSelected, setIsClassSelected] = useState(true);
   const handleClassPress = (selectedClass) => {
     setSelectedClass(selectedClass);
+    if (!isClassSelected) {
+      setIsClassSelected(!isClassSelected);
+    }
   };
 
   const renderClasses = () => {
@@ -196,6 +217,26 @@ const AskPage = ({ route }) => {
       </Text>
     );
 
+  const noClassSelected = () => {
+    return !isClassSelected ? (
+      <Text style={{ color: "red", fontSize: 20 * scaleFactor }}>
+        Please select a class
+      </Text>
+    ) : (
+      <Text></Text>
+    );
+  };
+
+  const noQuestion = () => {
+    return isQuestion === false ? (
+      <Text style={{ color: "red", fontSize: 20 * scaleFactor }}>
+        Please Type a Question
+      </Text>
+    ) : (
+      <Text></Text>
+    );
+  };
+
   return (
     <View style={{ backgroundColor: "#DDCFFF", flex: 1 }}>
       {/* <TouchableHighlight onPress={Keyboard.dismiss} style={{}}> */}
@@ -214,17 +255,30 @@ const AskPage = ({ route }) => {
         <View style={styles.tagsContainer}>
           <View
             style={{
+              // borderWidth: 2,
+              alignItems: "center",
+              flex: 1,
+              justifyContent: "flex-end",
+            }}
+          >
+            {noClassSelected()}
+          </View>
+          <View
+            style={{
+              // borderWidth: 2,
               width: "100%",
               flexDirection: "row",
               alignItems: "center",
-              margin: 10 * scaleFactor,
+              margin: 5 * scaleFactor,
+              // marginBottom: 5 * scaleFactor,
               paddingTop: 20 * scaleFactor,
+              paddingBottom: 10 * scaleFactor,
             }}
           >
             <Text style={{ fontSize: 20 * scaleFactor }}>Select Class</Text>
             <View style={{ flexDirection: "row" }}>{renderClasses()}</View>
           </View>
-          <View style={styles.tags}>
+          <View style={[styles.tags]}>
             <Text style={{ paddingRight: "5%", fontSize: 20 }}> Tags:</Text>
             {renderTags()}
           </View>
@@ -296,6 +350,7 @@ const AskPage = ({ route }) => {
             paddingBottom: "7%",
           }}
         >
+          {noQuestion()}
           <TouchableOpacity
             style={styles.submitQuestionButton}
             onPress={addQuestion}
