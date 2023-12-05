@@ -22,11 +22,21 @@ const CollabPage = () => {
 
   const deviceIdentifier = useDeviceIdentifier();
 
-  const handleQuestionPress = (course, question, deviceIdentifier) => {
+  const handleQuestionPress = (
+    course,
+    question,
+    deviceIdentifier,
+    prevPage
+  ) => {
     console.log(
       `Navigating to QuestionPage with question: ${question.question}`
     );
-    navigation.navigate("QuestionPage", { course, question, deviceIdentifier });
+    navigation.navigate("QuestionPage", {
+      course,
+      question,
+      deviceIdentifier,
+      prevPage,
+    });
   };
 
   const getCollabQuestions = async () => {
@@ -123,7 +133,14 @@ const CollabPage = () => {
       <TouchableOpacity
         key={question.uid}
         style={styles.collabBox}
-        onPress={() => handleQuestionPress(coursesArray, question, deviceIdentifier)}
+        onPress={() =>
+          handleQuestionPress(
+            coursesArray,
+            question,
+            deviceIdentifier,
+            "CollabPage"
+          )
+        }
       >
         {/* top row */}
         <Text>{question.course}</Text>

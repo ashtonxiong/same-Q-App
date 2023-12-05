@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
     paddingRight: "4%",
   },
   purpleMessageText: {
-    color: 'white',
+    color: "white",
   },
   emptyChat: {
     textAlign: "center",
@@ -473,13 +473,13 @@ const styles = StyleSheet.create({
   collabContainer: {
     marginTop: "20%",
     height: "100%",
-    borderColor: 'pink',
-    borderWidth: 5,
+    // borderColor: 'pink',
+    // borderWidth: 5,
   },
   collabHeader: {
     marginBottom: 25,
-    borderColor: 'black',
-    borderWidth: 3,
+    // borderColor: "black",
+    // borderWidth: 3,
   },
   collabBox: {
     padding: 5,

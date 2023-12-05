@@ -30,6 +30,17 @@ const MainStack = () => {
   );
 };
 
+const CollabStack = createStackNavigator();
+
+const CollabStackScreen = () => {
+  return (
+    <CollabStack.Navigator screenOptions={{ headerShown: false }}>
+      <CollabStack.Screen name="CollabPage" component={CollabPage} />
+      <CollabStack.Screen name="QuestionPage" component={QuestionPage} />
+    </CollabStack.Navigator>
+  );
+};
+
 const App = () => {
   return (
     <DeviceIdentifierProvider>
@@ -60,7 +71,7 @@ const App = () => {
           />
           <Tab.Screen
             name="Collaborating"
-            component={CollabPage}
+            component={CollabStackScreen}
             options={{
               tabBarIcon: ({ color, size }) => (
                 <Icon name="people" size={size} color={"#000"} />

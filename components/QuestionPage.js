@@ -21,7 +21,7 @@ import { supabase } from "../supabase";
 const { parse, getTime } = require("date-fns");
 
 const QuestionPage = ({ route }) => {
-  const { question, course, deviceIdentifier } = route.params;
+  const { question, course, deviceIdentifier, prevPage } = route.params;
   const [isModalVisible, setModalVisible] = useState(false);
   const [bottomMargin, setBottomMargin] = useState(0);
 
@@ -34,6 +34,7 @@ const QuestionPage = ({ route }) => {
   const isFocused = useIsFocused();
 
   const [collabStatus, setCollabStatus] = useState(["Collaborate"]);
+  console.log("TEST PARAMS ON QUESTION", prevPage);
 
   const getChats = async () => {
     try {
@@ -351,7 +352,11 @@ const QuestionPage = ({ route }) => {
 
   const handleBackCourse = (course, deviceIdentifier) => {
     console.log(`Navigating to CoursePage with course: ${course.course}`);
-    navigation.navigate("CoursePage", { course, deviceIdentifier });
+    if (prevPage === "CollabPage") {
+      navigation.navigate("CollabPage", { course, deviceIdentifier });
+    } else {
+      navigation.navigate("CoursePage", { course, deviceIdentifier });
+    }
   };
 
   const handleBackCollab = () => {
@@ -431,13 +436,13 @@ const QuestionPage = ({ route }) => {
             <Text style={[styles.questionHost, { fontWeight: "bold" }]}>
               Asked by: {question.author}
             </Text>
-            <View style={styles.numInHuddle}>
+            <View style={[styles.numInHuddle]}>
               <Text style={{ fontSize: 20 }}> {question.num_huddle} </Text>
               <Icon
                 name="earphones"
                 size={25}
                 color="#000"
-                style={styles.emojiIcon}
+                style={[styles.emojiIcon, {}]}
               />
             </View>
           </View>

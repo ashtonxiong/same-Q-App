@@ -102,11 +102,16 @@ const CoursePage = ({ route }) => {
     getQuestions();
   }, []);
 
-  const handleCollabPress = (course, question, deviceIdentifier) => {
+  const handleCollabPress = (course, question, deviceIdentifier, prevPage) => {
     console.log(
       `Navigating to QuestionPage with question: ${question.question}`
     );
-    navigation.navigate("QuestionPage", { course, question, deviceIdentifier });
+    navigation.navigate("QuestionPage", {
+      course,
+      question,
+      deviceIdentifier,
+      prevPage,
+    });
   };
 
   const handleBackHome = (home) => {
@@ -185,7 +190,12 @@ const CoursePage = ({ route }) => {
           <TouchableOpacity
             style={styles.queueButton}
             onPress={() =>
-              handleCollabPress(course, question, deviceIdentifier)
+              handleCollabPress(
+                course,
+                question,
+                deviceIdentifier,
+                "CoursePage"
+              )
             }
           >
             <Text style={styles.queueButtonText}> View </Text>
@@ -196,7 +206,7 @@ const CoursePage = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
       <View style={styles.appBar}>
         <TouchableOpacity onPress={handleBackHome}>
@@ -268,7 +278,12 @@ const CoursePage = ({ route }) => {
           </View>
         </View>
 
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <ScrollView
+          contentContainerStyle={[
+            styles.scrollContainer,
+            { paddingBottom: "65%" },
+          ]}
+        >
           {renderQuestions()}
         </ScrollView>
       </View>
