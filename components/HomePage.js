@@ -10,14 +10,12 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import "react-native-get-random-values";
-import { v4 as uuidv4 } from "uuid";
 import { supabase } from "../supabase";
 import { useDeviceIdentifier } from "./deviceID";
 
 const HomePage = () => {
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
-  // const [deviceIdentifier, setDeviceIdentifier] = useState('');
 
   const handleJoinPress = (course, deviceIdentifier) => {
     console.log(`Navigating to CoursePage with course: ${course.course}`);
@@ -50,7 +48,6 @@ const HomePage = () => {
         .eq("status", "TRUE");
 
       if (data) {
-        // Now 'data' is an array of objects with 'id' and 'course' columns
         const coursesArray = data.map((item) => ({
           id: item.id,
           course: item.course,
@@ -97,9 +94,6 @@ const HomePage = () => {
   const deviceIdentifier = useDeviceIdentifier();
 
   useEffect(() => {
-    // const generatedDeviceId = uuidv4();
-    // setDeviceIdentifier(generatedDeviceId);
-
     getActive();
     getInactive();
   }, []);
