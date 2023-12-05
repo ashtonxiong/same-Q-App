@@ -123,7 +123,7 @@ const CoursePage = ({ route }) => {
   };
 
   const renderQuestions = () => {
-    if (questions.length === 0) {
+    if (questions.length === 0 && defaultQuestions.length === 0) {
       return (
         <Text style={styles.emptyChat}>
           Be the first one to ask a question!
