@@ -79,8 +79,6 @@ const styles = StyleSheet.create({
    textAlign: "center",
    fontSize: 40,
    fontWeight: "bold",
-
-
    // marginTop: -50 * scaleFactor, // Moves the title/course/class up into header
  },
  sectionHeader: {

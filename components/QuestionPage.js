@@ -596,7 +596,7 @@ const [sound, setSound] = useState(null);
      style={{ flex: 1 }}
    >
      <View style={[styles.container, { marginBottom: bottomMargin }]}>
-       <Text>Device identifier: {deviceIdentifier}</Text>
+       {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
        <View style={styles.questionPageBox}>
          <View style={styles.questionPageBoxHeader}>
            {course.course ? ( // check if course.course is defined

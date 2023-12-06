@@ -10,31 +10,46 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 
-const FillerPage = () => {
+const FillerPage = ({ route }) => {
     const navigation = useNavigation();
+
+    const { prevPage } = route.params;
 
     const handleBackHome = (home) => {
         console.log(`Navigating to HomePage`);
         navigation.navigate("HomePage");
     };
 
+    const handleBackSettings = (settings) => {
+        console.log(`Navigating to SettingsPage`);
+        navigation.navigate("SettingsPage");
+    };
+
     return (
         // <View>
         <View style={styles.container}>
-            <View style={styles.appBar}>
-                <TouchableOpacity onPress={handleBackHome}>
-                    <View style={styles.backArrow}>
-                    <Icon name="arrow-left" size={20} color="#000" />
-                    <Text style={styles.backTEXT}>Home</Text>
-                    </View>
-                </TouchableOpacity>
+             <View style={styles.appBar}>
+        {prevPage === "HomePage" ? (
+          <TouchableOpacity onPress={handleBackHome}>
+            <View style={styles.backArrow}>
+              <Icon name="arrow-left" size={20} color="#000" />
+              <Text style={styles.backTEXT}>Home</Text>
             </View>
-        {/* </View> */}
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={handleBackSettings}>
+            <View style={styles.backArrow}>
+              <Icon name="arrow-left" size={20} color="#000" />
+              <Text style={styles.backTEXT}>Settings</Text>
+            </View>
+          </TouchableOpacity>
+        )}
+      </View>
             <View style={styles.container2}>
                 <Image style={styles.fillerImage} source={require("../assets/construction.png")} />
                 <Text style={styles.text}>Page under construction.</Text>
             </View>
-            </View>
+        </View>
     )
 };
 

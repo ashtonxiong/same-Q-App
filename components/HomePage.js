@@ -31,9 +31,9 @@ const HomePage = () => {
    navigation.navigate("CollabPage", { deviceIdentifier });
  };
 
- const handleFakePagePress = () => {
+ const handleFakePagePress = (prevPage) => {
   console.log(`Navigating to Filler Page`);
-  navigation.navigate("FillerPage");
+  navigation.navigate("FillerPage", { prevPage });
 };
 
 
@@ -120,7 +120,7 @@ const HomePage = () => {
 
  return (
    <View style={styles.container}>
-     <Text>Device identifier: {deviceIdentifier}</Text>
+     {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
      <View style={styles.appBar}>
        <TouchableOpacity onPress={clickMenuModal}>
          <View style={styles.backArrow}>
@@ -186,17 +186,17 @@ const HomePage = () => {
 
               <View style={styles.menuModalBottom}>
 
-              <TouchableOpacity onPress={() => { closeModal(); handleFakePagePress(); }} style={styles.fakePage}>
+              <TouchableOpacity onPress={() => { closeModal(); handleFakePagePress("HomePage"); }} style={styles.fakePage}>
                 <Icon name="user" size={30} color="#000" />
                 <Text style={styles.menuModalBody}> Profile</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => { closeModal(); handleFakePagePress(); }} style={styles.fakePage}>
+              <TouchableOpacity onPress={() => { closeModal(); handleFakePagePress("HomePage"); }} style={styles.fakePage}>
                 <Icon name="heart" size={30} color="#000" />
                 <Text style={styles.menuModalBody}> Most Frequently Collaborateed</Text>
               </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => { closeModal(); handleFakePagePress(); }} style={styles.fakePage}>
+                <TouchableOpacity onPress={() => { closeModal(); handleFakePagePress("HomePage"); }} style={styles.fakePage}>
                   <Image style={styles.canvasImage} source={require("../assets/canvas.png")} />
                   <Text style={styles.menuModalBody}> Canvas</Text>
                 </TouchableOpacity>
