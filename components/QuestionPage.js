@@ -667,14 +667,25 @@ const QuestionPage = ({ route }) => {
               color="#000"
               style={styles.emojiIcon}
             />
-            <TouchableOpacity onPress={() => openCamera()}>
-              <Icon
-                name="camera"
-                size={26}
-                color="#000"
-                style={styles.emojiIcon}
-              />
-            </TouchableOpacity>
+            {collabStatus[0] === "Collaborate" ? (
+              <TouchableOpacity>
+                <Icon
+                  name="camera"
+                  size={26}
+                  color="#000"
+                  style={styles.emojiIcon}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => openCamera()}>
+                <Icon
+                  name="camera"
+                  size={26}
+                  color="#000"
+                  style={styles.emojiIcon}
+                />
+              </TouchableOpacity>
+            )}
 
             {collabStatus[0] === "Collaborate" ? (
               <Text style={styles.input2}>
