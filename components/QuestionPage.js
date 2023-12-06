@@ -316,11 +316,13 @@ const QuestionPage = ({ route }) => {
 
     // combine default and new chats and images if any
     const combinedChats = [...sortedChatsArray, ...chatsArray];
-
+    var int = 0;
     return combinedChats.map((chat) => {
       if (chat.image) {
+        int += 1;
+
         return (
-          <View key={chat.timeSent} style={styles.messageAndTimeContainer}>
+          <View key={int} style={styles.messageAndTimeContainer}>
             <View style={[styles.purpleTextMessageContainer]}>
               <View style={styles.purpleMessage}>
                 <Image
@@ -334,8 +336,10 @@ const QuestionPage = ({ route }) => {
         );
       }
       if (chat.sender !== "You") {
+        int += 1;
+
         return (
-          <View key={chat.timeSent} style={styles.messageAndTimeContainer}>
+          <View key={int} style={styles.messageAndTimeContainer}>
             <View style={[styles.grayTextMessageContainer]}>
               <Text style={styles.grayMessageInitials}>
                 {chat.senderInitials}
@@ -348,8 +352,9 @@ const QuestionPage = ({ route }) => {
           </View>
         );
       } else {
+        int += 1;
         return (
-          <View key={chat.timeSent} style={styles.messageAndTimeContainer}>
+          <View key={int} style={styles.messageAndTimeContainer}>
             <View style={[styles.purpleTextMessageContainer]}>
               <View style={styles.purpleMessage}>
                 <Text style={styles.purpleMessageText}>{chat.message}</Text>
@@ -460,7 +465,7 @@ const QuestionPage = ({ route }) => {
   };
 
   const useImage = () => {
-    // setCapturedImageUri(null);
+    setCapturedImageUri(null);
     closeCamera();
     const imageObject = {
       image: true,
@@ -472,20 +477,10 @@ const QuestionPage = ({ route }) => {
 
     const temp1 = [...chatsArray, imageObject];
     setChatsArray(temp1);
-    console.log("test message ARRAY", temp1);
   };
 
   const retakeImage = () => {
     setCapturedImageUri(null);
-  };
-
-  const renderImages = () => {
-    return (
-      <Image
-        source={{ uri: capturedImageUri }}
-        style={{ height: 100, width: 100 }}
-      />
-    );
   };
 
   const renderCamera = () => {
@@ -534,7 +529,6 @@ const QuestionPage = ({ route }) => {
               flex: 1,
               justifyContent: "flex-end",
               borderWidth: 2,
-              borderColor: "red",
             }}
             type={type}
             ref={cameraRef}
