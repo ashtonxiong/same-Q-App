@@ -6,11 +6,12 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { supabase } from "../supabase";
 import { de } from "date-fns/locale";
+import FontIcon from "react-native-vector-icons/FontAwesome";
 
 const CoursePage = ({ route }) => {
   const { course, deviceIdentifier } = route.params;
@@ -21,15 +22,22 @@ const CoursePage = ({ route }) => {
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
 
   const [questions, setQuestions] = useState([]);
+  const [defaultQuestions, setDefaultQuestions] = useState([]);
+
+  useFocusEffect(() => {
+    // Fetch or update data when the component comes into focus
+    getQuestions();
+  });
 
   const getQuestions = async () => {
-    console.log("device id in getQuestions:", deviceIdentifier);
+    // console.log("device id in getQuestions:", deviceIdentifier);
     try {
       const { data, error } = await supabase
         .from("sameQ-app-questions")
         .select("*")
         .eq("course", courseName)
-        .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
+        // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
+        .eq("device_id", deviceIdentifier);
 
       if (error) {
         throw new Error(error.message);
@@ -48,7 +56,7 @@ const CoursePage = ({ route }) => {
           chats: item.chats,
           expected_help: item.expected_help,
         }));
-        console.log("in getQuestions 3");
+        // console.log("in getQuestions 3", questionInfoArray);
 
         setQuestions(questionInfoArray);
       }
@@ -57,19 +65,61 @@ const CoursePage = ({ route }) => {
     }
   };
 
+  const getDefaultQuestions = async () => {
+    // console.log("device id in getQuestions:", deviceIdentifier);
+    try {
+      const { data, error } = await supabase
+        .from("sameQ-app-questions")
+        .select("*")
+        .eq("course", courseName)
+        .eq("device_id", "000");
+      // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
+      // .eq("device_id", deviceIdentifier);
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      if (data) {
+        // 'data' is an array of objects with 'id' and 'course' columns
+        const questionInfoArray = data.map((item) => ({
+          uid: item.uid,
+          course: item.course,
+          question: item.question,
+          created: item.created,
+          author: item.author,
+          num_collab: item.num_collaborators,
+          num_huddle: item.num_huddle,
+          chats: item.chats,
+          expected_help: item.expected_help,
+        }));
+        // console.log("in getQuestions 3", questionInfoArray);
+
+        setDefaultQuestions(questionInfoArray);
+      }
+    } catch (error) {
+      console.error("Error fetching data from Supabase:", error.message);
+    }
+  };
+
   useEffect(() => {
+    getDefaultQuestions();
     getQuestions();
   }, []);
 
-  const handleCollabPress = (course, question, deviceIdentifier) => {
-    console.log(
-      `Navigating to QuestionPage with question: ${question.question}`
-    );
-    navigation.navigate("QuestionPage", { course, question, deviceIdentifier });
+  const handleCollabPress = (course, question, deviceIdentifier, prevPage) => {
+    // console.log(
+    //   `Navigating to QuestionPage with question: ${question.question}`
+    // );
+    navigation.navigate("QuestionPage", {
+      course,
+      question,
+      deviceIdentifier,
+      prevPage,
+    });
   };
 
   const handleBackHome = (home) => {
-    console.log(`Navigating to HomePage`);
     navigation.navigate("HomePage");
   };
 
@@ -82,7 +132,7 @@ const CoursePage = ({ route }) => {
   };
 
   const renderQuestions = () => {
-    if (questions.length === 0) {
+    if (questions.length === 0 && defaultQuestions.length === 0) {
       return (
         <Text style={styles.emptyChat}>
           Be the first one to ask a question!
@@ -90,8 +140,9 @@ const CoursePage = ({ route }) => {
       );
     }
 
+    const combinedQuestions = [...questions, ...defaultQuestions];
     // sort the questions based on expected help time
-    const sortedQuestionsArray = [...questions].sort((a, b) => {
+    const sortedQuestionsArray = [...combinedQuestions].sort((a, b) => {
       const timeA = new Date(2000, 0, 1, ...parseTime(a.expected_help));
       const timeB = new Date(2000, 0, 1, ...parseTime(b.expected_help));
       return timeA - timeB;
@@ -114,7 +165,7 @@ const CoursePage = ({ route }) => {
               marginRight: 5 * scaleFactor,
             }}
           >
-            Expected Help at{" "}
+            Expected Help at
             <Text style={{ fontWeight: "bold" }}>{question.expected_help}</Text>
           </Text>
           <View style={styles.queueEarphone}>
@@ -143,7 +194,12 @@ const CoursePage = ({ route }) => {
           <TouchableOpacity
             style={styles.queueButton}
             onPress={() =>
-              handleCollabPress(course, question, deviceIdentifier)
+              handleCollabPress(
+                course,
+                question,
+                deviceIdentifier,
+                "CoursePage"
+              )
             }
           >
             <Text style={styles.queueButtonText}> View </Text>
@@ -154,7 +210,7 @@ const CoursePage = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
       <View style={styles.appBar}>
         <TouchableOpacity onPress={handleBackHome}>
@@ -163,11 +219,6 @@ const CoursePage = ({ route }) => {
             <Text style={styles.backTEXT}>Home</Text>
           </View>
         </TouchableOpacity>
-        {/* <View style={styles.headerContainer}>
-          <Text style={styles.classNameText}>
-            LOGO
-          </Text>
-        </View> */}
       </View>
 
       <View>
@@ -192,12 +243,32 @@ const CoursePage = ({ route }) => {
               <Text style={{ marginLeft: "auto" }}> 20 Active </Text>
             </View>
           </View>
-          <View style={{ alignItems: "center" }}>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              //  justifyContent: "flex-end",
+            }}
+          >
             <Text style={styles.sectionHeader}>Queue</Text>
+          </View>
+          <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+            <TouchableOpacity style={{ justifyContent: "flex-end" }}>
+              <FontIcon
+                name="filter"
+                size={40}
+                style={{ marginTop: -110 * scaleFactor }}
+              ></FontIcon>
+            </TouchableOpacity>
           </View>
         </View>
 
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <ScrollView
+          contentContainerStyle={[
+            styles.scrollContainer,
+            { paddingBottom: "65%" },
+          ]}
+        >
           {renderQuestions()}
         </ScrollView>
       </View>

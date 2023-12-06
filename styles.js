@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   // ----------ALL----------
   container: {
     flex: 1,
-    backgroundColor: "#DDCFFF",
+    backgroundColor: "#f2ecff",
   },
   tabBarContainer: {
     backgroundColor: "white",
@@ -42,6 +42,10 @@ const styles = StyleSheet.create({
   backArrow: {
     flexDirection: "row",
     justifyContent: "left",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   headerContainer: {
     flex: 1,
@@ -136,7 +140,7 @@ const styles = StyleSheet.create({
   },
   joinButtonTEXT: {
     color: "white",
-    fontSize: 24,
+    fontSize: 20 * scaleFactor,
     fontWeight: "bold",
   },
   askButton: {
@@ -152,19 +156,19 @@ const styles = StyleSheet.create({
   },
   askButtonTEXT: {
     color: "white",
-    fontSize: 24,
+    fontSize: 20 * scaleFactor,
     fontWeight: "bold",
   },
   menuModalOverlay: {
     ...StyleSheet.absoluteFillObject, // apply fill to custom modal
     justifyContent: "center",
     alignItems: "left",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // value for transparency
+    backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
   },
   menuModalContent: {
     width: screenWidth * 0.7,
     height: screenHeight,
-    backgroundColor: "#9f6fdd",
+    backgroundColor: "#DDCFFF",
     borderRadius: 20, // round corners
   },
   menuModalTEXT: {
@@ -272,6 +276,10 @@ const styles = StyleSheet.create({
     padding: 5,
     width: "30%",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
   },
   queueButtonText: {
     color: "white",
@@ -292,7 +300,7 @@ const styles = StyleSheet.create({
   grayMessage: {
     borderRadius: 10,
     padding: 10,
-    backgroundColor: "gray",
+    backgroundColor: "white",
     maxWidth: "50%",
   },
   grayMessageInitials: {
@@ -312,13 +320,16 @@ const styles = StyleSheet.create({
   purpleMessage: {
     borderRadius: 10,
     padding: 10,
-    backgroundColor: "#b986ee",
+    backgroundColor: "#B74E91",
     maxWidth: "50%",
     marginRight: 5,
   },
   purpleTextMessageTime: {
     textAlign: "right",
     paddingRight: "4%",
+  },
+  purpleMessageText: {
+    color: "white",
   },
   emptyChat: {
     textAlign: "center",
@@ -331,13 +342,13 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject, // apply fill to custom modal
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // value for transparency
+    backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
   },
   modalContent: {
     width: screenWidth * 0.8,
     height: 500,
     padding: 25,
-    backgroundColor: "#CFB8E9",
+    backgroundColor: "white",
     borderRadius: 20, // round corners
     borderColor: "black",
     borderWidth: 2,
@@ -359,9 +370,13 @@ const styles = StyleSheet.create({
   modalCollabUncollabTEXT: {
     width: 175,
     borderRadius: 20,
-    backgroundColor: "black",
+    backgroundColor: "#5E42A6",
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   modalCollabUncollab: {
     flex: 1,
@@ -373,10 +388,67 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     marginLeft: "5%",
     marginTop: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   cancelTEXT: {
     fontSize: 18,
     marginLeft: 5,
+  },
+  customHuddleModalOverlay: {
+    ...StyleSheet.absoluteFillObject, // apply fill to custom modal
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
+  },
+  huddleModalContent: {
+    width: screenWidth * 0.95,
+    height: screenHeight * 0.77,
+    padding: 25,
+    backgroundColor: "white",
+    borderRadius: 20, // round corners
+    borderColor: "black",
+    borderWidth: 2,
+  },
+  huddleModalContent2: {
+    width: screenWidth * 0.95,
+    height: screenHeight * 0.2,
+    padding: 25,
+    backgroundColor: "white",
+    borderRadius: 20, // round corners
+    borderColor: "black",
+    borderWidth: 2,
+  },
+  huddleModalHeader: {
+    alignItems: "flex-end",
+  },
+  huddleModalHeaderText: {
+    margin: 20,
+    fontSize: scaleFactor * 20,
+    fontWeight: "600",
+    textAlign: "center",
+    color: "red",
+  },
+  huddleModalBodyText: {
+    margin: -15,
+    fontSize: scaleFactor * 15,
+    textAlign: "center",
+    fontWeight: "200",
+    color: "red",
+  },
+  collabModalHeaderText: {
+    margin: 20,
+    fontSize: scaleFactor * 25,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  collabModalBodyText: {
+    margin: -15,
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "200",
   },
   questionInfoHeader: {
     flexDirection: "row",
@@ -411,6 +483,13 @@ const styles = StyleSheet.create({
     padding: 0, // remove default padding
     marginLeft: 5, // add space between the emoji and text input
     fontSize: 16,
+  },
+  input2: {
+    flex: 1,
+    padding: 0, // remove default padding
+    marginLeft: 5, // add space between the emoji and text input
+    fontSize: 16,
+    fontWeight: "200",
   },
   cameraIcon: {
     marginLeft: 5, // add space between the text input and camera icon
@@ -454,20 +533,28 @@ const styles = StyleSheet.create({
   collabContainer: {
     marginTop: "20%",
     height: "100%",
+    // borderColor: 'pink',
+    // borderWidth: 5,
   },
   collabHeader: {
     marginBottom: 25,
+    // borderColor: "black",
+    // borderWidth: 3,
   },
   collabBox: {
-    padding: 10,
+    padding: 5,
     margin: 10,
     width: screenWidth * 0.95,
     borderWidth: 2,
-    borderColor: "#000",
+    borderColor: "#5E42A6",
     borderRadius: 10,
-    backgroundColor: "#b986ee",
+    backgroundColor: "white",
     justifyContent: "space-between",
-    maxHeight: "25%",
+    height: screenWidth * 0.25,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   collabTopRow: {
     flexDirection: "row",
@@ -509,8 +596,8 @@ const styles = StyleSheet.create({
 
   // ------ Ask Page  --------
   tagsContainer: {
-    height: 0.15 * screenHeight,
-    justifyContent: "flex-end",
+    justifyContent: "space-around",
+    height: 0.2 * screenHeight,
     flexWrap: "wrap",
   },
   tags: {
@@ -528,6 +615,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 2,
     margin: 2,
+    marginRight: 8,
+    marginLeft: 8,
   },
   questionBoxContainer: {
     height: 0.35 * screenHeight,
@@ -546,7 +635,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   submitQuestionButton: {
-    backgroundColor: "#FFFF",
+    backgroundColor: "#5E42A6",
     paddingHorizontal: "10%",
     paddingVertical: "1%",
     borderRadius: 40,
@@ -555,11 +644,82 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
+  submitQuestionButtonText: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
   selectedTag: {
     backgroundColor: "#5E42A6", // Apply your desired background color for selected tags
     borderColor: "white",
   },
+  submissionModalContent: {
+    width: screenWidth * 0.7,
+    height: screenHeight * 0.5,
+    backgroundColor: "#DDCFFF",
+    borderRadius: 20, // round corners
+  },
+  submissionModalTEXT: {
+    marginTop: "75%",
+    textAlign: "center",
+  },
   // ------ Ask Page  --------
+
+  // ------ Camera Page ------
+  takePictureButtonContainer: {
+    bottom: 0,
+    alignItems: "center",
+    paddingBottom: 10,
+  },
+  takePictureButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "white",
+    width: 75,
+    height: 75,
+    paddingBot: 10,
+  },
+  flipContainer: {
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    position: "absolute",
+    right: 0,
+  },
+  flipCameraButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: 20,
+  },
+  cameraExitButton: {
+    position: "absolute",
+    top: 60,
+    left: 30,
+  },
+  usePicButton: {
+    flexDirection: "row",
+    width: "50%",
+    color: "white",
+    justifyContent: "flex-end",
+  },
+  retakeButton: {
+    width: "50%",
+    color: "white",
+    paddingLeft: 65,
+    paddingBottom: 40,
+  },
+  bottomRowContainer: {
+    flexDirection: "row",
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+  },
+  // ------ Camera Page ------
 });
 
 export default styles;

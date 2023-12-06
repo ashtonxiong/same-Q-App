@@ -25,77 +25,109 @@ const MainStack = () => {
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="QuestionPage" component={QuestionPage} />
       <Stack.Screen name="CollabPage" component={CollabPage} />
+      <Stack.Screen name="AskPage" component={AskPage} />
     </Stack.Navigator>
+  );
+};
+
+const CollabStack = createStackNavigator();
+
+const CollabStackScreen = () => {
+  return (
+    <CollabStack.Navigator screenOptions={{ headerShown: false }}>
+      <CollabStack.Screen name="CollabPage" component={CollabPage} />
+      <CollabStack.Screen name="QuestionPage" component={QuestionPage} />
+    </CollabStack.Navigator>
   );
 };
 
 const App = () => {
   return (
-    // <DeviceIdentifierProvider>
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarActiveTintColor: "#000",
-          tabBarInactiveTintColor: "#9f6fdd",
-          tabBarStyle: [
-            {
-              display: "flex",
-              backgroundColor: "white",
-              height: "10%",
-            },
-            null,
-          ],
-        }}
-      >
-        <Tab.Screen
-          name="Home"
-          component={MainStack}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="home" size={size} color={"#000"} />
-            ),
+    <DeviceIdentifierProvider>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarActiveTintColor: "#000",
+            tabBarInactiveTintColor: "#9f6fdd",
+            tabBarStyle: [
+              {
+                display: "flex",
+                backgroundColor: "white",
+                height: "10%",
+              },
+              null,
+            ],
           }}
-        />
-        <Tab.Screen
-          name="Collaborating"
-          component={CollabPage}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="people" size={size} color={"#000"} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Ask"
-          component={AskPage}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="plus" size={size} color={"#000"} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Notifications"
-          component={Notifications}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="bell" size={size} color={"#000"} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Account"
-          component={Notifications}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="settings" size={size} color={"#000"} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
-    // {/* </DeviceIdentifierProvider> */}
+        >
+          <Tab.Screen
+            name="Home"
+            component={MainStack}
+            options={{
+              tabBarIcon: ({ color, size, focused }) => (
+                <Icon
+                  name="home"
+                  size={size}
+                  color={focused ? "#000" : "#9f6fdd"}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Collaborating"
+            component={CollabStackScreen}
+            options={{
+              tabBarIcon: ({ color, size, focused }) => (
+                <Icon
+                  name="people"
+                  size={size}
+                  color={focused ? "#000" : "#9f6fdd"}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Ask"
+            component={AskPage}
+            options={{
+              tabBarIcon: ({ color, size, focused }) => (
+                <Icon
+                  name="plus"
+                  size={size}
+                  color={focused ? "#000" : "#9f6fdd"}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Notifications"
+            component={Notifications}
+            options={{
+              tabBarIcon: ({ color, size, focused }) => (
+                <Icon
+                  name="bell"
+                  size={size}
+                  color={focused ? "#000" : "#9f6fdd"}
+                />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Account"
+            component={Notifications}
+            options={{
+              tabBarIcon: ({ color, size, focused }) => (
+                <Icon
+                  name="settings"
+                  size={size}
+                  color={focused ? "#000" : "#9f6fdd"}
+                />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </DeviceIdentifierProvider>
   );
 };
 
