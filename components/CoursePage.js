@@ -28,16 +28,15 @@ const CoursePage = ({ route }) => {
  const [defaultQuestions, setDefaultQuestions] = useState([]);
 
 
- const getQuestions = async () => {
-   console.log("device id in getQuestions:", deviceIdentifier);
-   try {
-     const { data, error } = await supabase
-       .from("sameQ-app-questions")
-       .select("*")
-       .eq("course", courseName)
-       // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
-       .eq("device_id", deviceIdentifier);
-      // .eq('device_id', '000');
+  const getQuestions = async () => {
+    console.log("device id in getQuestions:", deviceIdentifier);
+    try {
+      const { data, error } = await supabase
+        .from("sameQ-app-questions")
+        .select("*")
+        .eq("course", courseName)
+        // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
+        .eq("device_id", deviceIdentifier);
 
      if (error) {
        throw new Error(error.message);
@@ -110,13 +109,17 @@ const CoursePage = ({ route }) => {
  }, []);
 
 
- const handleCollabPress = (course, question, deviceIdentifier) => {
-   console.log(
-     `Navigating to QuestionPage with question: ${question.question}`
-   );
-   navigation.navigate("QuestionPage", { course, question, deviceIdentifier });
- };
-
+  const handleCollabPress = (course, question, deviceIdentifier, prevPage) => {
+    console.log(
+      `Navigating to QuestionPage with question: ${question.question}`
+    );
+    navigation.navigate("QuestionPage", {
+      course,
+      question,
+      deviceIdentifier,
+      prevPage,
+    });
+  };
 
  const handleBackHome = (home) => {
    console.log(`Navigating to HomePage`);
@@ -195,21 +198,25 @@ const CoursePage = ({ route }) => {
        </View>
 
 
-       {/* bottom row */}
-       <View style={styles.queueBot}>
-         <TouchableOpacity
-           style={styles.queueButton}
-           onPress={() =>
-             handleCollabPress(course, question, deviceIdentifier)
-           }
-         >
-           <Text style={styles.queueButtonText}> View </Text>
-         </TouchableOpacity>
-       </View>
-     </View>
-   ));
- };
-
+        {/* bottom row */}
+        <View style={styles.queueBot}>
+          <TouchableOpacity
+            style={styles.queueButton}
+            onPress={() =>
+              handleCollabPress(
+                course,
+                question,
+                deviceIdentifier,
+                "CoursePage"
+              )
+            }
+          >
+            <Text style={styles.queueButtonText}> View </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    ));
+  };
 
  return (
    <View style={styles.container}>
@@ -287,6 +294,17 @@ const CoursePage = ({ route }) => {
        </View>
 
 
+        <ScrollView
+          contentContainerStyle={[
+            styles.scrollContainer,
+            { paddingBottom: "65%" },
+          ]}
+        >
+          {renderQuestions()}
+        </ScrollView>
+      </View>
+    </View>
+  );
        <ScrollView contentContainerStyle={styles.scrollContainer}>
          {renderQuestions()}
        </ScrollView>

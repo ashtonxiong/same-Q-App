@@ -6,7 +6,12 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { useNavigation, useIsFocused } from "@react-navigation/native";
+// import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import {
+  useNavigation,
+  useIsFocused,
+  useFocusEffect,
+} from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { supabase } from "../supabase";
@@ -22,11 +27,21 @@ const CollabPage = () => {
 
   const deviceIdentifier = useDeviceIdentifier();
 
-  const handleQuestionPress = (course, question, deviceIdentifier) => {
+  const handleQuestionPress = (
+    course,
+    question,
+    deviceIdentifier,
+    prevPage
+  ) => {
     console.log(
       `Navigating to QuestionPage with question: ${question.question}`
     );
-    navigation.navigate("QuestionPage", { course, question, deviceIdentifier });
+    navigation.navigate("QuestionPage", {
+      course,
+      question,
+      deviceIdentifier,
+      prevPage,
+    });
   };
 
   const getCollabQuestions = async () => {
@@ -59,6 +74,11 @@ const CollabPage = () => {
     }
   };
 
+  useFocusEffect(() => {
+    // Fetch or update data when the component comes into focus
+    getCollabQuestions();
+  });
+
   useEffect(() => {}, [coursesArray]);
 
   const getCourses = async () => {
@@ -77,7 +97,7 @@ const CollabPage = () => {
           status: item.status,
         }));
         setCourses(courses);
-        console.log("course data: ", coursesArray);
+        console.log("course data collab page: ", coursesArray);
       }
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
@@ -123,7 +143,14 @@ const CollabPage = () => {
       <TouchableOpacity
         key={question.uid}
         style={styles.collabBox}
-        onPress={() => handleQuestionPress(coursesArray, question, deviceIdentifier)}
+        onPress={() =>
+          handleQuestionPress(
+            coursesArray,
+            question,
+            deviceIdentifier,
+            "CollabPage"
+          )
+        }
       >
         {/* top row */}
         <Text>{question.course}</Text>

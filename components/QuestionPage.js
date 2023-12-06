@@ -400,11 +400,14 @@ const QuestionPage = ({ route }) => {
  };
 
 
- const handleBackCourse = (course, deviceIdentifier) => {
-   console.log(`Navigating to CoursePage with course: ${course.course}`);
-   navigation.navigate("CoursePage", { course, deviceIdentifier, actualNumCollaborators });
- };
-
+  const handleBackCourse = (course, deviceIdentifier) => {
+    console.log(`Navigating to CoursePage with course: ${course.course}`);
+    if (prevPage === "CollabPage") {
+      navigation.navigate("CollabPage", { course, deviceIdentifier });
+    } else {
+      navigation.navigate("CoursePage", { course, deviceIdentifier });
+    }
+  };
 
  const handleBackCollab = () => {
    console.log(`Navigating to Collaborating Page`);

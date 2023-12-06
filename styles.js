@@ -525,76 +525,75 @@ const styles = StyleSheet.create({
  // ------ Notification Info --------
 
 
- // ------ Collab Info --------
- collabScroll: {
-   marginLeft: 5,
-   marginRight: 5,
-   marginTop: "10%",
- },
- collabContainer: {
-   marginTop: "20%",
-   height: "100%",
-   borderColor: 'pink',
-   borderWidth: 5,
- },
- collabHeader: {
-   marginBottom: 25,
-   borderColor: 'black',
-   borderWidth: 3,
- },
- collabBox: {
-   padding: 5,
-   margin: 10,
-   width: screenWidth * 0.95,
-   borderWidth: 2,
-   borderColor: "#5E42A6",
-   borderRadius: 10,
-   backgroundColor: "white",
-   justifyContent: "space-between",
-   height: screenWidth * 0.25,
-   shadowColor: "#000",
-   shadowOffset: { width: 0, height: 10 },
-   shadowOpacity: 0.2,
-   shadowRadius: 4,
- },
- collabTopRow: {
-   flexDirection: "row",
-   justifyContent: "center", // align items along the row
- },
- collabEarphone: {
-   flexDirection: "row",
-   justifyContent: "center", // align items along the row
- },
- collabPeopleIcon: {
-   flexDirection: "row",
-   justifyContent: "center", // align items along the row
- },
- collabMid: {
-   flexWrap: "wrap", // Allow text to wrap
-   overflow: "hidden", // Hide overflow content
-   flexDirection: "row",
-   justifyContent: "center", // align items along the row
- },
- collabBot: {
-   marginTop: 5,
-   flexWrap: "wrap", // Allow text to wrap
-   overflow: "hidden", // Hide overflow content
-   flexDirection: "row",
-   justifyContent: "center", // align items along the row
- },
- collabButton: {
-   height: "100%",
-   borderRadius: 20,
-   backgroundColor: "black",
-   padding: 5,
- },
- collabButtonText: {
-   color: "white",
-   fontSize: 20 * scaleFactor,
-   fontWeight: "bold",
- },
- // ------ Collab Info --------
-
+  // ------ Collab Info --------
+  collabScroll: {
+    marginLeft: 5,
+    marginRight: 5,
+    marginTop: "10%",
+  },
+  collabContainer: {
+    marginTop: "20%",
+    height: "100%",
+    // borderColor: 'pink',
+    // borderWidth: 5,
+  },
+  collabHeader: {
+    marginBottom: 25,
+    // borderColor: "black",
+    // borderWidth: 3,
+  },
+  collabBox: {
+    padding: 5,
+    margin: 10,
+    width: screenWidth * 0.95,
+    borderWidth: 2,
+    borderColor: "#5E42A6",
+    borderRadius: 10,
+    backgroundColor: "white",
+    justifyContent: "space-between",
+    height: screenWidth * 0.25,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  collabTopRow: {
+    flexDirection: "row",
+    justifyContent: "center", // align items along the row
+  },
+  collabEarphone: {
+    flexDirection: "row",
+    justifyContent: "center", // align items along the row
+  },
+  collabPeopleIcon: {
+    flexDirection: "row",
+    justifyContent: "center", // align items along the row
+  },
+  collabMid: {
+    flexWrap: "wrap", // Allow text to wrap
+    overflow: "hidden", // Hide overflow content
+    flexDirection: "row",
+    justifyContent: "center", // align items along the row
+  },
+  collabBot: {
+    marginTop: 5,
+    flexWrap: "wrap", // Allow text to wrap
+    overflow: "hidden", // Hide overflow content
+    flexDirection: "row",
+    justifyContent: "center", // align items along the row
+  },
+  collabButton: {
+    height: "100%",
+    borderRadius: 20,
+    backgroundColor: "black",
+    padding: 5,
+  },
+  collabButtonText: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
+  // ------ Collab Info --------
 
  // ------ Ask Page  --------
  tagsContainer: {

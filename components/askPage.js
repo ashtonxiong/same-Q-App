@@ -6,21 +6,36 @@ import {
   TextInput,
   Modal,
   TouchableWithoutFeedback,
-  Keyboard,
   Dimensions,
-  TouchableHighlight,
 } from "react-native";
 // import DropDownPicker from "react-native-dropdown-picker";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/FontAwesome";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
-// import "react-native-get-random-values";
 import { supabase } from "../supabase";
+import { useDeviceIdentifier } from "./deviceID";
 
-const AskPage = () => {
-  // TESTING SAVING QUESTION INFO
-  const [questionInfo, setQuestionInfo] = useState({
+const AskPage = ({ route }) => {
+  const deviceIdentifier = useDeviceIdentifier();
+  const { width, height } = Dimensions.get("window");
+  const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isCS147Checked, setIsCS147Checked] = useState(false);
+  const [text, setText] = useState("");
+  const [isQuestion, setIsQuestion] = useState(true);
+  const [isLimitReachedModalVisible, setLimitReachedModalVisible] =
+    useState(false);
+
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [tags, setTags] = useState(["Homework", "Lecture", "General"]);
+  const [classes, setClasses] = useState(["CS 147", "CS 161", "ENGLISH 9CE"]);
+  const [selectedClass, setSelectedClass] = useState("");
+  const [isClassSelected, setIsClassSelected] = useState(true);
+
+  // -------- SEND QUESTION TO DATABASE ------
+  const [classObject, setClassObject] = useState({
     question: "",
     author: "",
     num_collaborators: 0,
@@ -33,15 +48,68 @@ const AskPage = () => {
     course: "",
   });
 
-  // TESTING SAVING QUESTION INFO
-  const { width, height } = Dimensions.get("window");
-  const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [isCS147Checked, setIsCS147Checked] = useState(false);
-  const [text, setText] = useState("");
-  const [isLimitReachedModalVisible, setLimitReachedModalVisible] =
-    useState(false);
+  const addQuestion = async () => {
+    try {
+      if (selectedClass === "") {
+        setIsClassSelected(false);
+        return;
+      }
+      if (text.length === 0) {
+        setIsQuestion(false);
+        return;
+      }
+      // setIsQuestion(false);
+
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.toLocaleString("en-US", {
+        month: "long",
+      })} ${currentDate.getDate()}, ${currentDate.getFullYear()}, ${currentDate.toLocaleString(
+        "en-US",
+        { hour: "numeric", minute: "numeric", hour12: true }
+      )}`;
+
+      const { error } = await supabase.from("sameQ-app-questions").insert([
+        {
+          question: text,
+          author: "You",
+          num_collaborators: 1,
+          num_huddle: 0,
+          expected_help: "5:00 PM",
+          created: formattedDate,
+          collab_status: "TRUE",
+          device_id: deviceIdentifier,
+          course: selectedClass,
+        },
+      ]);
+
+      const info = {
+        question: text,
+        author: "You",
+        num_collaborators: 1,
+        num_huddle: 0,
+        expected_help: "5:00 PM",
+        created: formattedDate,
+        collab_status: "TRUE",
+        device_id: deviceIdentifier,
+        course: selectedClass,
+      };
+      setClassObject(info);
+
+      // setQuestions(questionInfoArray);
+      openSubmission();
+      setText("");
+      setSelectedClass("");
+      setSelectedTags([]);
+    } catch (error) {
+      console.error("Error fetching data from Supabase:", error.message);
+    }
+  };
+  // -------- SEND QUESTION TO DATABASE ------
+
+  useEffect(() => {
+    console.log("Updated CLASS OBJECT", classObject);
+  }, [classObject]);
+
   const characterLimit = 150;
   const navigation = useNavigation();
 
@@ -55,32 +123,63 @@ const AskPage = () => {
       // Show the modal when the character limit is reached
       setLimitReachedModalVisible(true);
     } else {
-      // Update the text state with the inputText
       setText(inputText);
+      if (inputText.length > 0) {
+        setIsQuestion(true);
+      }
+      if (inputText.length === 0 && isQuestion) {
+        setIsQuestion(true);
+      } else {
+        setIsCS147Checked(false);
+      }
     }
   };
 
-  const handleCloseModal = () => {
-    // Close the modal
-    setLimitReachedModalVisible(false);
-  };
-
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [tags, setTags] = useState([
-    "Homework",
-    "Lecture",
-    "General",
-    "Test",
-    "Test1",
-    "Tes2t",
-    "Te3st",
-  ]);
-  const [classes, setClasses] = useState(["CS 147", "CS 161", "English 9CE"]);
-  const [selectedClass, setSelectedClass] = useState("");
   const handleClassPress = (selectedClass) => {
     setSelectedClass(selectedClass);
+    if (!isClassSelected) {
+      setIsClassSelected(!isClassSelected);
+    }
   };
 
+  const clickMenuModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const [isSubmissionVisible, setIsSubmissionVisible] = useState(false);
+
+  const openSubmission = () => {
+    setIsSubmissionVisible(!isSubmissionVisible);
+  };
+  const closeSubmission = () => {
+    setIsSubmissionVisible(false);
+  };
+
+  const handleTagPress = (tag) => {
+    // Check if the tag is already selected
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(
+        selectedTags.filter((selectedTag) => selectedTag !== tag)
+      );
+    } else {
+      // Tag is not selected, add it to the selected tags
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
+
+  const handleViewQuestion = (course, question, deviceIdentifier, prevPage) => {
+    closeSubmission();
+    console.log(`Navigating to QuestionPage with question: ${question}`);
+    navigation.navigate("QuestionPage", {
+      course,
+      question,
+      deviceIdentifier,
+      prevPage,
+    });
+  };
   const renderClasses = () => {
     return classes.map((classItem) => (
       <TouchableOpacity
@@ -109,26 +208,6 @@ const AskPage = () => {
     ));
   };
 
-  const clickMenuModal = () => {
-    setModalVisible(!isModalVisible);
-  };
-
-  const closeModal = () => {
-    setModalVisible(false);
-  };
-
-  const handleTagPress = (tag) => {
-    // Check if the tag is already selected
-    if (selectedTags.includes(tag)) {
-      setSelectedTags(
-        selectedTags.filter((selectedTag) => selectedTag !== tag)
-      );
-    } else {
-      // Tag is not selected, add it to the selected tags
-      setSelectedTags([...selectedTags, tag]);
-    }
-  };
-
   const renderTags = () => {
     return tags.map((tag) => (
       <TouchableOpacity key={tag} onPress={() => handleTagPress(tag)}>
@@ -154,7 +233,10 @@ const AskPage = () => {
     ));
   };
 
-  const borderColor = text.length >= characterLimit ? "red" : "black";
+  // const borderColor = text.length >= characterLimit ? "red" : "black";
+  const borderColor =
+    text.length >= characterLimit || isQuestion === false ? "red" : "black";
+
   const errorMessage =
     text.length >= characterLimit ? (
       "Error: Character Limit has been reached"
@@ -163,6 +245,28 @@ const AskPage = () => {
         Character Limit: {text.length} / {characterLimit}{" "}
       </Text>
     );
+
+  const noClassSelected = () => {
+    return isClassSelected === false ? (
+      <Text style={{ color: "red", fontSize: 20 * scaleFactor }}>
+        Please select a class
+      </Text>
+    ) : (
+      <Text></Text>
+    );
+  };
+
+  const noQuestion = () => {
+    return isQuestion === false && text.length === 0 ? (
+      <Text
+        style={{ color: "red", fontSize: 20 * scaleFactor, fontWeight: "bold" }}
+      >
+        Please Type a Question
+      </Text>
+    ) : (
+      <Text></Text>
+    );
+  };
 
   return (
     <View style={{ backgroundColor: "#DDCFFF", flex: 1 }}>
@@ -182,17 +286,30 @@ const AskPage = () => {
         <View style={styles.tagsContainer}>
           <View
             style={{
+              // borderWidth: 2,
+              alignItems: "center",
+              flex: 1,
+              justifyContent: "flex-end",
+            }}
+          >
+            {noClassSelected()}
+          </View>
+          <View
+            style={{
+              // borderWidth: 2,
               width: "100%",
               flexDirection: "row",
               alignItems: "center",
-              margin: 10 * scaleFactor,
+              margin: 5 * scaleFactor,
+              // marginBottom: 5 * scaleFactor,
               paddingTop: 20 * scaleFactor,
+              paddingBottom: 10 * scaleFactor,
             }}
           >
             <Text style={{ fontSize: 20 * scaleFactor }}>Select Class</Text>
             <View style={{ flexDirection: "row" }}>{renderClasses()}</View>
           </View>
-          <View style={styles.tags}>
+          <View style={[styles.tags]}>
             <Text style={{ paddingRight: "5%", fontSize: 20 }}> Tags:</Text>
             {renderTags()}
           </View>
@@ -255,44 +372,27 @@ const AskPage = () => {
             </TouchableOpacity>
             {/* ------ Private Question ----- */}
           </View>
-          {/* <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#FFFF",
-              paddingHorizontal: "10%",
-              paddingVertical: "1%",
-              borderRadius: 40,
-            }}
-            onPress={checkCS147}
-          >
-            <Text
-              style={{
-                fontSize: 13,
-                fontWeight: "bold",
-                marginRight: "5%",
-              }}
-            >
-              CS 147
-            </Text>
-            {isCS147Checked ? (
-              <Icon name="check" size={18} color="green" />
-            ) : (
-              <Icon name="square-o" size={20} color="#5E42A6" />
-            )}
-          </TouchableOpacity> */}
         </View>
         <View
           style={{
             flex: 1,
             alignItems: "center",
-            justifyContent: "flex-end",
             paddingBottom: "7%",
           }}
         >
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "flex-end",
+              paddingBottom: "5%",
+            }}
+          >
+            {noQuestion()}
+          </View>
           <TouchableOpacity
             style={styles.submitQuestionButton}
+            onPress={addQuestion}
             //----- NEED TO ADD NAVIGATING TO A CLASSES OFFICE HOURS
             //----- CREATE CLASSES DROPDOWN FOR WHICH QUESTION TO ASK
           >
@@ -303,11 +403,82 @@ const AskPage = () => {
         <Modal transparent={true} visible={isModalVisible}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.menuModalOverlay}>
-              <TouchableWithoutFeedback onPress={() => {}}>
+              <TouchableWithoutFeedback onPress={() => addQuestion()}>
                 <View style={styles.menuModalContent}>
                   <Text style={styles.menuModalTEXT}>TEST</Text>
                 </View>
               </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
+
+        <Modal transparent={true} visible={isSubmissionVisible}>
+          <TouchableWithoutFeedback onPress={closeSubmission}>
+            <View style={styles.submissionModal}>
+              {/* <TouchableWithoutFeedback onPress={() => addQuestion()}> */}
+              <View
+                style={[
+                  styles.submissionModalContent,
+                  { flexDirection: "column" },
+                ]}
+              >
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "50%",
+                  }}
+                >
+                  <Text style={{ fontSize: 20 * scaleFactor }}>
+                    Question addded to Queue
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                    height: "100%",
+                    paddingBottom: "10%",
+                  }}
+                  // onPress={navigation.navigate("QuestionPage", {
+                  //   course: classObject.course,
+                  //   question: classObject.question,
+                  //   deviceIdentifier: deviceIdentifier,
+                  //   prevPage: "AskPage",
+                  // })}
+                  onPress={() =>
+                    handleViewQuestion(
+                      classObject,
+                      classObject,
+                      deviceIdentifier,
+                      "CollabPage"
+                    )
+                  }
+                >
+                  <View
+                    style={{
+                      borderColor: "white",
+                      borderWidth: 1,
+                      paddingHorizontal: "5%",
+                      paddingVertical: "1%",
+                      borderRadius: 10,
+                      backgroundColor: "white",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: "#5E42A6",
+                        fontSize: 15 * scaleFactor,
+                      }}
+                    >
+                      View Question
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+              {/* </TouchableWithoutFeedback> */}
             </View>
           </TouchableWithoutFeedback>
         </Modal>
