@@ -30,7 +30,7 @@ const CoursePage = ({ route }) => {
   });
 
   const getQuestions = async () => {
-    console.log("device id in getQuestions:", deviceIdentifier);
+    // console.log("device id in getQuestions:", deviceIdentifier);
     try {
       const { data, error } = await supabase
         .from("sameQ-app-questions")
@@ -56,7 +56,7 @@ const CoursePage = ({ route }) => {
           chats: item.chats,
           expected_help: item.expected_help,
         }));
-        console.log("in getQuestions 3", questionInfoArray);
+        // console.log("in getQuestions 3", questionInfoArray);
 
         setQuestions(questionInfoArray);
       }
@@ -66,7 +66,7 @@ const CoursePage = ({ route }) => {
   };
 
   const getDefaultQuestions = async () => {
-    console.log("device id in getQuestions:", deviceIdentifier);
+    // console.log("device id in getQuestions:", deviceIdentifier);
     try {
       const { data, error } = await supabase
         .from("sameQ-app-questions")
@@ -93,7 +93,7 @@ const CoursePage = ({ route }) => {
           chats: item.chats,
           expected_help: item.expected_help,
         }));
-        console.log("in getQuestions 3", questionInfoArray);
+        // console.log("in getQuestions 3", questionInfoArray);
 
         setDefaultQuestions(questionInfoArray);
       }
@@ -108,9 +108,9 @@ const CoursePage = ({ route }) => {
   }, []);
 
   const handleCollabPress = (course, question, deviceIdentifier, prevPage) => {
-    console.log(
-      `Navigating to QuestionPage with question: ${question.question}`
-    );
+    // console.log(
+    //   `Navigating to QuestionPage with question: ${question.question}`
+    // );
     navigation.navigate("QuestionPage", {
       course,
       question,
@@ -120,7 +120,6 @@ const CoursePage = ({ route }) => {
   };
 
   const handleBackHome = (home) => {
-    console.log(`Navigating to HomePage`);
     navigation.navigate("HomePage");
   };
 
