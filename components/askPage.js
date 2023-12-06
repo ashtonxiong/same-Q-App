@@ -171,6 +171,7 @@ const AskPage = ({ route }) => {
   };
 
   const handleViewQuestion = (course, question, deviceIdentifier, prevPage) => {
+    closeSubmission();
     console.log(`Navigating to QuestionPage with question: ${question}`);
     navigation.navigate("QuestionPage", {
       course,
@@ -232,7 +233,10 @@ const AskPage = ({ route }) => {
     ));
   };
 
-  const borderColor = text.length >= characterLimit ? "red" : "black";
+  // const borderColor = text.length >= characterLimit ? "red" : "black";
+  const borderColor =
+    text.length >= characterLimit || isQuestion === false ? "red" : "black";
+
   const errorMessage =
     text.length >= characterLimit ? (
       "Error: Character Limit has been reached"
