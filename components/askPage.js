@@ -273,11 +273,11 @@ const AskPage = ({ route }) => {
       {/* <TouchableHighlight onPress={Keyboard.dismiss} style={{}}> */}
       <View style={styles.container}>
         <View style={styles.appBar}>
-          <TouchableOpacity onPress={clickMenuModal}>
+          {/* <TouchableOpacity onPress={clickMenuModal}>
             <View style={styles.backArrow}>
               <SimpleLineIcon name="menu" size={20} color="#000" />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.courseHeaderContainer}>
           <Text style={[styles.pageHeader]}>Create Question</Text>
@@ -400,7 +400,7 @@ const AskPage = ({ route }) => {
           </TouchableOpacity>
         </View>
 
-        <Modal transparent={true} visible={isModalVisible}>
+        {/* <Modal transparent={true} visible={isModalVisible}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.menuModalOverlay}>
               <TouchableWithoutFeedback onPress={() => addQuestion()}>
@@ -410,7 +410,7 @@ const AskPage = ({ route }) => {
               </TouchableWithoutFeedback>
             </View>
           </TouchableWithoutFeedback>
-        </Modal>
+        </Modal> */}
 
         <Modal transparent={true} visible={isSubmissionVisible}>
           <TouchableWithoutFeedback onPress={closeSubmission}>

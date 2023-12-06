@@ -199,8 +199,6 @@ const styles = StyleSheet.create({
    marginTop: "20%",
    textAlign: "center",
    fontSize: scaleFactor * 20,
-  //  borderColor: 'orange',
-  //  borderWidth: 2,
    marginTop: 5
  },
  menuModalImage: {
@@ -422,6 +420,7 @@ fakePage: {
  emptyChat: {
    textAlign: "center",
    fontWeight: "200",
+   marginTop: '20%',
  },
  // ------ Text Message Styling  --------
 
@@ -589,16 +588,13 @@ collabModalBodyText: {
  // ------ Notification Info --------
  NotiContainer: {
    flex: 1,
-   alignItems: "center",
-   marginLeft: 5,
-   marginRight: 5,
-   marginTop: "20%",
+   backgroundColor: '#f2ecff',
  },
  NotificationInfo: {
    flexDirection: "row",
    width: 0.9 * ScreenWidth,
    height: "10%",
-   marginTop: "3%",
+   marginTop: "5%",
    marginBottom: "3%",
  },
  NotiText: {
@@ -617,21 +613,9 @@ collabModalBodyText: {
 
 
   // ------ Collab Info --------
-  collabScroll: {
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: "10%",
-  },
   collabContainer: {
-    marginTop: "20%",
-    height: "100%",
-    // borderColor: 'pink',
-    // borderWidth: 5,
-  },
-  collabHeader: {
-    marginBottom: 25,
-    // borderColor: "black",
-    // borderWidth: 3,
+    flex: 1,
+    backgroundColor: '#f2ecff',
   },
   collabBox: {
     padding: 10,

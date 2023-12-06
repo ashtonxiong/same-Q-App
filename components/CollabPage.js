@@ -113,11 +113,9 @@ const CollabPage = () => {
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
 
   const renderCollab = () => {
-    // console.log('Collab questions:', collabQuestions);
     if (collabQuestions.length === 0) {
       return (
         <Text style={styles.emptyChat}>Collaborate on a question!</Text>
-        // <Text>Device id: {deviceIdentifier}</Text>
       );
     }
 
@@ -153,7 +151,6 @@ const CollabPage = () => {
         }
       >
         {/* top row */}
-        {/* <Text>{question.course}</Text> */}
         <View style={styles.collabTopRow}>
           <View style={styles.collabIcons}>
             <Icon name="clock" size={15 * scaleFactor}/>
@@ -188,25 +185,20 @@ const CollabPage = () => {
 
   return (
     <View style={styles.collabContainer}>
-      {/* <ScrollView 
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ alignItems: 'center', paddingBottom: '20%'}} 
-        // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
-        >         */}
-      <View style={styles.collabHeader}>
-        <Text style={styles.courseBoxTEXT}> Collaborating </Text>
-        <Text> Collaborating on {collabQuestions.length} questions</Text>
-      </View>
 
-      {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
+       <View style={styles.appBar}></View>
+            <View style={styles.courseHeaderContainer}>
+                <Text style={styles.pageHeader}>Colloborating</Text>
+            </View>
+
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ alignItems: "center", paddingBottom: "20%" }}
         // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
-      >
-        {renderCollab()}
+      >{renderCollab()} 
       </ScrollView>
+
     </View>
   );
 };
