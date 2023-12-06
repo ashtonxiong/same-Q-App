@@ -21,6 +21,7 @@ import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { supabase } from "../supabase";
 const { parse, getTime } = require("date-fns");
 import HuddleUI from "./HuddleUI";
+import BlinkingDot from "./BlinkingDot";
 
 
 const QuestionPage = ({ route }) => {
@@ -30,6 +31,7 @@ const QuestionPage = ({ route }) => {
  const [isPeopleModalVisible, setPeopleModalVisible] = useState(false);
  const [bottomMargin, setBottomMargin] = useState(0);
  const [actualNumCollaborators, setNumCollaborators] = useState(question.num_collab);
+ const [inHuddle, setInHuddle] = useState(false);
 
 
  const [chatsArray, setChatsArray] = useState([]);
@@ -305,15 +307,20 @@ const QuestionPage = ({ route }) => {
      }
    );
 
-
    return () => {
      keyboardDidShowListener.remove();
      keyboardDidHideListener.remove();
    };
  }, []);
 
+ 
+
  const toggleMuted = () => {
   setMuted((prevMuted) => !prevMuted);
+};
+
+const handleToggleHuddle = () => {
+  setInHuddle((prevIsInHuddle) => !prevIsInHuddle);
 };
 
 
@@ -462,6 +469,10 @@ const QuestionPage = ({ route }) => {
  };
 
 
+ const handleLeaveHuddle = () => {
+  setInHuddle(false);
+};
+
 
 
  return (
@@ -514,12 +525,13 @@ const QuestionPage = ({ route }) => {
              Asked by: {question.author}
            </Text>
            <View style={styles.numInHuddle}>
-           <TouchableOpacity onPress={clickHuddleModal}>
-             <View style={styles.backArrow}>
-               <Icon name="earphones" size={30} color="#000" />
-             </View>
-           </TouchableOpacity>
-           </View>
+           {inHuddle && <BlinkingDot inHuddle={inHuddle} />}
+            <TouchableOpacity onPress={clickHuddleModal}>
+              <View style={styles.backArrow}>
+                <Icon name="earphones" size={30} color="#000" />
+              </View>
+            </TouchableOpacity>
+          </View>
          </View>
 
 
@@ -631,13 +643,15 @@ const QuestionPage = ({ route }) => {
                  <View style={styles.huddleModalContent}>
                    <Text style={styles.collabModalHeaderText}>Huddle</Text>
                    <Text style={styles.collabModalBodyText}>
-                     {question.num_huddle + 1} in huddle {'\n'}
-                     {question.num_huddle} others in huddle with you {'\n'}
-                   </Text>
+                    {inHuddle ? `${question.num_huddle} others in huddle with you.` : `Join ${question.num_huddle} others in huddle.`}
+                  </Text>
                    <HuddleUI
-                    huddlers={question.huddlers}
-                    isMuted={isMuted}
-                    toggleMuted={toggleMuted}
+                     huddlers={question.huddlers}
+                     isMuted={isMuted}
+                     toggleMuted={toggleMuted}
+                     isInHuddle={inHuddle}
+                     onToggleHuddle={handleToggleHuddle}
+                     onLeaveHuddle={handleLeaveHuddle}
                   />
                  </View>
                )}
@@ -661,9 +675,6 @@ const QuestionPage = ({ route }) => {
            </View>
          </TouchableWithoutFeedback>
        </Modal>
-
-
-
 
      </View>
    </KeyboardAvoidingView>

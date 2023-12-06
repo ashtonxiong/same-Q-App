@@ -1,17 +1,17 @@
-import { ScreenHeight } from "@freakycoder/react-native-helpers";
-import React, { useEffect, useRef, useState } from "react";
-import { View, Text, Image, StyleSheet, Dimensions, Animated, Easing, TouchableOpacity } from "react-native";
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 const Pulse = require('react-native-pulse').default;
 import FontIcon from "react-native-vector-icons/FontAwesome";
 
 const { width, height } = Dimensions.get("window");
-const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
+const scaleFactor = Math.min(width, height) / 375; 
 
 
-const HuddleUI = ({ huddlers, isMuted, toggleMuted }) => {
-  console.log('mute', isMuted)
-  console.log('toggle:', toggleMuted)
-  // const [isMuted, setMuted] = useState(true);
+const HuddleUI = ({  huddlers,
+  isMuted,
+  toggleMuted,
+  isInHuddle,
+  onToggleHuddle,
+  onLeaveHuddle, }) => {
 
  const icons = [
     require("../assets/avatar.png"),
@@ -22,14 +22,18 @@ const HuddleUI = ({ huddlers, isMuted, toggleMuted }) => {
  ];
 
 
- const renderMic = () => (
-  <TouchableOpacity onPress={toggleMuted} style={styles.icons}>
-    <FontIcon
-      name={isMuted ? "microphone-slash" : "microphone"}
-      size={40}
-    />
-  </TouchableOpacity>
-);
+ const renderMic = () => {
+  if (isInHuddle === true) {
+    return (
+      <TouchableOpacity onPress={toggleMuted} style={styles.icons}>
+        <FontIcon
+          name={isMuted ? "microphone-slash" : "microphone"}
+          size={40}
+        />
+      </TouchableOpacity>
+    );
+  }
+};
 
 
  const getRandomIcon = () => {
@@ -74,9 +78,14 @@ const HuddleUI = ({ huddlers, isMuted, toggleMuted }) => {
         </View>
       </View>
         <View style={styles.leaveButtonContainer}>
-          <TouchableOpacity style={styles.leaveButton}>
-            <Text style={styles.leaveButtonText}>Leave Huddle</Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.leaveButton}
+          onPress={() => (isInHuddle ? onLeaveHuddle() : onToggleHuddle())}
+        >
+          <Text style={styles.leaveButtonText}>
+            {isInHuddle ? "Leave Huddle" : "Join Huddle"}
+          </Text>
+        </TouchableOpacity>
         </View>
       </View>
   );
