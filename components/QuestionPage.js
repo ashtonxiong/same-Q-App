@@ -18,6 +18,8 @@ import {
 import styles from "../styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { supabase } from "../supabase";
+import { Camera, CameraType } from "expo-camera";
+
 const { parse, getTime } = require("date-fns");
 
 const QuestionPage = ({ route }) => {
@@ -34,6 +36,10 @@ const QuestionPage = ({ route }) => {
   const isFocused = useIsFocused();
 
   const [collabStatus, setCollabStatus] = useState(["Collaborate"]);
+
+  const [isCameraOpen, setIsCameraOpen] = useState(false);
+  const [type, setType] = useState(CameraType.back);
+  const [permission, requestPermission] = Camera.useCameraPermissions();
 
   const getChats = async () => {
     try {
@@ -387,144 +393,198 @@ const QuestionPage = ({ route }) => {
     setModalVisible(!isModalVisible);
   };
 
+  const openCamera = () => {
+    if (!isCameraOpen) {
+      setIsCameraOpen(true);
+    }
+  };
+
+  seEffect(() => {
+    (async () => {
+      const { status } = await Camera.requestPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  }, []);
+
+  const toggleCameraType = () => {
+    setType(
+      type === Camera.Constants.Type.back
+        ? Camera.Constants.Type.front
+        : Camera.Constants.Type.back
+    );
+  };
+
+  const handleTakePicture = async () => {
+    if (cameraRef.current) {
+      const { uri } = await cameraRef.current.takePictureAsync();
+      // Handle the captured image URI as needed
+      console.log("Captured image URI:", uri);
+    }
+  };
+
+  const renderCamera = () => {
+    if (hasPermission === null) {
+      return <View />;
+    }
+    if (hasPermission === false) {
+      return <Text>No access to camera</Text>;
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       enabled
       style={{ flex: 1 }}
     >
-      <View style={[styles.container, { marginBottom: bottomMargin }]}>
-        <Text>Device identifier: {deviceIdentifier}</Text>
-        <View style={styles.questionPageBox}>
-          <View style={styles.questionPageBoxHeader}>
-            {course.course ? ( // check if course.course is defined
-              <TouchableOpacity
-                onPress={() => handleBackCourse(course, deviceIdentifier)}
-              >
+      {isCameraOpen ? (
+        renderCamera()
+      ) : (
+        <View style={[styles.container, { marginBottom: bottomMargin }]}>
+          <Text>Device identifier: {deviceIdentifier}</Text>
+          <View style={styles.questionPageBox}>
+            <View style={styles.questionPageBoxHeader}>
+              {course.course ? ( // check if course.course is defined
+                <TouchableOpacity
+                  onPress={() => handleBackCourse(course, deviceIdentifier)}
+                >
+                  <View style={styles.backArrow}>
+                    <Icon name="arrow-left" size={20} color="#000" />
+                    <Text style={styles.backTEXT}>{course.course}</Text>
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                // if course.course is undefined, we came from the collab page
+                <TouchableOpacity onPress={handleBackCollab}>
+                  <View style={styles.backArrow}>
+                    <Icon name="arrow-left" size={20} color="#000" />
+                    <Text style={styles.backTEXT}>Collaborating</Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+              <TouchableOpacity onPress={clickMoreModal}>
                 <View style={styles.backArrow}>
-                  <Icon name="arrow-left" size={20} color="#000" />
-                  <Text style={styles.backTEXT}>{course.course}</Text>
+                  <Icon name="exclamation" size={20} color="#000" />
+                  <Text style={styles.backTEXT}>More Info</Text>
                 </View>
               </TouchableOpacity>
-            ) : (
-              // if course.course is undefined, we came from the collab page
-              <TouchableOpacity onPress={handleBackCollab}>
-                <View style={styles.backArrow}>
-                  <Icon name="arrow-left" size={20} color="#000" />
-                  <Text style={styles.backTEXT}>Collaborating</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-            <TouchableOpacity onPress={clickMoreModal}>
-              <View style={styles.backArrow}>
-                <Icon name="exclamation" size={20} color="#000" />
-                <Text style={styles.backTEXT}>More Info</Text>
+            </View>
+
+            <View style={styles.questionInfoHeader}>
+              <View style={styles.numCollaborators}>
+                <Icon
+                  name="people"
+                  size={25}
+                  color="#000"
+                  style={styles.emojiIcon}
+                />
+                <Text style={{ fontSize: 20 }}> {question.num_collab} </Text>
               </View>
-            </TouchableOpacity>
+              <Text style={[styles.questionHost, { fontWeight: "bold" }]}>
+                Asked by: {question.author}
+              </Text>
+              <View style={[styles.numInHuddle]}>
+                <Text style={{ fontSize: 20 }}> {question.num_huddle} </Text>
+                <Icon
+                  name="earphones"
+                  size={25}
+                  color="#000"
+                  style={[styles.emojiIcon, {}]}
+                />
+              </View>
+            </View>
+
+            <View style={{ alignItems: "center" }}>
+              <Text style={{ fontSize: 17 }}>{question.question}</Text>
+            </View>
           </View>
 
-          <View style={styles.questionInfoHeader}>
-            <View style={styles.numCollaborators}>
+          <ScrollView
+            ref={messagesRef}
+            style={[styles.chatArea, { paddingBottom: "60%" }]}
+          >
+            {renderMessages()}
+          </ScrollView>
+
+          <View style={styles.inputContainer}>
+            <Icon
+              name="emotsmile"
+              size={25}
+              color="#000"
+              style={styles.emojiIcon}
+            />
+            <TouchableOpacity onPress={() => toggleCameraType}>
               <Icon
-                name="people"
-                size={25}
+                name="camera"
+                size={26}
                 color="#000"
                 style={styles.emojiIcon}
               />
-              <Text style={{ fontSize: 20 }}> {question.num_collab} </Text>
-            </View>
-            <Text style={[styles.questionHost, { fontWeight: "bold" }]}>
-              Asked by: {question.author}
-            </Text>
-            <View style={[styles.numInHuddle]}>
-              <Text style={{ fontSize: 20 }}> {question.num_huddle} </Text>
+            </TouchableOpacity>
+
+            <TextInput
+              style={styles.input}
+              placeholder="Click to start typing…"
+              value={message}
+              onChangeText={(newMessage) => setText(newMessage)}
+            />
+            <TouchableOpacity
+              onPress={() => handleMessageSend(course, question, message)}
+            >
               <Icon
-                name="earphones"
+                name="paper-plane"
                 size={25}
                 color="#000"
-                style={[styles.emojiIcon, {}]}
+                style={styles.cameraIcon}
               />
+            </TouchableOpacity>
+          </View>
+
+          {isModalVisible && (
+            <View style={styles.customModalOverlay}>
+              <TouchableWithoutFeedback
+                onPress={Keyboard.dismiss}
+                accessible={false}
+              >
+                <View style={styles.modalContent}>
+                  <View style={styles.modalHeader}>
+                    <TouchableOpacity onPress={clickMoreModal}>
+                      <View style={styles.cancelButton}>
+                        <Icon name="close" size={20} color="#000" />
+                        <Text style={styles.cancelTEXT}></Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={styles.modalHeaderTEXT}>
+                    Question Information
+                  </Text>
+                  <Text style={styles.modalHeaderTEXT2}>
+                    Course: {course.course} {"\n"}
+                    Asked by: {question.author} {"\n"}
+                    Posted: {question.created} {"\n"} {"\n"}
+                    Current Collaborators: {question.num_collab} {"\n"} {"\n"}
+                    {/* Total Collaborators: {question.num_collab} {'\n'} {'\n'} */}
+                    Last Active: XXX
+                  </Text>
+
+                  <View style={styles.modalCollabUncollab}>
+                    <TouchableOpacity
+                      style={styles.modalCollabUncollabTEXT}
+                      onPress={() =>
+                        handleCollabUncollabPress(course, question)
+                      }
+                    >
+                      <Text style={styles.courseCollabButtonText}>
+                        {collabStatus}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </TouchableWithoutFeedback>
             </View>
-          </View>
-
-          <View style={{ alignItems: "center" }}>
-            <Text style={{ fontSize: 17 }}>{question.question}</Text>
-          </View>
+          )}
         </View>
-
-        <ScrollView
-          ref={messagesRef}
-          style={[styles.chatArea, { paddingBottom: "60%" }]}
-        >
-          {renderMessages()}
-        </ScrollView>
-
-        <View style={styles.inputContainer}>
-          <Icon
-            name="emotsmile"
-            size={25}
-            color="#000"
-            style={styles.emojiIcon}
-          />
-          <Icon name="camera" size={26} color="#000" style={styles.emojiIcon} />
-          <TextInput
-            style={styles.input}
-            placeholder="Click to start typing…"
-            value={message}
-            onChangeText={(newMessage) => setText(newMessage)}
-          />
-          <TouchableOpacity
-            onPress={() => handleMessageSend(course, question, message)}
-          >
-            <Icon
-              name="paper-plane"
-              size={25}
-              color="#000"
-              style={styles.cameraIcon}
-            />
-          </TouchableOpacity>
-        </View>
-
-        {isModalVisible && (
-          <View style={styles.customModalOverlay}>
-            <TouchableWithoutFeedback
-              onPress={Keyboard.dismiss}
-              accessible={false}
-            >
-              <View style={styles.modalContent}>
-                <View style={styles.modalHeader}>
-                  <TouchableOpacity onPress={clickMoreModal}>
-                    <View style={styles.cancelButton}>
-                      <Icon name="close" size={20} color="#000" />
-                      <Text style={styles.cancelTEXT}></Text>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-                <Text style={styles.modalHeaderTEXT}>Question Information</Text>
-                <Text style={styles.modalHeaderTEXT2}>
-                  Course: {course.course} {"\n"}
-                  Asked by: {question.author} {"\n"}
-                  Posted: {question.created} {"\n"} {"\n"}
-                  Current Collaborators: {question.num_collab} {"\n"} {"\n"}
-                  {/* Total Collaborators: {question.num_collab} {'\n'} {'\n'} */}
-                  Last Active: XXX
-                </Text>
-
-                <View style={styles.modalCollabUncollab}>
-                  <TouchableOpacity
-                    style={styles.modalCollabUncollabTEXT}
-                    onPress={() => handleCollabUncollabPress(course, question)}
-                  >
-                    <Text style={styles.courseCollabButtonText}>
-                      {collabStatus}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
-          </View>
-        )}
-      </View>
+      )}
     </KeyboardAvoidingView>
   );
 };
