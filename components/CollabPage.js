@@ -47,9 +47,9 @@ const CollabPage = () => {
   const getCollabQuestions = async () => {
     try {
       const { data, error } = await supabase
-        .from("sameQ-app-questions")
+        .from("sameQ-app-collab")
         .select("*")
-        .eq("collab_status", "TRUE")
+        // .eq("collab_status", "TRUE")
         .eq("device_id", deviceIdentifier);
 
       if (data) {
@@ -65,6 +65,7 @@ const CollabPage = () => {
           chats: item.chats,
           help: item.expected_help,
           collab_status: item.collab_status,
+          question_id: item.question_id,
         }));
 
         setCollabQuestions(collabQuestionsArray);

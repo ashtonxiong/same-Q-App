@@ -27,6 +27,7 @@ import * as FileSystem from "expo-file-system";
 
 const { parse, getTime } = require("date-fns");
 import HuddleUI from "./HuddleUI";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const QuestionPage = ({ route }) => {
   const { question, course, deviceIdentifier } = route.params;
@@ -69,6 +70,7 @@ const QuestionPage = ({ route }) => {
         .select("*")
         .eq("course", course.course)
         .eq("question", question.question)
+        .eq("question_id", question.question_id)
         // .eq('device_id', '000');
         .eq("device_id", deviceIdentifier);
       // .or('device_id.eq.000, device_id.eq.', deviceIdentifier);
@@ -95,14 +97,6 @@ const QuestionPage = ({ route }) => {
 
   const getDefaultChats = async () => {
     try {
-      console.log(
-        "fetching data for device:",
-        deviceIdentifier,
-        "for question:",
-        question.question,
-        "for course:",
-        course.course
-      );
       const { data, error } = await supabase
         .from("sameQ-chats")
         .select("*")
@@ -134,10 +128,6 @@ const QuestionPage = ({ route }) => {
 
   const addMessage = async (course, question, message) => {
     try {
-      console.log("Course to add message to:", course.course);
-      console.log("Question to add message to:", question.question);
-      console.log("New message to send:", message);
-
       const currentDate = new Date();
       const formattedDate = `${currentDate.toLocaleString("en-US", {
         month: "long",
@@ -154,6 +144,7 @@ const QuestionPage = ({ route }) => {
           message: message,
           time: formattedDate,
           device_id: deviceIdentifier,
+          question_id: question.question_id,
         },
       ]);
 
@@ -177,59 +168,136 @@ const QuestionPage = ({ route }) => {
 
   const addCollab = async (course, question) => {
     try {
-      console.log("device in in addCollab", deviceIdentifier);
-      console.log("course to add:", course.course);
-      console.log("question to add:", question.question);
-
-      const { error } = await supabase.from("sameQ-app-questions").upsert([
+      const { error } = await supabase.from("sameQ-app-collab").insert([
         {
-          course: course.course,
           question: question.question,
-          author: question.author,
-          num_collaborators: question.num_collab + 1,
-          num_huddle: question.num_huddle,
-          created: question.created,
-          expected_help: question.expected_help,
+          created: "January 1, 2023, 3:00 PM",
+          author: "me",
+          num_collaborators: 0,
+          num_huddle: 0,
+          expected_help: "3:15 PM",
           collab_status: "TRUE",
-          device_id: deviceIdentifier,
+          course: `${course.course}`,
+          collaborators: {},
+          huddlers: {},
+          question_id: `${question.question_id}`,
+          device_id: `${deviceIdentifier}`,
         },
       ]);
-
-      setNumCollaborators(
-        (prevActualNumCollaborators) => prevActualNumCollaborators + 1
-      );
-
       if (error) {
         throw new Error(error.message);
       }
     } catch (error) {
-      console.error("Error adding data into Supabase:", error.message);
+      console.log(error);
     }
   };
 
+  // const addCollab = async (course, question) => {
+  //   try {
+  //     // const { error } = await supabase.from("sameQ-app-questions").upsert([
+  //     //   {
+  //     //     course: course.course,
+  //     //     question: question.question,
+  //     //     author: question.author,
+  //     //     num_collaborators: question.num_collab + 1,
+  //     //     num_huddle: question.num_huddle,
+  //     //     created: question.created,
+  //     //     expected_help: question.expected_help,
+  //     //     collab_status: "TRUE",
+  //     //     device_id: deviceIdentifier,
+  //     //   },
+  //     // ]);
+
+  //     const { data, error } = await supabase
+  //       .from("sameQ-app-questions")
+  //       .select("*")
+  //       .eq("question", question.question);
+  //     console.log("TEST DATA EXIST", data[0]);
+  //     if (data) {
+  //       const newArray = data.map((item) => ({
+  //         author: item.author,
+  //         collab_status: item.collab_status,
+  //         collaborators: item.collaborators,
+  //         course: item.course,
+  //         created: item.created,
+  //         device_id: deviceIdentifier,
+  //         help: item.expected_help,
+  //         huddlers: item.huddlers,
+  //       }));
+
+  //       console.log("newArray:", newArray[0]);
+  //       if (error) {
+  //         throw new Error(error.message);
+  //       }
+  //       if (error) {
+  //         console.log("TELL ME A FUCING ERROR", error);
+  //       }
+
+  //       // console.log("data[0].author:", data[0].course);
+  //       // console.log(typeof data[0]);
+
+  //       const { error2 } = await supabase
+  //         .from("sameQ-app-collab-questions")
+  //         .insert([
+  //           {
+  //             created_at: newArray[0].created,
+  //             author: newArray.author,
+  //             num_collab: 0,
+  //             num_huddle: 0,
+  //             expected_help: newArray.expected_help,
+  //             collab_status: "TRUE",
+  //             question: "BLAH BLAH",
+  //             device_id: deviceIdentifier,
+  //             collaborators: 0,
+  //             huddlers: 0,
+  //             course: newArray.course,
+  //             question_id: newArray.question_id,
+  //           },
+  //         ]);
+
+  //       if (error2) {
+  //         throw new Error(error2.message);
+  //       }
+
+  //       setNumCollaborators(
+  //         (prevActualNumCollaborators) => prevActualNumCollaborators + 1
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding data into Supabase:", error.message);
+  //   }
+  // };
+
   const deleteCollab = async (course, question) => {
+    console.log("delete collab pressed");
     try {
-      console.log("course to delete:", course.course);
-      console.log("question to delete:", question.question);
+      const { old, error1 } = await supabase
+        .from("sameQ-app-collab")
+        .select("*")
+        .eq("question_id", question.question_id)
+        .eq("question", question.question);
+      console.log("TEST DATA EXIST", question);
+
       const { error } = await supabase
-        .from("sameQ-app-questions")
-        .update([
+        .from("sameQ-app-collab")
+        .delete([
           {
             collab_status: "FALSE",
             num_collaborators: question.num_collab,
+            device_id: "000",
           },
         ])
         .eq("device_id", deviceIdentifier)
-        .eq("course", course.course)
-        .eq("question", question.question);
+        .eq("question_id", question.question_id);
+      // .eq("question", question.question);
 
-      setNumCollaborators(
-        (prevActualNumCollaborators) => prevActualNumCollaborators - 1
-      );
+      // setNumCollaborators(
+      //   (prevActualNumCollaborators) => prevActualNumCollaborators - 1
+      // );
 
-      if (error) {
-        throw new Error(error.message);
-      }
+      // if (error) {
+      //   throw new Error(error.message);
+      // }
     } catch (error) {
       console.error("Error deleting data from Supabase:", error.message);
     }
@@ -238,9 +306,10 @@ const QuestionPage = ({ route }) => {
   const getCollabStatus = async () => {
     try {
       const { data, error } = await supabase
-        .from("sameQ-app-questions")
+        .from("sameQ-app-collab")
         .select("collab_status", "num_collaborators")
         .eq("question", question.question)
+        .eq("question_id", question.question_id)
         .eq("device_id", deviceIdentifier);
 
       if (data && data.length > 0) {
@@ -391,7 +460,7 @@ const QuestionPage = ({ route }) => {
       const newStatus =
         prevStatus[0] === "Collaborate" ? ["Uncollaborate"] : ["Collaborate"];
 
-      console.log("newStatus:", newStatus);
+      // console.log("newStatus:", newStatus);
 
       if (newStatus[0] === "Collaborate") {
         deleteCollab(course, question);
@@ -403,26 +472,15 @@ const QuestionPage = ({ route }) => {
   };
 
   const handleBackCourse = (course, deviceIdentifier) => {
-    console.log(`Navigating to CoursePage with course: ${course.course}`);
     navigation.navigate("CoursePage", { course, deviceIdentifier });
   };
 
   const handleBackCollab = () => {
-    console.log(`Navigating to Collaborating Page`);
     navigation.navigate("CollabPage");
   };
 
   const handleMessageSend = async (course, question, message) => {
     try {
-      console.log(
-        "Sending new message:",
-        message,
-        "to course:",
-        course.course,
-        "in question:",
-        question.question
-      );
-
       await addMessage(course, question, message);
       setText("");
     } catch (error) {
@@ -485,7 +543,7 @@ const QuestionPage = ({ route }) => {
       const newUri = `${directory}${Date.now()}.jpg`;
       await FileSystem.moveAsync({ from: uri, to: newUri });
 
-      console.log("FileSystem", FileSystem.documentDirectory);
+      // console.log("FileSystem", FileSystem.documentDirectory);
       setCapturedImageUri(newUri);
       // closeCamera();
       // setCapturedImageUri(uri);

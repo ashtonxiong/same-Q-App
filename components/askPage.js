@@ -82,6 +82,20 @@ const AskPage = ({ route }) => {
           course: selectedClass,
         },
       ]);
+      // adds to collab page
+      const { error2 } = await supabase.from("sameQ-app-collab").insert([
+        {
+          question: text,
+          author: "You",
+          num_collaborators: 1,
+          num_huddle: 0,
+          expected_help: "5:00 PM",
+          created: formattedDate,
+          collab_status: "TRUE",
+          device_id: deviceIdentifier,
+          course: selectedClass,
+        },
+      ]);
 
       const info = {
         question: text,

@@ -32,6 +32,7 @@ const CoursePage = ({ route }) => {
   const getQuestions = async () => {
     // console.log("device id in getQuestions:", deviceIdentifier);
     try {
+      // sortedQuestionsArray([]);
       const { data, error } = await supabase
         .from("sameQ-app-questions")
         .select("*")
@@ -55,8 +56,8 @@ const CoursePage = ({ route }) => {
           num_huddle: item.num_huddle,
           chats: item.chats,
           expected_help: item.expected_help,
+          question_id: item.question_id,
         }));
-        // console.log("in getQuestions 3", questionInfoArray);
 
         setQuestions(questionInfoArray);
       }
@@ -92,6 +93,7 @@ const CoursePage = ({ route }) => {
           num_huddle: item.num_huddle,
           chats: item.chats,
           expected_help: item.expected_help,
+          question_id: item.question_id,
         }));
         // console.log("in getQuestions 3", questionInfoArray);
 
