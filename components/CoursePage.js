@@ -6,7 +6,7 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { supabase } from "../supabase";
@@ -23,6 +23,11 @@ const CoursePage = ({ route }) => {
 
   const [questions, setQuestions] = useState([]);
   const [defaultQuestions, setDefaultQuestions] = useState([]);
+
+  useFocusEffect(() => {
+    // Fetch or update data when the component comes into focus
+    getQuestions();
+  });
 
   const getQuestions = async () => {
     console.log("device id in getQuestions:", deviceIdentifier);
@@ -215,11 +220,6 @@ const CoursePage = ({ route }) => {
             <Text style={styles.backTEXT}>Home</Text>
           </View>
         </TouchableOpacity>
-        {/* <View style={styles.headerContainer}>
-          <Text style={styles.classNameText}>
-            LOGO
-          </Text>
-        </View> */}
       </View>
 
       <View>
