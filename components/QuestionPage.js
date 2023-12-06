@@ -454,7 +454,7 @@ const handleToggleHuddle = () => {
         // Show an alert if collaboration is required
         Alert.alert(
           "Cannot Send Message",
-          "Begin collaborating on the question first.",
+          "Begin collaborating on the question first!",
           [{ text: "OK", onPress: () => {} }]
         );
       } else {
@@ -664,12 +664,6 @@ const [sound, setSound] = useState(null);
 
 
        <View style={styles.inputContainer}>
-         <Icon
-           name="emotsmile"
-           size={25}
-           color="#000"
-           style={styles.emojiIcon}
-         />
          <Icon name="camera" size={26} color="#000" style={styles.emojiIcon} />
 
 
