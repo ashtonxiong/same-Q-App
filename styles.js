@@ -172,15 +172,84 @@ const styles = StyleSheet.create({
    backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
  },
  menuModalContent: {
+  flex: 1,
    width: screenWidth * 0.7,
    height: screenHeight,
    backgroundColor: "#DDCFFF",
    borderRadius: 20, // round corners
+   padding: '10%',
+   alignItems: 'center',
+   borderColor: 'orange',
+   borderWidth: 3,
+   justifyContent: 'space-around'
  },
- menuModalTEXT: {
-   marginTop: "75%",
+ menuModalTop: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginTop: '-40%',
+ },
+ menuModalBottom: {
+  alignItems: 'center',
+  marginTop: '-60%',
+  flexDirection: 'column',
+ },
+ menuModalHeader: {
+  marginTop: '50%',
+  fontSize: scaleFactor * 27,
+  textAlign: 'center',
+  fontWeight: 'bold',
+ },
+ menuModalBody: {
+   marginTop: "20%",
    textAlign: "center",
+   fontSize: scaleFactor * 20,
+  //  borderColor: 'orange',
+  //  borderWidth: 2,
+   marginTop: 5
  },
+ menuModalImage: {
+  width: 75, 
+  height: 75, 
+  borderRadius: 15,
+  marginTop: "50%",
+ },
+ logoutButtonContainer: {
+  justifyContent: 'flex-end',
+  width: "40%", 
+  alignItems: 'center'
+ },
+ logoutButton: {
+  borderRadius: 25,
+  backgroundColor: "#5E42A6",
+  padding: 10,
+  width: "150%", 
+  textAlign: 'center',
+  alignItems: 'center',
+  alignContent: 'center',
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 10 },
+  shadowOpacity: 0.2,
+  shadowRadius: 4,
+ },
+ logoutButtonText: {
+  color: "white",
+  fontSize: 20 * scaleFactor,
+  fontWeight: "bold",
+  textAlign: 'center',
+  alignItems: 'center',
+  alignContent: 'center'
+},
+canvasImage: {
+  width: 30,
+  height: 30,
+},
+fakePage: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginTop: "25%",
+},
+// ----------HomePage----------
+
 
 
  // ----------CoursePage----------
