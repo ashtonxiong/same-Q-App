@@ -165,7 +165,7 @@ const CoursePage = ({ route }) => {
               marginRight: 5 * scaleFactor,
             }}
           >
-            Expected Help at{" "}
+            Expected Help at
             <Text style={{ fontWeight: "bold" }}>{question.expected_help}</Text>
           </Text>
           <View style={styles.queueEarphone}>
@@ -247,24 +247,10 @@ const CoursePage = ({ route }) => {
             style={{
               alignItems: "center",
               flexDirection: "row",
-              justifyContent: "flex-end",
+              //  justifyContent: "flex-end",
             }}
           >
-            <Text
-              style={[
-                styles.sectionHeader,
-                { marginRight: "auto", marginLeft: "auto" },
-              ]}
-            >
-              Queue
-            </Text>
-            {/* <TouchableOpacity style={{ justifyContent: "flex-end" }}>
-              <FontIcon
-                name="filter"
-                size={30}
-                style={{ borderWidth: 2 }}
-              ></FontIcon>
-            </TouchableOpacity> */}
+            <Text style={styles.sectionHeader}>Queue</Text>
           </View>
           <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
             <TouchableOpacity style={{ justifyContent: "flex-end" }}>

@@ -9,6 +9,7 @@ import {
   Platform,
   ScrollView,
   KeyboardAvoidingView,
+  Modal,
   Image,
   ImageBackground,
 } from "react-native";
@@ -25,14 +26,18 @@ import { Camera, CameraType } from "expo-camera";
 import * as FileSystem from "expo-file-system";
 
 const { parse, getTime } = require("date-fns");
+import HuddleUI from "./HuddleUI";
 
 const QuestionPage = ({ route }) => {
-  const { question, course, deviceIdentifier, prevPage } = route.params;
+  const { question, course, deviceIdentifier } = route.params;
   const [isModalVisible, setModalVisible] = useState(false);
+  const [isHuddleModalVisible, setHuddleModalVisible] = useState(false);
+  const [isPeopleModalVisible, setPeopleModalVisible] = useState(false);
   const [bottomMargin, setBottomMargin] = useState(0);
+  const [actualNumCollaborators, setNumCollaborators] = useState(
+    question.num_collab
+  );
 
-  // const questionText = question.question;
-  // const courseName = course.course;
   const [chatsArray, setChatsArray] = useState([]);
   const [defaultChatsArray, setDefaultChatsArray] = useState([]);
   const [message, setText] = useState("");
@@ -175,12 +180,13 @@ const QuestionPage = ({ route }) => {
       console.log("device in in addCollab", deviceIdentifier);
       console.log("course to add:", course.course);
       console.log("question to add:", question.question);
+
       const { error } = await supabase.from("sameQ-app-questions").upsert([
         {
           course: course.course,
           question: question.question,
           author: question.author,
-          num_collaborators: question.num_collab,
+          num_collaborators: question.num_collab + 1,
           num_huddle: question.num_huddle,
           created: question.created,
           expected_help: question.expected_help,
@@ -188,7 +194,10 @@ const QuestionPage = ({ route }) => {
           device_id: deviceIdentifier,
         },
       ]);
-      // .eq('uid', question.uid);
+
+      setNumCollaborators(
+        (prevActualNumCollaborators) => prevActualNumCollaborators + 1
+      );
 
       if (error) {
         throw new Error(error.message);
@@ -204,10 +213,19 @@ const QuestionPage = ({ route }) => {
       console.log("question to delete:", question.question);
       const { error } = await supabase
         .from("sameQ-app-questions")
-        .update([{ collab_status: "FALSE" }])
+        .update([
+          {
+            collab_status: "FALSE",
+            num_collaborators: question.num_collab,
+          },
+        ])
         .eq("device_id", deviceIdentifier)
         .eq("course", course.course)
         .eq("question", question.question);
+
+      setNumCollaborators(
+        (prevActualNumCollaborators) => prevActualNumCollaborators - 1
+      );
 
       if (error) {
         throw new Error(error.message);
@@ -221,15 +239,15 @@ const QuestionPage = ({ route }) => {
     try {
       const { data, error } = await supabase
         .from("sameQ-app-questions")
-        .select("collab_status")
+        .select("collab_status", "num_collaborators")
         .eq("question", question.question)
         .eq("device_id", deviceIdentifier);
 
-      // console.log("TEST DATA ON ASK QUESTION INFO", question.question);
       if (data && data.length > 0) {
         setCollabStatus([
           data[0].collab_status ? "Uncollaborate" : "Collaborate",
         ]);
+        setNumCollaborators(data[0].num_collaborators);
       }
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
@@ -252,9 +270,9 @@ const QuestionPage = ({ route }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getCollabStatus(); // fetch the collaboration status when navigating back into modal
       getDefaultChats();
       getChats();
+      getCollabStatus(); // fetch the collaboration status when navigating back into modal
     }, [])
   );
 
@@ -386,11 +404,7 @@ const QuestionPage = ({ route }) => {
 
   const handleBackCourse = (course, deviceIdentifier) => {
     console.log(`Navigating to CoursePage with course: ${course.course}`);
-    if (prevPage === "CollabPage") {
-      navigation.navigate("CollabPage", { course, deviceIdentifier });
-    } else {
-      navigation.navigate("CoursePage", { course, deviceIdentifier });
-    }
+    navigation.navigate("CoursePage", { course, deviceIdentifier });
   };
 
   const handleBackCollab = () => {
@@ -419,6 +433,21 @@ const QuestionPage = ({ route }) => {
   const clickMoreModal = () => {
     Keyboard.dismiss();
     setModalVisible(!isModalVisible);
+  };
+  const clickHuddleModal = () => {
+    setHuddleModalVisible(!isHuddleModalVisible);
+  };
+
+  const closeHuddleModal = () => {
+    setHuddleModalVisible(false);
+  };
+
+  const clickPeopleModal = () => {
+    setPeopleModalVisible(!isPeopleModalVisible);
+  };
+
+  const closePeopleModal = () => {
+    setPeopleModalVisible(false);
   };
 
   const openCamera = () => {
@@ -600,25 +629,22 @@ const QuestionPage = ({ route }) => {
 
             <View style={styles.questionInfoHeader}>
               <View style={styles.numCollaborators}>
-                <Icon
-                  name="people"
-                  size={25}
-                  color="#000"
-                  style={styles.emojiIcon}
-                />
-                <Text style={{ fontSize: 20 }}> {question.num_collab} </Text>
+                <TouchableOpacity onPress={clickPeopleModal}>
+                  <View style={styles.backArrow}>
+                    <Icon name="people" size={30} color="#000" />
+                  </View>
+                </TouchableOpacity>
+                <Text style={{ fontSize: 20 }}> {actualNumCollaborators} </Text>
               </View>
               <Text style={[styles.questionHost, { fontWeight: "bold" }]}>
                 Asked by: {question.author}
               </Text>
-              <View style={[styles.numInHuddle]}>
-                <Text style={{ fontSize: 20 }}> {question.num_huddle} </Text>
-                <Icon
-                  name="earphones"
-                  size={25}
-                  color="#000"
-                  style={[styles.emojiIcon, {}]}
-                />
+              <View style={styles.numInHuddle}>
+                <TouchableOpacity onPress={clickHuddleModal}>
+                  <View style={styles.backArrow}>
+                    <Icon name="earphones" size={30} color="#000" />
+                  </View>
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -632,7 +658,6 @@ const QuestionPage = ({ route }) => {
             style={[styles.chatArea, { paddingBottom: "60%" }]}
           >
             {renderMessages()}
-            {/* {renderImages()} */}
           </ScrollView>
 
           <View style={styles.inputContainer}>
@@ -651,12 +676,19 @@ const QuestionPage = ({ route }) => {
               />
             </TouchableOpacity>
 
-            <TextInput
-              style={styles.input}
-              placeholder="Click to start typing…"
-              value={message}
-              onChangeText={(newMessage) => setText(newMessage)}
-            />
+            {collabStatus[0] === "Collaborate" ? (
+              <Text style={styles.input2}>
+                Begin collaborating on the question first!
+              </Text>
+            ) : (
+              <TextInput
+                style={styles.input}
+                placeholder="Click to start typing…"
+                value={message}
+                onChangeText={(newMessage) => setText(newMessage)}
+              />
+            )}
+
             <TouchableOpacity
               onPress={() => handleMessageSend(course, question, message)}
             >
@@ -691,7 +723,8 @@ const QuestionPage = ({ route }) => {
                     Course: {course.course} {"\n"}
                     Asked by: {question.author} {"\n"}
                     Posted: {question.created} {"\n"} {"\n"}
-                    Current Collaborators: {question.num_collab} {"\n"} {"\n"}
+                    Current Collaborators: {actualNumCollaborators} {"\n"}{" "}
+                    {"\n"}
                     {/* Total Collaborators: {question.num_collab} {'\n'} {'\n'} */}
                     Last Active: XXX
                   </Text>
@@ -712,6 +745,51 @@ const QuestionPage = ({ route }) => {
               </TouchableWithoutFeedback>
             </View>
           )}
+
+          <Modal transparent={true} visible={isHuddleModalVisible}>
+            <TouchableWithoutFeedback onPress={closeHuddleModal}>
+              <View style={styles.customHuddleModalOverlay}>
+                <TouchableWithoutFeedback onPress={() => {}}>
+                  {collabStatus[0] === "Collaborate" ? (
+                    <View style={styles.huddleModalContent2}>
+                      <Text style={styles.huddleModalHeaderText}>
+                        Begin collaborating on the question first!
+                      </Text>
+                      <Text style={styles.huddleModalBodyText}>
+                        Click the 'More Info' to collaborate.
+                      </Text>
+                    </View>
+                  ) : (
+                    <View style={styles.huddleModalContent}>
+                      <Text style={styles.collabModalHeaderText}>Huddle</Text>
+                      <Text style={styles.collabModalBodyText}>
+                        {question.num_huddle + 1} in huddle {"\n"}
+                        {question.num_huddle} others in huddle with you {"\n"}
+                        <HuddleUI huddlers={question.huddlers} />
+                      </Text>
+                    </View>
+                  )}
+                </TouchableWithoutFeedback>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
+
+          <Modal transparent={true} visible={isPeopleModalVisible}>
+            <TouchableWithoutFeedback onPress={closePeopleModal}>
+              <View style={styles.customHuddleModalOverlay}>
+                <TouchableWithoutFeedback onPress={() => {}}>
+                  <View style={styles.huddleModalContent}>
+                    <Text style={styles.collabModalHeaderText}>
+                      Collaborators
+                    </Text>
+                    <Text style={styles.collabModalBodyText}>
+                      {actualNumCollaborators} Collaborators
+                    </Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            </TouchableWithoutFeedback>
+          </Modal>
         </View>
       )}
     </KeyboardAvoidingView>

@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   joinButtonTEXT: {
     color: "white",
-    fontSize: 24,
+    fontSize: 20 * scaleFactor,
     fontWeight: "bold",
   },
   askButton: {
@@ -156,14 +156,14 @@ const styles = StyleSheet.create({
   },
   askButtonTEXT: {
     color: "white",
-    fontSize: 24,
+    fontSize: 20 * scaleFactor,
     fontWeight: "bold",
   },
   menuModalOverlay: {
     ...StyleSheet.absoluteFillObject, // apply fill to custom modal
     justifyContent: "center",
     alignItems: "left",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // value for transparency
+    backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
   },
   menuModalContent: {
     width: screenWidth * 0.7,
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject, // apply fill to custom modal
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // value for transparency
+    backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
   },
   modalContent: {
     width: screenWidth * 0.8,
@@ -397,6 +397,59 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginLeft: 5,
   },
+  customHuddleModalOverlay: {
+    ...StyleSheet.absoluteFillObject, // apply fill to custom modal
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
+  },
+  huddleModalContent: {
+    width: screenWidth * 0.95,
+    height: screenHeight * 0.77,
+    padding: 25,
+    backgroundColor: "white",
+    borderRadius: 20, // round corners
+    borderColor: "black",
+    borderWidth: 2,
+  },
+  huddleModalContent2: {
+    width: screenWidth * 0.95,
+    height: screenHeight * 0.2,
+    padding: 25,
+    backgroundColor: "white",
+    borderRadius: 20, // round corners
+    borderColor: "black",
+    borderWidth: 2,
+  },
+  huddleModalHeader: {
+    alignItems: "flex-end",
+  },
+  huddleModalHeaderText: {
+    margin: 20,
+    fontSize: scaleFactor * 20,
+    fontWeight: "600",
+    textAlign: "center",
+    color: "red",
+  },
+  huddleModalBodyText: {
+    margin: -15,
+    fontSize: scaleFactor * 15,
+    textAlign: "center",
+    fontWeight: "200",
+    color: "red",
+  },
+  collabModalHeaderText: {
+    margin: 20,
+    fontSize: scaleFactor * 25,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  collabModalBodyText: {
+    margin: -15,
+    fontSize: 20,
+    textAlign: "center",
+    fontWeight: "200",
+  },
   questionInfoHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -430,6 +483,13 @@ const styles = StyleSheet.create({
     padding: 0, // remove default padding
     marginLeft: 5, // add space between the emoji and text input
     fontSize: 16,
+  },
+  input2: {
+    flex: 1,
+    padding: 0, // remove default padding
+    marginLeft: 5, // add space between the emoji and text input
+    fontSize: 16,
+    fontWeight: "200",
   },
   cameraIcon: {
     marginLeft: 5, // add space between the text input and camera icon
@@ -536,9 +596,8 @@ const styles = StyleSheet.create({
 
   // ------ Ask Page  --------
   tagsContainer: {
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     height: 0.2 * screenHeight,
-    // justifyContent: "flex-end",
     flexWrap: "wrap",
   },
   tags: {
@@ -556,6 +615,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 2,
     margin: 2,
+    marginRight: 8,
+    marginLeft: 8,
   },
   questionBoxContainer: {
     height: 0.35 * screenHeight,
@@ -574,7 +635,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   submitQuestionButton: {
-    backgroundColor: "#FFFF",
+    backgroundColor: "#5E42A6",
     paddingHorizontal: "10%",
     paddingVertical: "1%",
     borderRadius: 40,
@@ -583,15 +644,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
+  submitQuestionButtonText: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
   selectedTag: {
     backgroundColor: "#5E42A6", // Apply your desired background color for selected tags
     borderColor: "white",
-  },
-  submissionModal: {
-    ...StyleSheet.absoluteFillObject, // apply fill to custom modal
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // value for transparency
   },
   submissionModalContent: {
     width: screenWidth * 0.7,
