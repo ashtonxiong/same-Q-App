@@ -40,6 +40,7 @@ const QuestionPage = ({ route }) => {
 
 
  const [collabStatus, setCollabStatus] = useState(["Collaborate"]);
+ const [isMuted, setMuted] = useState(true);
 
 
  const getChats = async () => {
@@ -310,6 +311,10 @@ const QuestionPage = ({ route }) => {
      keyboardDidHideListener.remove();
    };
  }, []);
+
+ const toggleMuted = () => {
+  setMuted((prevMuted) => !prevMuted);
+};
 
 
  const navigation = useNavigation();
@@ -628,8 +633,12 @@ const QuestionPage = ({ route }) => {
                    <Text style={styles.collabModalBodyText}>
                      {question.num_huddle + 1} in huddle {'\n'}
                      {question.num_huddle} others in huddle with you {'\n'}
-                     <HuddleUI huddlers={question.huddlers} />
                    </Text>
+                   <HuddleUI
+                    huddlers={question.huddlers}
+                    isMuted={isMuted}
+                    toggleMuted={toggleMuted}
+                  />
                  </View>
                )}
              </TouchableWithoutFeedback>
