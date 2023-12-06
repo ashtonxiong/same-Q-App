@@ -56,7 +56,7 @@ const CoursePage = ({ route }) => {
           num_huddle: item.num_huddle,
           chats: item.chats,
           expected_help: item.expected_help,
-          question_id: item.question_id,
+          // question_id: item.question_id,
         }));
 
         setQuestions(questionInfoArray);
@@ -93,7 +93,7 @@ const CoursePage = ({ route }) => {
           num_huddle: item.num_huddle,
           chats: item.chats,
           expected_help: item.expected_help,
-          question_id: item.question_id,
+          // question_id: item.question_id,
         }));
         // console.log("in getQuestions 3", questionInfoArray);
 

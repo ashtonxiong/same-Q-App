@@ -57,23 +57,19 @@ const QuestionPage = ({ route }) => {
 
   const getChats = async () => {
     try {
-      // console.log(
-      //   "fetching data for device:",
-      //   deviceIdentifier,
-      //   "for question:",
-      //   question.question,
-      //   "for course:",
-      //   course.course
-      // );
+      console.log("for QUESTION:", question);
+      console.log("for COURSE:", course);
+
       const { data, error } = await supabase
         .from("sameQ-chats")
         .select("*")
         .eq("course", course.course)
         .eq("question", question.question)
-        .eq("question_id", question.question_id)
+        // .eq("question_id", question.question_id)
         // .eq('device_id', '000');
         .eq("device_id", deviceIdentifier);
       // .or('device_id.eq.000, device_id.eq.', deviceIdentifier);
+      console.log("DATA:", data);
 
       if (error) {
         throw new Error(error.message);
@@ -86,8 +82,8 @@ const QuestionPage = ({ route }) => {
           senderInitials: item.sender_initials,
           message: item.message,
           timeSent: item.time,
+          // question_id: item.question_id,
         }));
-
         setChatsArray(newChats);
       }
     } catch (error) {
@@ -102,6 +98,7 @@ const QuestionPage = ({ route }) => {
         .select("*")
         .eq("course", course.course)
         .eq("question", question.question)
+        // .eq("question", question.question_id)
         .eq("device_id", "000");
       // .eq('device_id', deviceIdentifier);
       // .or('device_id.eq.000, device_id.eq.', deviceIdentifier);
@@ -144,7 +141,7 @@ const QuestionPage = ({ route }) => {
           message: message,
           time: formattedDate,
           device_id: deviceIdentifier,
-          question_id: question.question_id,
+          // question_id: question.question_id,
         },
       ]);
 

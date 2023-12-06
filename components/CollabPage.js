@@ -62,11 +62,12 @@ const CollabPage = () => {
           author: item.author,
           num_collab: item.num_collaborators,
           num_huddle: item.num_huddle,
-          chats: item.chats,
           help: item.expected_help,
           collab_status: item.collab_status,
-          question_id: item.question_id,
+          // question_id: item.question_id,
+          device_id: deviceIdentifier,
         }));
+        console.log("test collabQuestions", collabQuestionsArray);
 
         setCollabQuestions(collabQuestionsArray);
       }
@@ -98,7 +99,7 @@ const CollabPage = () => {
           status: item.status,
         }));
         setCourses(courses);
-        console.log("course data collab page: ", coursesArray);
+        // console.log("course data collab page: ", coursesArray);
       }
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
