@@ -615,8 +615,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 2,
     margin: 2,
-    marginRight: 8,
-    marginLeft: 8,
   },
   questionBoxContainer: {
     height: 0.35 * screenHeight,
