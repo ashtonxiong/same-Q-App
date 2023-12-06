@@ -17,6 +17,7 @@ import {
 } from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import { supabase } from "../supabase";
 import { Camera, CameraType } from "expo-camera";
 
@@ -40,17 +41,19 @@ const QuestionPage = ({ route }) => {
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [type, setType] = useState(CameraType.back);
   const [permission, requestPermission] = Camera.useCameraPermissions();
+  const [hasPermission, setHasPermission] = useState(null);
+  const cameraRef = useRef(null);
 
   const getChats = async () => {
     try {
-      console.log(
-        "fetching data for device:",
-        deviceIdentifier,
-        "for question:",
-        question.question,
-        "for course:",
-        course.course
-      );
+      // console.log(
+      //   "fetching data for device:",
+      //   deviceIdentifier,
+      //   "for question:",
+      //   question.question,
+      //   "for course:",
+      //   course.course
+      // );
       const { data, error } = await supabase
         .from("sameQ-chats")
         .select("*")
@@ -393,15 +396,17 @@ const QuestionPage = ({ route }) => {
     setModalVisible(!isModalVisible);
   };
 
+  // const openCamera = () => {
+  //   setHasPermission((prevPermission) => !prevPermission);
+  // };
+
   const openCamera = () => {
-    if (!isCameraOpen) {
-      setIsCameraOpen(true);
-    }
+    setIsCameraOpen(!isCameraOpen);
   };
 
-  seEffect(() => {
+  useEffect(() => {
     (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === "granted");
     })();
   }, []);
@@ -429,6 +434,32 @@ const QuestionPage = ({ route }) => {
     if (hasPermission === false) {
       return <Text>No access to camera</Text>;
     }
+    return (
+      <View style={{ flex: 1 }}>
+        <Camera
+          style={{ flex: 1, justifyContent: "flex-end" }}
+          type={type}
+          ref={cameraRef}
+        >
+          <View style={styles.takePictureButtonContainer}>
+            <TouchableOpacity
+              style={styles.takePictureButton}
+              onPress={handleTakePicture}
+            >
+              <FontAwesomeIcon icon="fa-regular" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.flipContainer}>
+            <TouchableOpacity
+              style={styles.flipCameraButton}
+              onPress={toggleCameraType}
+            >
+              <Icon name="shuffle" color="white" size={40}></Icon>
+            </TouchableOpacity>
+          </View>
+        </Camera>
+      </View>
+    );
   };
 
   return (
@@ -513,7 +544,7 @@ const QuestionPage = ({ route }) => {
               color="#000"
               style={styles.emojiIcon}
             />
-            <TouchableOpacity onPress={() => toggleCameraType}>
+            <TouchableOpacity onPress={() => openCamera()}>
               <Icon
                 name="camera"
                 size={26}

@@ -604,6 +604,39 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   // ------ Ask Page  --------
+
+  // ------ Camera Page ------
+  takePictureButtonContainer: {
+    bottom: 0,
+    alignItems: "center",
+    paddingBottom: 10,
+  },
+  takePictureButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "white",
+    width: 75,
+    height: 75,
+    paddingBot: 10,
+  },
+  flipContainer: {
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    position: "absolute",
+    right: 0,
+  },
+  flipCameraButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: 20,
+  },
+  // ------ Camera Page ------
 });
 
 export default styles;
