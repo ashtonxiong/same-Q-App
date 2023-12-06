@@ -402,11 +402,7 @@ const QuestionPage = ({ route }) => {
 
   const handleBackCourse = (course, deviceIdentifier) => {
     console.log(`Navigating to CoursePage with course: ${course.course}`);
-    if (prevPage === "CollabPage") {
-      navigation.navigate("CollabPage", { course, deviceIdentifier });
-    } else {
-      navigation.navigate("CoursePage", { course, deviceIdentifier });
-    }
+    navigation.navigate("CoursePage", { course, deviceIdentifier });
   };
 
  const handleBackCollab = () => {
@@ -623,13 +619,13 @@ const QuestionPage = ({ route }) => {
                      Begin collaborating on the question first!
                    </Text>
                    <Text style={styles.huddleModalBodyText}>
-                     Click the 'More Info' to collaborate
+                     Click the 'More Info' to collaborate.
                    </Text>
                  </View>
                ) : (
                  <View style={styles.huddleModalContent}>
-                   <Text style={styles.huddleModalHeaderText}>Huddle</Text>
-                   <Text style={styles.huddleModalBodyText}>
+                   <Text style={styles.collabModalHeaderText}>Huddle</Text>
+                   <Text style={styles.collabModalBodyText}>
                      {question.num_huddle + 1} in huddle {'\n'}
                      {question.num_huddle} others in huddle with you {'\n'}
                      <HuddleUI huddlers={question.huddlers} />
@@ -647,8 +643,8 @@ const QuestionPage = ({ route }) => {
            <View style={styles.customHuddleModalOverlay}>
              <TouchableWithoutFeedback onPress={() => {}}>
                <View style={styles.huddleModalContent}>
-                 <Text style={styles.huddleModalHeaderText}>Collaborators</Text>
-                 <Text style={styles.huddleModalBodyText}>
+                 <Text style={styles.collabModalHeaderText}>Collaborators</Text>
+                 <Text style={styles.collabModalBodyText}>
                    {actualNumCollaborators} Collaborators
                  </Text>
                </View>

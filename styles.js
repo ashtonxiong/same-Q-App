@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
    ...StyleSheet.absoluteFillObject, // apply fill to custom modal
    justifyContent: "center",
    alignItems: "left",
-   backgroundColor: "rgba(0, 0, 0, 0.5)", // value for transparency
+   backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
  },
  menuModalContent: {
    width: screenWidth * 0.7,
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
    ...StyleSheet.absoluteFillObject, // apply fill to custom modal
    justifyContent: "center",
    alignItems: "center",
-   backgroundColor: "rgba(0, 0, 0, 0.5)", // value for transparency
+   backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
  },
  modalContent: {
    width: screenWidth * 0.8,
@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
    ...StyleSheet.absoluteFillObject, // apply fill to custom modal
    justifyContent: "center",
    alignItems: "center",
-   backgroundColor: "rgba(0, 0, 0, 0.5)", // value for transparency
+   backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
  },
  huddleModalContent: {
    width: screenWidth * 0.95,
@@ -438,16 +438,30 @@ const styles = StyleSheet.create({
  },
  huddleModalHeaderText: {
    margin: 20,
-   fontSize: scaleFactor * 25,
-   fontWeight: "bold",
+   fontSize: scaleFactor * 20,
+   fontWeight: "600",
    textAlign: "center",
+   color: 'red',
  },
  huddleModalBodyText: {
    margin: -15,
-   fontSize: 20,
+   fontSize: scaleFactor * 15,
    textAlign: "center",
    fontWeight: '200',
+   color: 'red',
  },
+ collabModalHeaderText: {
+  margin: 20,
+  fontSize: scaleFactor * 25,
+  fontWeight: "bold",
+  textAlign: "center",
+},
+collabModalBodyText: {
+  margin: -15,
+  fontSize: 20,
+  textAlign: "center",
+  fontWeight: '200',
+},
  questionInfoHeader: {
    flexDirection: "row",
    justifyContent: "space-between",

@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { View, Text, Image, StyleSheet, Dimensions, Animated, Easing } from "react-native";
 
 
 const HuddleUI = ({ huddlers }) => {
@@ -27,38 +27,98 @@ const HuddleUI = ({ huddlers }) => {
  };
 
 
- //  convert huddlers string into array
- const huddlersArray = huddlers
-   .replace(/[{}]/g, "") // remove curly braces
-   .split(",")
-   .map((huddler) => huddler.trim()); // trim whitespace
+ const huddlersArray = 
+  huddlers !== null ? 
+    huddlers.replace(/[{}]/g, "") // remove curly braces
+              .split(",")
+              .map((huddler) => huddler.trim()) // trim whitespace
+  : ["You"];
 
 
- return (
-   <View style={styles.container}>
-     {/* <Text style={styles.headerText}>Huddle</Text> */}
-     <View style={styles.circleContainer}>
-       {huddlersArray.map((huddler, index) => {
-         const position = calculatePosition(index, huddlersArray.length);
-         return (
-           <View
-             key={index}
-             style={[
-               styles.circle,
-               {
-                 top: position.y,
-                 left: position.x,
-               },
-             ]}
-           >
-             <Image source={getRandomIcon()} style={styles.collaboratorIcon} />
-             <Text style={styles.collaboratorName}>{huddler || "You"}</Text>
-           </View>
-         );
-       })}
-     </View>
-   </View>
- );
+   const PulseAnimation = ({ position }) => {
+    const pulseValue = useRef(new Animated.Value(0)).current;
+
+    const pulse = () => {
+      Animated.sequence([
+        Animated.timing(pulseValue, {
+          toValue: 1.2,
+          duration: 500,
+          easing: Easing.ease,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseValue, {
+          toValue: 1,
+          duration: 500,
+          easing: Easing.ease,
+          useNativeDriver: true,
+        }),
+      ]).start(() => pulse());
+    };
+
+    useEffect(() => {
+      pulse();
+    }, []);
+
+    return (
+      <Animated.View
+        style={{
+          borderWidth: 3,
+          borderColor: 'red',
+          position: "absolute",
+          top: position.y,
+          left: position.x,
+          width: 70,
+          height: 70,
+          borderRadius: 45,
+          backgroundColor: "#B74E91", // Adjust color and opacity as needed
+          justifyContent: 'center',
+          alignContent: 'center',
+          alignItems: 'center',
+          transform: [{ scale: pulseValue }],
+        }}
+      />
+    );
+  };
+
+
+  return (
+    <View style={styles.main}>
+    <View style={styles.container}>
+      {/* <Text style={styles.headerText}>Huddle</Text> */}
+      <View style={styles.circleContainer}>
+        {huddlersArray.map((huddler, index) => {
+          const position = calculatePosition(index, huddlersArray.length);
+          return (
+            <View
+              key={index}
+              style={[
+                styles.circle,
+                {
+                  top: position.y,
+                  left: position.x,
+                },
+              ]}
+            >
+              <PulseAnimation position={position} />
+              <Image
+                source={getRandomIcon()}
+                style={[
+                  styles.collaboratorIcon,
+                  {
+                    position: "absolute",
+                    top: position.y + 10, // Adjust the values as needed
+                    left: position.x + 10, // Adjust the values as needed
+                  },
+                ]}
+              />
+              <Text style={styles.collaboratorName}>{huddler || "You"}</Text>
+            </View>
+          );
+        })}
+      </View>
+    </View>
+    </View>
+  );
 };
 
 
@@ -67,27 +127,35 @@ const screenHeight = Dimensions.get("window").height;
 
 
 const styles = StyleSheet.create({
+  main: {
+    // flex: 1,
+    justifyContent: 'center',
+    // alignItems: 'center',
+  },
    container: {
      alignItems: "center",
+     justifyContent: 'center',
+     alignContent: 'center'
    },
    circleContainer: {
+    // borderWidth: 1,
      position: "relative",
      marginTop: 100,
      alignItems: "center",
      justifyContent: "center",
-     transform: [{ translateX: screenWidth * 0.38}] // center horizontally?
+     transform: [{ translateX: screenWidth * 0.38}], // center horizontally?
    },
    circle: {
      position: "absolute",
      alignItems: "center",
      alignContent: "center",
-   //   transform: [{ translateX: 110 }],
+     transform: [{ translateY: screenHeight * 0. }],
+     justifyContent: 'center',
    },
    collaboratorIcon: {
      width: 50,
      height: 50,
      borderRadius: 25,
-     borderColor: 'blue',
    },
    collaboratorName: {
      fontSize: 12,

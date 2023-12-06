@@ -249,7 +249,7 @@ const AskPage = ({ route }) => {
   const noClassSelected = () => {
     return isClassSelected === false ? (
       <Text style={{ color: "red", fontSize: 20 * scaleFactor }}>
-        Please select a class
+        Please select a class.
       </Text>
     ) : (
       <Text></Text>
@@ -430,7 +430,7 @@ const AskPage = ({ route }) => {
                   }}
                 >
                   <Text style={{ fontSize: 20 * scaleFactor }}>
-                    Question addded to Queue
+                    Question added to Queue
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -459,17 +459,16 @@ const AskPage = ({ route }) => {
                 >
                   <View
                     style={{
-                      borderColor: "white",
                       borderWidth: 1,
                       paddingHorizontal: "5%",
                       paddingVertical: "1%",
                       borderRadius: 10,
-                      backgroundColor: "white",
+                      backgroundColor: "#5E42A6",
                     }}
                   >
                     <Text
                       style={{
-                        color: "#5E42A6",
+                        color: "white",
                         fontSize: 15 * scaleFactor,
                       }}
                     >
