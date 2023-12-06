@@ -296,7 +296,7 @@ const AskPage = () => {
             //----- NEED TO ADD NAVIGATING TO A CLASSES OFFICE HOURS
             //----- CREATE CLASSES DROPDOWN FOR WHICH QUESTION TO ASK
           >
-            <Text style={{ fontSize: 30 }}>Submit</Text>
+            <Text style={styles.submitQuestionButtonText}>Submit</Text>
           </TouchableOpacity>
         </View>
 
