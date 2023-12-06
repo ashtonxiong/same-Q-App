@@ -27,6 +27,7 @@ const CoursePage = ({ route }) => {
   useFocusEffect(() => {
     // Fetch or update data when the component comes into focus
     getQuestions();
+    getDefaultQuestions();
   });
 
   const getQuestions = async () => {
@@ -37,13 +38,11 @@ const CoursePage = ({ route }) => {
         .from("sameQ-app-questions")
         .select("*")
         .eq("course", courseName)
-        // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
         .eq("device_id", deviceIdentifier);
 
       if (error) {
         throw new Error(error.message);
       }
-
       if (data) {
         // 'data' is an array of objects with 'id' and 'course' columns
         const questionInfoArray = data.map((item) => ({
@@ -52,11 +51,11 @@ const CoursePage = ({ route }) => {
           question: item.question,
           created: item.created,
           author: item.author,
-          num_collab: item.num_collaborators,
+          num_collaborators: item.num_collaborators,
           num_huddle: item.num_huddle,
           chats: item.chats,
           expected_help: item.expected_help,
-          // question_id: item.question_id,
+          question_id: item.question_id,
         }));
 
         setQuestions(questionInfoArray);
@@ -74,8 +73,6 @@ const CoursePage = ({ route }) => {
         .select("*")
         .eq("course", courseName)
         .eq("device_id", "000");
-      // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
-      // .eq("device_id", deviceIdentifier);
 
       if (error) {
         throw new Error(error.message);
@@ -89,11 +86,11 @@ const CoursePage = ({ route }) => {
           question: item.question,
           created: item.created,
           author: item.author,
-          num_collab: item.num_collaborators,
+          num_collaborators: item.num_collaborators,
           num_huddle: item.num_huddle,
           chats: item.chats,
           expected_help: item.expected_help,
-          // question_id: item.question_id,
+          question_id: item.question_id,
         }));
         // console.log("in getQuestions 3", questionInfoArray);
 
@@ -104,15 +101,12 @@ const CoursePage = ({ route }) => {
     }
   };
 
-  useEffect(() => {
-    getDefaultQuestions();
-    getQuestions();
-  }, []);
+  // useEffect(() => {
+  //   getDefaultQuestions();
+  //   getQuestions();
+  // }, []);
 
   const handleCollabPress = (course, question, deviceIdentifier, prevPage) => {
-    // console.log(
-    //   `Navigating to QuestionPage with question: ${question.question}`
-    // );
     navigation.navigate("QuestionPage", {
       course,
       question,
@@ -149,6 +143,8 @@ const CoursePage = ({ route }) => {
       const timeB = new Date(2000, 0, 1, ...parseTime(b.expected_help));
       return timeA - timeB;
     });
+
+    // console.log("SORTED QUESTIONS ARRAY", sortedQuestionsArray);
 
     return sortedQuestionsArray.map((question) => (
       <View key={question.uid} style={styles.queueBox}>

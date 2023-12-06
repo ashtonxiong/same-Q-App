@@ -57,19 +57,15 @@ const QuestionPage = ({ route }) => {
 
   const getChats = async () => {
     try {
-      console.log("for QUESTION:", question);
-      console.log("for COURSE:", course);
-
       const { data, error } = await supabase
         .from("sameQ-chats")
         .select("*")
-        .eq("course", course.course)
+        .eq("course", question.course)
         .eq("question", question.question)
-        // .eq("question_id", question.question_id)
+        .eq("question_id", question.question_id)
         // .eq('device_id', '000');
         .eq("device_id", deviceIdentifier);
       // .or('device_id.eq.000, device_id.eq.', deviceIdentifier);
-      console.log("DATA:", data);
 
       if (error) {
         throw new Error(error.message);
@@ -82,7 +78,7 @@ const QuestionPage = ({ route }) => {
           senderInitials: item.sender_initials,
           message: item.message,
           timeSent: item.time,
-          // question_id: item.question_id,
+          question_id: item.question_id,
         }));
         setChatsArray(newChats);
       }
@@ -96,9 +92,9 @@ const QuestionPage = ({ route }) => {
       const { data, error } = await supabase
         .from("sameQ-chats")
         .select("*")
-        .eq("course", course.course)
+        .eq("course", question.course)
         .eq("question", question.question)
-        // .eq("question", question.question_id)
+        .eq("question_id", question.question_id)
         .eq("device_id", "000");
       // .eq('device_id', deviceIdentifier);
       // .or('device_id.eq.000, device_id.eq.', deviceIdentifier);
@@ -114,6 +110,7 @@ const QuestionPage = ({ route }) => {
           senderInitials: item.sender_initials,
           message: item.message,
           timeSent: item.time,
+          question_id: item.question_id,
         }));
 
         setDefaultChatsArray(newChats);
@@ -135,13 +132,13 @@ const QuestionPage = ({ route }) => {
 
       const { error } = await supabase.from("sameQ-chats").insert([
         {
-          course: course.course,
+          course: question.course,
           question: question.question,
           sender: "You",
           message: message,
           time: formattedDate,
           device_id: deviceIdentifier,
-          // question_id: question.question_id,
+          question_id: question.question_id,
         },
       ]);
 
@@ -163,13 +160,14 @@ const QuestionPage = ({ route }) => {
     }
   };
 
-  const addCollab = async (course, question) => {
+  const addCollab = async (course, questionObj) => {
+    //question_id not passed into params
     try {
       const { error } = await supabase.from("sameQ-app-collab").insert([
         {
-          question: question.question,
+          question: questionObj.question,
           created: "January 1, 2023, 3:00 PM",
-          author: "me",
+          author: questionObj.author,
           num_collaborators: 0,
           num_huddle: 0,
           expected_help: "3:15 PM",
@@ -188,82 +186,6 @@ const QuestionPage = ({ route }) => {
       console.log(error);
     }
   };
-
-  // const addCollab = async (course, question) => {
-  //   try {
-  //     // const { error } = await supabase.from("sameQ-app-questions").upsert([
-  //     //   {
-  //     //     course: course.course,
-  //     //     question: question.question,
-  //     //     author: question.author,
-  //     //     num_collaborators: question.num_collab + 1,
-  //     //     num_huddle: question.num_huddle,
-  //     //     created: question.created,
-  //     //     expected_help: question.expected_help,
-  //     //     collab_status: "TRUE",
-  //     //     device_id: deviceIdentifier,
-  //     //   },
-  //     // ]);
-
-  //     const { data, error } = await supabase
-  //       .from("sameQ-app-questions")
-  //       .select("*")
-  //       .eq("question", question.question);
-  //     console.log("TEST DATA EXIST", data[0]);
-  //     if (data) {
-  //       const newArray = data.map((item) => ({
-  //         author: item.author,
-  //         collab_status: item.collab_status,
-  //         collaborators: item.collaborators,
-  //         course: item.course,
-  //         created: item.created,
-  //         device_id: deviceIdentifier,
-  //         help: item.expected_help,
-  //         huddlers: item.huddlers,
-  //       }));
-
-  //       console.log("newArray:", newArray[0]);
-  //       if (error) {
-  //         throw new Error(error.message);
-  //       }
-  //       if (error) {
-  //         console.log("TELL ME A FUCING ERROR", error);
-  //       }
-
-  //       // console.log("data[0].author:", data[0].course);
-  //       // console.log(typeof data[0]);
-
-  //       const { error2 } = await supabase
-  //         .from("sameQ-app-collab-questions")
-  //         .insert([
-  //           {
-  //             created_at: newArray[0].created,
-  //             author: newArray.author,
-  //             num_collab: 0,
-  //             num_huddle: 0,
-  //             expected_help: newArray.expected_help,
-  //             collab_status: "TRUE",
-  //             question: "BLAH BLAH",
-  //             device_id: deviceIdentifier,
-  //             collaborators: 0,
-  //             huddlers: 0,
-  //             course: newArray.course,
-  //             question_id: newArray.question_id,
-  //           },
-  //         ]);
-
-  //       if (error2) {
-  //         throw new Error(error2.message);
-  //       }
-
-  //       setNumCollaborators(
-  //         (prevActualNumCollaborators) => prevActualNumCollaborators + 1
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding data into Supabase:", error.message);
-  //   }
-  // };
 
   const deleteCollab = async (course, question) => {
     console.log("delete collab pressed");
@@ -326,19 +248,11 @@ const QuestionPage = ({ route }) => {
     getCollabStatus();
   }, [isFocused]);
 
-  useEffect(() => {
-    if (isFocused) {
-      getDefaultChats();
-      getChats();
-      getCollabStatus();
-    }
-  }, [isFocused]);
-
   useFocusEffect(
     React.useCallback(() => {
+      getCollabStatus(); // fetch the collaboration status when navigating back into modal
       getDefaultChats();
       getChats();
-      getCollabStatus(); // fetch the collaboration status when navigating back into modal
     }, [])
   );
 
@@ -401,6 +315,7 @@ const QuestionPage = ({ route }) => {
     // combine default and new chats and images if any
     const combinedChats = [...sortedChatsArray, ...chatsArray];
     var int = 0;
+
     return combinedChats.map((chat) => {
       if (chat.image) {
         int += 1;
@@ -457,7 +372,7 @@ const QuestionPage = ({ route }) => {
       const newStatus =
         prevStatus[0] === "Collaborate" ? ["Uncollaborate"] : ["Collaborate"];
 
-      // console.log("newStatus:", newStatus);
+      console.log("newStatus:", question);
 
       if (newStatus[0] === "Collaborate") {
         deleteCollab(course, question);

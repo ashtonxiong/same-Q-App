@@ -47,6 +47,7 @@ const AskPage = ({ route }) => {
     collab_status: "",
     device_id: "",
     course: "",
+    question_id: "",
   });
 
   const addQuestion = async () => {
@@ -68,6 +69,7 @@ const AskPage = ({ route }) => {
         "en-US",
         { hour: "numeric", minute: "numeric", hour12: true }
       )}`;
+      const num = Math.floor(Math.random() * 900) + 100;
 
       const { error } = await supabase.from("sameQ-app-questions").insert([
         {
@@ -80,8 +82,10 @@ const AskPage = ({ route }) => {
           collab_status: "TRUE",
           device_id: deviceIdentifier,
           course: selectedClass,
+          question_id: `${num}`,
         },
       ]);
+
       // adds to collab page
       const { error2 } = await supabase.from("sameQ-app-collab").insert([
         {
@@ -94,6 +98,7 @@ const AskPage = ({ route }) => {
           collab_status: "TRUE",
           device_id: deviceIdentifier,
           course: selectedClass,
+          question_id: `${num}`,
         },
       ]);
 
@@ -107,6 +112,7 @@ const AskPage = ({ route }) => {
         collab_status: "TRUE",
         device_id: deviceIdentifier,
         course: selectedClass,
+        question_id: `${num}`,
       };
       setClassObject(info);
 

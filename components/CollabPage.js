@@ -33,9 +33,7 @@ const CollabPage = () => {
     deviceIdentifier,
     prevPage
   ) => {
-    console.log(
-      `Navigating to QuestionPage with question: ${question.question}`
-    );
+    console.log(`Navigating to QuestionPage with question:`, question);
     navigation.navigate("QuestionPage", {
       course,
       question,
@@ -52,6 +50,8 @@ const CollabPage = () => {
         // .eq("collab_status", "TRUE")
         .eq("device_id", deviceIdentifier);
 
+      // console.log("DATA IN COLLAB PAGE", question);
+
       if (data) {
         // 'data' is an array of objects with 'id' and 'course' columns
         const collabQuestionsArray = data.map((item) => ({
@@ -60,14 +60,14 @@ const CollabPage = () => {
           question: item.question,
           created: item.created,
           author: item.author,
-          num_collab: item.num_collaborators,
+          num_collaborators: item.num_collaborators,
           num_huddle: item.num_huddle,
-          help: item.expected_help,
+          expected_help: item.expected_help,
           collab_status: item.collab_status,
-          // question_id: item.question_id,
+          question_id: item.question_id,
           device_id: deviceIdentifier,
         }));
-        console.log("test collabQuestions", collabQuestionsArray);
+        // console.log("test collabQuestions", data);
 
         setCollabQuestions(collabQuestionsArray);
       }
@@ -79,6 +79,7 @@ const CollabPage = () => {
   useFocusEffect(() => {
     // Fetch or update data when the component comes into focus
     getCollabQuestions();
+    getCourses();
   });
 
   useEffect(() => {}, [coursesArray]);
@@ -116,6 +117,7 @@ const CollabPage = () => {
 
   const renderCollab = () => {
     // console.log('Collab questions:', collabQuestions);
+    // console.log("TEST RENDER COLLAB", collabQuestions);
     if (collabQuestions.length === 0) {
       return (
         <Text style={styles.emptyChat}>Collaborate on a question!</Text>
@@ -140,6 +142,7 @@ const CollabPage = () => {
       const timeB = getTime(parsedDataB);
       return timeA - timeB;
     });
+    // console.log("TESTING WHAT question is:", sortedQuestions);
 
     return sortedQuestions.map((question) => (
       <TouchableOpacity
