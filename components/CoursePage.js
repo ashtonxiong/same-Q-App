@@ -28,85 +28,42 @@ const CoursePage = ({ route }) => {
  const [defaultQuestions, setDefaultQuestions] = useState([]);
 
 
-//  const getQuestions = async () => {
-//    console.log("device id in getQuestions:", deviceIdentifier);
-//    try {
-//      const { data, error } = await supabase
-//        .from("sameQ-app-questions")
-//        .select("*")
-//        .eq("course", courseName)
-//        // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
-//        .eq("device_id", deviceIdentifier);
-//       // .eq('device_id', '000');
+ const getQuestions = async () => {
+   console.log("device id in getQuestions:", deviceIdentifier);
+   try {
+     const { data, error } = await supabase
+       .from("sameQ-app-questions")
+       .select("*")
+       .eq("course", courseName)
+       // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
+       .eq("device_id", deviceIdentifier);
+      // .eq('device_id', '000');
 
-//      if (error) {
-//        throw new Error(error.message);
-//      }
+     if (error) {
+       throw new Error(error.message);
+     }
 
-//      if (data) {
-//        // 'data' is an array of objects with 'id' and 'course' columns
-//        const questionInfoArray = data.map((item) => ({
-//          uid: item.uid,
-//          course: item.course,
-//          question: item.question,
-//          created: item.created,
-//          author: item.author,
-//          num_collab: item.num_collaborators,
-//          num_huddle: item.num_huddle,
-//          chats: item.chats,
-//          expected_help: item.expected_help,
-//        }));
-
-
-//        setQuestions(questionInfoArray);
-//      }
-//    } catch (error) {
-//      console.error("Error fetching data from Supabase:", error.message);
-//    }
-//  };
+     if (data) {
+       // 'data' is an array of objects with 'id' and 'course' columns
+       const questionInfoArray = data.map((item) => ({
+         uid: item.uid,
+         course: item.course,
+         question: item.question,
+         created: item.created,
+         author: item.author,
+         num_collab: item.num_collaborators,
+         num_huddle: item.num_huddle,
+         chats: item.chats,
+         expected_help: item.expected_help,
+       }));
 
 
-const getQuestions = async () => {
-  console.log("device id in getQuestions:", deviceIdentifier);
-  try {
-    const { data, error } = await supabase
-      .from("sameQ-app-questions")
-      .select("*")
-      .eq("course", courseName)
-      .eq("device_id", deviceIdentifier);
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    if (data) {
-      const questionInfoArray = data.map((item) => ({
-        uid: item.uid,
-        course: item.course,
-        question: item.question,
-        created: item.created,
-        author: item.author,
-        num_collab: item.num_collaborators,
-        num_huddle: item.num_huddle,
-        chats: item.chats,
-        expected_help: item.expected_help,
-      }));
-
-      // Filter out questions with identical question parts from defaultQuestions
-      const filteredQuestions = questionInfoArray.filter(
-        (question) =>
-          !defaultQuestions.some(
-            (defaultQuestion) => defaultQuestion.question === question.question
-          )
-      );
-
-      setQuestions(filteredQuestions);
-    }
-  } catch (error) {
-    console.error("Error fetching data from Supabase:", error.message);
-  }
-};
-
+       setQuestions(questionInfoArray);
+     }
+   } catch (error) {
+     console.error("Error fetching data from Supabase:", error.message);
+   }
+ };
 
 
  const getDefaultQuestions = async () => {
