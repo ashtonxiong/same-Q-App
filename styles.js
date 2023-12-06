@@ -177,8 +177,6 @@ const styles = StyleSheet.create({
    borderRadius: 20, // round corners
    padding: '10%',
    alignItems: 'center',
-   borderColor: 'orange',
-   borderWidth: 3,
    justifyContent: 'space-around'
  },
  menuModalTop: {
@@ -311,19 +309,30 @@ fakePage: {
    padding: 10,
    margin: 10,
    width: screenWidth * 0.95,
-   // height: screenHeight * 0.2,
    borderWidth: 2,
-   borderColor: "#b986ee",
+   borderColor: "#5E42A6",
    borderRadius: 10,
    backgroundColor: "#FFFFFF",
-   // justifyContent: 'space-between',
-   // maxHeight: '35%',
+   shadowColor: "#000",
+   shadowOffset: { width: 1, height: 10 },
+   shadowOpacity: 0.2,
+   shadowRadius: 4,
  },
-
-
  queueTopRow: {
+  flex: 1,
    flexDirection: "row", // align items along the row
-   justifyContent: "space-between", // space between icon and help time
+   justifyContent: "flex-start", // space between icon and help time
+  // alignContent: 'flex-start'
+ },
+ queueTopRowText: {
+  marginLeft: '1.5%',
+  fontSize: scaleFactor * 15,
+  marginTop: '-0.5%'
+ },
+ queueTopRowTextEnd: {
+  fontSize: scaleFactor * 15,
+  marginTop: '-0.5%',
+  justifyContent: 'flex-end'
  },
  queueEarphone: {
    flexDirection: "row",
@@ -338,9 +347,10 @@ fakePage: {
    overflow: "hidden", // Hide overflow content
    flexDirection: "row",
    justifyContent: "center", // align items along the row
+   marginTop: '2%',
  },
  queueBot: {
-   marginTop: 5,
+   marginTop: '2%',
    flexWrap: "wrap", // Allow text to wrap
    overflow: "hidden", // Hide overflow content
    flexDirection: "row",
@@ -354,8 +364,8 @@ fakePage: {
    width: "30%",
    alignItems: "center",
    shadowColor: "#000",
-   shadowOffset: { width: 0, height: -2 },
-   shadowOpacity: 0.25,
+   shadowOffset: { width: 0, height: 10 },
+   shadowOpacity: 0.2,
    shadowRadius: 4,
  },
  queueButtonText: {
@@ -624,27 +634,31 @@ collabModalBodyText: {
     // borderWidth: 3,
   },
   collabBox: {
-    padding: 5,
+    padding: 10,
     margin: 10,
     width: screenWidth * 0.95,
     borderWidth: 2,
     borderColor: "#5E42A6",
     borderRadius: 10,
-    backgroundColor: "white",
-    justifyContent: "space-between",
-    height: screenWidth * 0.25,
+    backgroundColor: "#FFFFFF",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 10 },
+    shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
   collabTopRow: {
+    flex: 1,
+     flexDirection: "row", // align items along the row
+     justifyContent: "space-around", // space between icon and help time
+     padding: '2%',
+   },
+   Earphone: {
     flexDirection: "row",
     justifyContent: "center", // align items along the row
   },
-  collabEarphone: {
-    flexDirection: "row",
-    justifyContent: "center", // align items along the row
+  collabIcons: {
+    flex: 1,
+    flexDirection: 'row'
   },
   collabPeopleIcon: {
     flexDirection: "row",
@@ -655,6 +669,7 @@ collabModalBodyText: {
     overflow: "hidden", // Hide overflow content
     flexDirection: "row",
     justifyContent: "center", // align items along the row
+    marginTop: '2%',
   },
   collabBot: {
     marginTop: 5,
