@@ -9,6 +9,8 @@ import {
   Platform,
   ScrollView,
   KeyboardAvoidingView,
+  Image,
+  ImageBackground,
 } from "react-native";
 import {
   useNavigation,
@@ -20,6 +22,7 @@ import Icon from "react-native-vector-icons/SimpleLineIcons";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome5";
 import { supabase } from "../supabase";
 import { Camera, CameraType } from "expo-camera";
+import * as FileSystem from "expo-file-system";
 
 const { parse, getTime } = require("date-fns");
 
@@ -43,6 +46,8 @@ const QuestionPage = ({ route }) => {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [hasPermission, setHasPermission] = useState(null);
   const cameraRef = useRef(null);
+  const [capturedImageUri, setCapturedImageUri] = useState(null);
+  const [messageArray, setMessageArray] = useState([]);
 
   const getChats = async () => {
     try {
@@ -309,10 +314,25 @@ const QuestionPage = ({ route }) => {
       return timeA - timeB;
     });
 
-    // combine default and new chats
+    // combine default and new chats and images if any
     const combinedChats = [...sortedChatsArray, ...chatsArray];
 
     return combinedChats.map((chat) => {
+      if (chat.image) {
+        return (
+          <View key={chat.timeSent} style={styles.messageAndTimeContainer}>
+            <View style={[styles.purpleTextMessageContainer]}>
+              <View style={styles.purpleMessage}>
+                <Image
+                  source={{ uri: chat.source }}
+                  style={{ height: 100, width: 100, padding: 10 }}
+                />
+              </View>
+            </View>
+            <Text style={styles.purpleTextMessageTime}>{chat.timeSent}</Text>
+          </View>
+        );
+      }
       if (chat.sender !== "You") {
         return (
           <View key={chat.timeSent} style={styles.messageAndTimeContainer}>
@@ -396,11 +416,11 @@ const QuestionPage = ({ route }) => {
     setModalVisible(!isModalVisible);
   };
 
-  // const openCamera = () => {
-  //   setHasPermission((prevPermission) => !prevPermission);
-  // };
-
   const openCamera = () => {
+    setIsCameraOpen(!isCameraOpen);
+  };
+
+  const closeCamera = () => {
     setIsCameraOpen(!isCameraOpen);
   };
 
@@ -423,8 +443,49 @@ const QuestionPage = ({ route }) => {
     if (cameraRef.current) {
       const { uri } = await cameraRef.current.takePictureAsync();
       // Handle the captured image URI as needed
-      console.log("Captured image URI:", uri);
+
+      const directory = `${FileSystem.documentDirectory}images/`;
+      await FileSystem.makeDirectoryAsync(directory, { intermediates: true });
+
+      // Move the image to the images folder
+      const newUri = `${directory}${Date.now()}.jpg`;
+      await FileSystem.moveAsync({ from: uri, to: newUri });
+
+      console.log("FileSystem", FileSystem.documentDirectory);
+      setCapturedImageUri(newUri);
+      // closeCamera();
+      // setCapturedImageUri(uri);
+      // closeCamera();
     }
+  };
+
+  const useImage = () => {
+    // setCapturedImageUri(null);
+    closeCamera();
+    const imageObject = {
+      image: true,
+      source: capturedImageUri,
+      sender: "YOU",
+      timeSent: new Date().toLocaleString(),
+      device_id: deviceIdentifier,
+    };
+
+    const temp1 = [...chatsArray, imageObject];
+    setChatsArray(temp1);
+    console.log("test message ARRAY", temp1);
+  };
+
+  const retakeImage = () => {
+    setCapturedImageUri(null);
+  };
+
+  const renderImages = () => {
+    return (
+      <Image
+        source={{ uri: capturedImageUri }}
+        style={{ height: 100, width: 100 }}
+      />
+    );
   };
 
   const renderCamera = () => {
@@ -436,28 +497,69 @@ const QuestionPage = ({ route }) => {
     }
     return (
       <View style={{ flex: 1 }}>
-        <Camera
-          style={{ flex: 1, justifyContent: "flex-end" }}
-          type={type}
-          ref={cameraRef}
-        >
-          <View style={styles.takePictureButtonContainer}>
-            <TouchableOpacity
-              style={styles.takePictureButton}
-              onPress={handleTakePicture}
-            >
-              <FontAwesomeIcon icon="fa-regular" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.flipContainer}>
-            <TouchableOpacity
-              style={styles.flipCameraButton}
-              onPress={toggleCameraType}
-            >
-              <Icon name="shuffle" color="white" size={40}></Icon>
-            </TouchableOpacity>
-          </View>
-        </Camera>
+        {capturedImageUri ? (
+          <ImageBackground
+            source={{ uri: capturedImageUri }}
+            style={{ flex: 1 }}
+          >
+            <View style={{ flex: 1, flexDirection: "column" }}>
+              <View style={styles.bottomRowContainer}>
+                <View style={styles.retakeButton}>
+                  <TouchableOpacity onPress={() => retakeImage()}>
+                    <Text style={[{ fontSize: 15, color: "white" }]}>
+                      Retake
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.usePicButton}>
+                  <TouchableOpacity
+                    style={{ flexDirection: "row" }}
+                    onPress={() => useImage()}
+                  >
+                    <Text style={{ color: "white", fontSize: 15 }}>Use</Text>
+                    <Icon
+                      name="arrow-right"
+                      size={15}
+                      color="white"
+                      style={{ paddingRight: 65 }}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </ImageBackground>
+        ) : (
+          <Camera
+            style={{
+              flex: 1,
+              justifyContent: "flex-end",
+              borderWidth: 2,
+              borderColor: "red",
+            }}
+            type={type}
+            ref={cameraRef}
+          >
+            <View style={styles.cameraExitButton}>
+              <TouchableOpacity onPress={() => closeCamera()}>
+                <Text style={{ color: "white", fontSize: 40 }}>X</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.takePictureButtonContainer}>
+              <TouchableOpacity
+                style={styles.takePictureButton}
+                onPress={handleTakePicture}
+              ></TouchableOpacity>
+            </View>
+            <View style={styles.flipContainer}>
+              <TouchableOpacity
+                style={styles.flipCameraButton}
+                onPress={toggleCameraType}
+              >
+                <Icon name="shuffle" color="white" size={40}></Icon>
+              </TouchableOpacity>
+            </View>
+          </Camera>
+        )}
       </View>
     );
   };
@@ -472,7 +574,8 @@ const QuestionPage = ({ route }) => {
         renderCamera()
       ) : (
         <View style={[styles.container, { marginBottom: bottomMargin }]}>
-          <Text>Device identifier: {deviceIdentifier}</Text>
+          {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
+          <Image source={{ uri: capturedImageUri }} />
           <View style={styles.questionPageBox}>
             <View style={styles.questionPageBoxHeader}>
               {course.course ? ( // check if course.course is defined
@@ -535,6 +638,7 @@ const QuestionPage = ({ route }) => {
             style={[styles.chatArea, { paddingBottom: "60%" }]}
           >
             {renderMessages()}
+            {/* {renderImages()} */}
           </ScrollView>
 
           <View style={styles.inputContainer}>

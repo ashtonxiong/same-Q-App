@@ -636,6 +636,29 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     padding: 20,
   },
+  cameraExitButton: {
+    position: "absolute",
+    top: 60,
+    left: 30,
+  },
+  usePicButton: {
+    flexDirection: "row",
+    width: "50%",
+    color: "white",
+    justifyContent: "flex-end",
+  },
+  retakeButton: {
+    width: "50%",
+    color: "white",
+    paddingLeft: 65,
+    paddingBottom: 40,
+  },
+  bottomRowContainer: {
+    flexDirection: "row",
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+  },
   // ------ Camera Page ------
 });
 
