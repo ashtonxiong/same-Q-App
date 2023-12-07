@@ -8,12 +8,6 @@ const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your d
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
-// const fetchFonts = () => {
-//   return Font.loadAsync({
-//     'Comfortaa-Regular': require('../Comfortaa/static/Comfortaa-Regular.ttf'),
-//   });
-// };
-
 const styles = StyleSheet.create({
   // ----------ALL----------
   container: {
@@ -121,7 +115,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   courseBoxTEXT: {
-    // fontFamily:"Comfortaa-Medium",
     fontSize: 24,
     fontWeight: "bold",
     color: "black",
@@ -200,8 +193,10 @@ const styles = StyleSheet.create({
   menuModalImage: {
     width: 75,
     height: 75,
-    borderRadius: 15,
+    borderRadius: 40,
     marginTop: "50%",
+    borderColor: "#5E42A6",
+    borderWidth: 3,
   },
   logoutButtonContainer: {
     justifyContent: "flex-end",

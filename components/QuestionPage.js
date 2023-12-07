@@ -13,6 +13,7 @@ import {
   Image,
   ImageBackground,
   Alert,
+  ScrollViewRef,
 } from "react-native";
 import {
   useNavigation,
@@ -42,6 +43,7 @@ const QuestionPage = ({ route }) => {
     question.num_collab
   );
   const [inHuddle, setInHuddle] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   const [chatsArray, setChatsArray] = useState([]);
   const [defaultChatsArray, setDefaultChatsArray] = useState([]);
@@ -267,22 +269,28 @@ const QuestionPage = ({ route }) => {
   );
 
   useEffect(() => {
-    if (messagesRef.current) {
+    if (messagesRef.current && !keyboardVisible) {
       messagesRef.current.scrollToEnd({ animated: true });
     }
-  }, [chatsArray]);
+  }, [chatsArray, keyboardVisible]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       () => {
-        setBottomMargin(Platform.OS === "ios" ? 0 : 0); // make keyboard and input box smooth
+        if (messagesRef.current) {
+          setTimeout(() => {
+            messagesRef.current.scrollToEnd({ animated: true });
+          }, 100); // Introduce a delay to ensure the keyboard is fully shown
+        }
       }
     );
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
       () => {
-        setBottomMargin(0);
+        if (messagesRef.current) {
+          messagesRef.current.scrollToEnd({ animated: true });
+        }
       }
     );
 
@@ -403,16 +411,13 @@ const QuestionPage = ({ route }) => {
 
   const handleBackCourse = (course, deviceIdentifier) => {
     console.log(`Navigating to CoursePage with course: ${course.course}`);
-    // navigation.navigate("CoursePage", { course, deviceIdentifier });
     if (inHuddle) {
-      // Show a pop-up message if inHuddle is true
       Alert.alert(
         "Cannot Leave Question Page",
         "Please leave the huddle before exiting the question.",
         [{ text: "OK", onPress: () => {} }]
       );
     } else {
-      // If not in the huddle, navigate to the CoursePage
       navigation.navigate("CoursePage", { course, deviceIdentifier });
     }
   };
@@ -422,28 +427,14 @@ const QuestionPage = ({ route }) => {
   };
 
   const handleMessageSend = async (course, question, message) => {
-    //  try {
-    //  console.log(
-    //    "Sending new message:",
-    //    message,
-    //    "to course:",
-    //    course.course,
-    //    "in question:",
-    //    question.question
-    //  );
-
-    //  await addMessage(course, question, message);
-    //  setText("");
     try {
       if (collabStatus[0] === "Collaborate") {
-        // Show an alert if collaboration is required
         Alert.alert(
           "Cannot Send Message",
           "Begin collaborating on the question first!",
           [{ text: "OK", onPress: () => {} }]
         );
       } else {
-        // Send the message if collaboration is not required
         console.log(
           "Sending new message:",
           message,
@@ -454,7 +445,12 @@ const QuestionPage = ({ route }) => {
         );
 
         await addMessage(course, question, message);
-        setText(""); // Clear the message input
+        setText("");
+        if (messagesRef.current) {
+          setTimeout(() => {
+            messagesRef.current.scrollToEnd({ animated: true });
+          }, 100); // delay to ensure message is added before scrolling
+        }
       }
     } catch (error) {
       console.error("Error sending message:", error.message);
@@ -624,7 +620,6 @@ const QuestionPage = ({ route }) => {
       playHuddleOpenSound();
     }
   }, [inHuddle, sound, soundDidLoad]);
-  // console.log('status:', inHuddle)
 
   const renderCamera = () => {
     if (hasPermission === null) {
@@ -706,6 +701,7 @@ const QuestionPage = ({ route }) => {
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       enabled
       style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -500}
     >
       {isCameraOpen ? (
         renderCamera()
