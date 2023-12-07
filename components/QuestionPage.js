@@ -255,9 +255,14 @@ const QuestionPage = ({ route }) => {
 
   useFocusEffect(
     React.useCallback(() => {
-      getCollabStatus(); // fetch the collaboration status when navigating back into modal
-      getDefaultChats();
-      getChats();
+      const fetchData = async () => {
+        // Fetch or update data when the component comes into focus
+        await getCollabStatus();
+        await getDefaultChats();
+        await getChats();
+      };
+
+      fetchData(); // Call the fetchData function
     }, [])
   );
 

@@ -295,18 +295,18 @@ const AskPage = ({ route }) => {
 
   return (
     <View style={{ backgroundColor: "#DDCFFF", flex: 1 }}>
-      {/* <TouchableHighlight onPress={Keyboard.dismiss} style={{}}> */}
-      <View style={styles.container}>
-        <View style={styles.appBar}>
-          {/* <TouchableOpacity onPress={clickMenuModal}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{}}>
+        <View style={styles.container}>
+          <View style={styles.appBar}>
+            {/* <TouchableOpacity onPress={clickMenuModal}>
             <View style={styles.backArrow}>
               <SimpleLineIcon name="menu" size={20} color="#000" />
             </View>
           </TouchableOpacity> */}
-        </View>
-        <View style={styles.courseHeaderContainer}>
-          <Text style={[styles.pageHeader]}>Create Question</Text>
-        </View>
+          </View>
+          <View style={styles.courseHeaderContainer}>
+            <Text style={[styles.pageHeader]}>Create Question</Text>
+          </View>
 
           <View style={styles.tagsContainer}>
             <View
@@ -425,7 +425,7 @@ const AskPage = ({ route }) => {
             </TouchableOpacity>
           </View>
 
-        {/* <Modal transparent={true} visible={isModalVisible}>
+          {/* <Modal transparent={true} visible={isModalVisible}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.menuModalOverlay}>
               <TouchableWithoutFeedback onPress={() => addQuestion()}>

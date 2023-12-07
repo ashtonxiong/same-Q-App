@@ -24,11 +24,17 @@ const CoursePage = ({ route }) => {
   const [questions, setQuestions] = useState([]);
   const [defaultQuestions, setDefaultQuestions] = useState([]);
 
-  useFocusEffect(() => {
-    // Fetch or update data when the component comes into focus
-    getQuestions();
-    getDefaultQuestions();
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        // Fetch or update data when the component comes into focus
+        await getQuestions();
+        await getDefaultQuestions();
+      };
+
+      fetchData();
+    }, [])
+  );
 
   const getQuestions = async () => {
     // console.log("device id in getQuestions:", deviceIdentifier);
@@ -54,6 +60,7 @@ const CoursePage = ({ route }) => {
           num_collaborators: item.num_collaborators,
           num_huddle: item.num_huddle,
           chats: item.chats,
+          huddlers: item.huddlers,
           expected_help: item.expected_help,
           question_id: item.question_id,
         }));
@@ -102,10 +109,10 @@ const CoursePage = ({ route }) => {
     }
   };
 
-  // useEffect(() => {
-  //   getDefaultQuestions();
-  //   getQuestions();
-  // }, []);
+  useEffect(() => {
+    getDefaultQuestions();
+    getQuestions();
+  }, []);
 
   const handleCollabPress = (course, question, deviceIdentifier, prevPage) => {
     navigation.navigate("QuestionPage", {

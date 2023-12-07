@@ -66,6 +66,7 @@ const CollabPage = () => {
           collab_status: item.collab_status,
           question_id: item.question_id,
           device_id: deviceIdentifier,
+          huddlers: item.huddlers,
         }));
         // console.log("test collabQuestions", data);
 
@@ -76,13 +77,22 @@ const CollabPage = () => {
     }
   };
 
-  useFocusEffect(() => {
-    // Fetch or update data when the component comes into focus
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        // Fetch or update data when the component comes into focus
+        await getCollabQuestions();
+        await getCourses();
+      };
+
+      fetchData(); // Call the fetchData function
+    }, [])
+  );
+
+  useEffect(() => {
     getCollabQuestions();
     getCourses();
-  });
-
-  useEffect(() => {}, [coursesArray]);
+  }, [coursesArray]);
 
   const getCourses = async () => {
     try {
