@@ -24,25 +24,31 @@ const CoursePage = ({ route }) => {
   const [questions, setQuestions] = useState([]);
   const [defaultQuestions, setDefaultQuestions] = useState([]);
 
-  useFocusEffect(() => {
-    // Fetch or update data when the component comes into focus
-    getQuestions();
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        // Fetch or update data when the component comes into focus
+        await getQuestions();
+        await getDefaultQuestions();
+      };
+
+      fetchData();
+    }, [])
+  );
 
   const getQuestions = async () => {
     // console.log("device id in getQuestions:", deviceIdentifier);
     try {
+      // sortedQuestionsArray([]);
       const { data, error } = await supabase
         .from("sameQ-app-questions")
         .select("*")
         .eq("course", courseName)
-        // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
         .eq("device_id", deviceIdentifier);
 
       if (error) {
         throw new Error(error.message);
       }
-
       if (data) {
         // 'data' is an array of objects with 'id' and 'course' columns
         const questionInfoArray = data.map((item) => ({
@@ -51,12 +57,13 @@ const CoursePage = ({ route }) => {
           question: item.question,
           created: item.created,
           author: item.author,
-          num_collab: item.num_collaborators,
+          num_collaborators: item.num_collaborators,
           num_huddle: item.num_huddle,
           chats: item.chats,
+          huddlers: item.huddlers,
           expected_help: item.expected_help,
+          question_id: item.question_id,
         }));
-        // console.log("in getQuestions 3", questionInfoArray);
 
         setQuestions(questionInfoArray);
       }
@@ -73,8 +80,6 @@ const CoursePage = ({ route }) => {
         .select("*")
         .eq("course", courseName)
         .eq("device_id", "000");
-      // .or("device_id.eq.000", "device_id.eq.", deviceIdentifier);
-      // .eq("device_id", deviceIdentifier);
 
       if (error) {
         throw new Error(error.message);
@@ -88,10 +93,12 @@ const CoursePage = ({ route }) => {
           question: item.question,
           created: item.created,
           author: item.author,
-          num_collab: item.num_collaborators,
+          num_collaborators: item.num_collaborators,
           num_huddle: item.num_huddle,
+          huddlers: item.huddlers,
           chats: item.chats,
           expected_help: item.expected_help,
+          question_id: item.question_id,
         }));
         // console.log("in getQuestions 3", questionInfoArray);
 
@@ -108,9 +115,6 @@ const CoursePage = ({ route }) => {
   }, []);
 
   const handleCollabPress = (course, question, deviceIdentifier, prevPage) => {
-    // console.log(
-    //   `Navigating to QuestionPage with question: ${question.question}`
-    // );
     navigation.navigate("QuestionPage", {
       course,
       question,
@@ -148,38 +152,20 @@ const CoursePage = ({ route }) => {
       return timeA - timeB;
     });
 
+    // console.log("SORTED QUESTIONS ARRAY", sortedQuestionsArray);
+
     return sortedQuestionsArray.map((question) => (
       <View key={question.uid} style={styles.queueBox}>
         {/* top row */}
         <View style={styles.queueTopRow}>
-          <View style={styles.queuePeopleIcon}>
-            <Text style={{ fontSize: 17 * scaleFactor, fontWeight: "bold" }}>
-              {question.num_collab}
-            </Text>
-            <Icon name="people" size={20 * scaleFactor} />
-          </View>
-          <Text
-            style={{
-              fontSize: 20 + scaleFactor,
-              marginLeft: 5 * scaleFactor,
-              marginRight: 5 * scaleFactor,
-            }}
-          >
-            Expected Help at
-            <Text style={{ fontWeight: "bold" }}>{question.expected_help}</Text>
-          </Text>
-          <View style={styles.queueEarphone}>
-            <Icon name="earphones" size={20 * scaleFactor} />
-            <Text
-              style={{
-                fontSize: 20 * scaleFactor,
-                fontWeight: "bold",
-                marginLeft: 3,
-              }}
-            >
-              {question.num_huddle}
-            </Text>
-          </View>
+          {/* <View style={styles.queueMiniBox}>
+
+        </View> */}
+          <Icon name="clock" size={15 * scaleFactor} />
+          <Text style={styles.queueTopRowText}>{question.expected_help} </Text>
+
+          <Icon name="people" size={15 * scaleFactor} />
+          <Text style={styles.queueTopRowText}>{question.num_collab}</Text>
         </View>
 
         {/* middle row */}

@@ -33,9 +33,7 @@ const CollabPage = () => {
     deviceIdentifier,
     prevPage
   ) => {
-    console.log(
-      `Navigating to QuestionPage with question: ${question.question}`
-    );
+    console.log(`Navigating to QuestionPage with question:`, question);
     navigation.navigate("QuestionPage", {
       course,
       question,
@@ -47,10 +45,12 @@ const CollabPage = () => {
   const getCollabQuestions = async () => {
     try {
       const { data, error } = await supabase
-        .from("sameQ-app-questions")
+        .from("sameQ-app-collab")
         .select("*")
-        .eq("collab_status", "TRUE")
+        // .eq("collab_status", "TRUE")
         .eq("device_id", deviceIdentifier);
+
+      // console.log("DATA IN COLLAB PAGE", question);
 
       if (data) {
         // 'data' is an array of objects with 'id' and 'course' columns
@@ -60,12 +60,15 @@ const CollabPage = () => {
           question: item.question,
           created: item.created,
           author: item.author,
-          num_collab: item.num_collaborators,
+          num_collaborators: item.num_collaborators,
           num_huddle: item.num_huddle,
-          chats: item.chats,
-          help: item.expected_help,
+          expected_help: item.expected_help,
           collab_status: item.collab_status,
+          question_id: item.question_id,
+          device_id: deviceIdentifier,
+          huddlers: item.huddlers,
         }));
+        // console.log("test collabQuestions", data);
 
         setCollabQuestions(collabQuestionsArray);
       }
@@ -74,12 +77,22 @@ const CollabPage = () => {
     }
   };
 
-  useFocusEffect(() => {
-    // Fetch or update data when the component comes into focus
-    getCollabQuestions();
-  });
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        // Fetch or update data when the component comes into focus
+        await getCollabQuestions();
+        await getCourses();
+      };
 
-  useEffect(() => {}, [coursesArray]);
+      fetchData(); // Call the fetchData function
+    }, [])
+  );
+
+  useEffect(() => {
+    getCollabQuestions();
+    getCourses();
+  }, [coursesArray]);
 
   const getCourses = async () => {
     try {
@@ -97,7 +110,7 @@ const CollabPage = () => {
           status: item.status,
         }));
         setCourses(courses);
-        console.log("course data collab page: ", coursesArray);
+        // console.log("course data collab page: ", coursesArray);
       }
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
@@ -113,12 +126,8 @@ const CollabPage = () => {
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
 
   const renderCollab = () => {
-    // console.log('Collab questions:', collabQuestions);
     if (collabQuestions.length === 0) {
-      return (
-        <Text style={styles.emptyChat}>Collaborate on a question!</Text>
-        // <Text>Device id: {deviceIdentifier}</Text>
-      );
+      return <Text style={styles.emptyChat}>Collaborate on a question!</Text>;
     }
 
     const sortedQuestions = [...collabQuestions].sort((a, b) => {
@@ -138,6 +147,7 @@ const CollabPage = () => {
       const timeB = getTime(parsedDataB);
       return timeA - timeB;
     });
+    // console.log("TESTING WHAT question is:", sortedQuestions);
 
     return sortedQuestions.map((question) => (
       <TouchableOpacity
@@ -153,36 +163,16 @@ const CollabPage = () => {
         }
       >
         {/* top row */}
-        <Text>{question.course}</Text>
         <View style={styles.collabTopRow}>
-          <View style={styles.collabPeopleIcon}>
-            <Text style={{ fontSize: 17 * scaleFactor, fontWeight: "bold" }}>
-              {question.num_collab}
-            </Text>
-            <Icon name="people" size={20 * scaleFactor} />
+          <View style={styles.collabIcons}>
+            <Icon name="clock" size={15 * scaleFactor} />
+            <Text style={styles.queueTopRowText}>{question.help} </Text>
+
+            <Icon name="people" size={15 * scaleFactor} />
+            <Text style={styles.queueTopRowText}>{question.num_collab}</Text>
           </View>
-          <Text
-            style={{
-              fontSize: 20 + scaleFactor,
-              marginLeft: 5 * scaleFactor,
-              marginRight: 5 * scaleFactor,
-            }}
-          >
-            Expected Help at{" "}
-            <Text style={{ fontWeight: "bold" }}>{question.help}</Text>
-          </Text>
-          <View style={styles.collabEarphone}>
-            <Icon name="earphones" size={20 * scaleFactor} />
-            <Text
-              style={{
-                fontSize: 20 * scaleFactor,
-                fontWeight: "bold",
-                marginLeft: 3,
-              }}
-            >
-              {question.num_huddle}
-            </Text>
-          </View>
+
+          <Text style={styles.queueTopRowTextEnd}>{question.course}</Text>
         </View>
 
         {/* middle row */}
@@ -207,17 +197,10 @@ const CollabPage = () => {
 
   return (
     <View style={styles.collabContainer}>
-      {/* <ScrollView 
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ alignItems: 'center', paddingBottom: '20%'}} 
-        // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
-        >         */}
-      <View style={styles.collabHeader}>
-        <Text style={styles.courseBoxTEXT}> Collaborating </Text>
-        <Text> Collaborating on {collabQuestions.length} questions</Text>
+      <View style={styles.appBar}></View>
+      <View style={styles.courseHeaderContainer}>
+        <Text style={styles.pageHeader}>Colloborating</Text>
       </View>
-
-      <Text>Device identifier: {deviceIdentifier}</Text>
 
       <ScrollView
         showsVerticalScrollIndicator={false}

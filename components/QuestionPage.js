@@ -12,6 +12,8 @@ import {
   Modal,
   Image,
   ImageBackground,
+  Alert,
+  ScrollViewRef,
 } from "react-native";
 import {
   useNavigation,
@@ -27,6 +29,9 @@ import * as FileSystem from "expo-file-system";
 
 const { parse, getTime } = require("date-fns");
 import HuddleUI from "./HuddleUI";
+import BlinkingDot from "./BlinkingDot";
+import { Audio } from "expo-av";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const QuestionPage = ({ route }) => {
   const { question, course, deviceIdentifier } = route.params;
@@ -37,6 +42,8 @@ const QuestionPage = ({ route }) => {
   const [actualNumCollaborators, setNumCollaborators] = useState(
     question.num_collab
   );
+  const [inHuddle, setInHuddle] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   const [chatsArray, setChatsArray] = useState([]);
   const [defaultChatsArray, setDefaultChatsArray] = useState([]);
@@ -45,6 +52,7 @@ const QuestionPage = ({ route }) => {
   const isFocused = useIsFocused();
 
   const [collabStatus, setCollabStatus] = useState(["Collaborate"]);
+  const [isMuted, setMuted] = useState(true);
 
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [type, setType] = useState(CameraType.back);
@@ -56,19 +64,12 @@ const QuestionPage = ({ route }) => {
 
   const getChats = async () => {
     try {
-      // console.log(
-      //   "fetching data for device:",
-      //   deviceIdentifier,
-      //   "for question:",
-      //   question.question,
-      //   "for course:",
-      //   course.course
-      // );
       const { data, error } = await supabase
         .from("sameQ-chats")
         .select("*")
-        .eq("course", course.course)
+        .eq("course", question.course)
         .eq("question", question.question)
+        .eq("question_id", question.question_id)
         // .eq('device_id', '000');
         .eq("device_id", deviceIdentifier);
       // .or('device_id.eq.000, device_id.eq.', deviceIdentifier);
@@ -84,8 +85,8 @@ const QuestionPage = ({ route }) => {
           senderInitials: item.sender_initials,
           message: item.message,
           timeSent: item.time,
+          question_id: item.question_id,
         }));
-
         setChatsArray(newChats);
       }
     } catch (error) {
@@ -95,19 +96,12 @@ const QuestionPage = ({ route }) => {
 
   const getDefaultChats = async () => {
     try {
-      console.log(
-        "fetching data for device:",
-        deviceIdentifier,
-        "for question:",
-        question.question,
-        "for course:",
-        course.course
-      );
       const { data, error } = await supabase
         .from("sameQ-chats")
         .select("*")
-        .eq("course", course.course)
+        .eq("course", question.course)
         .eq("question", question.question)
+        .eq("question_id", question.question_id)
         .eq("device_id", "000");
       // .eq('device_id', deviceIdentifier);
       // .or('device_id.eq.000, device_id.eq.', deviceIdentifier);
@@ -123,6 +117,7 @@ const QuestionPage = ({ route }) => {
           senderInitials: item.sender_initials,
           message: item.message,
           timeSent: item.time,
+          question_id: item.question_id,
         }));
 
         setDefaultChatsArray(newChats);
@@ -134,10 +129,6 @@ const QuestionPage = ({ route }) => {
 
   const addMessage = async (course, question, message) => {
     try {
-      console.log("Course to add message to:", course.course);
-      console.log("Question to add message to:", question.question);
-      console.log("New message to send:", message);
-
       const currentDate = new Date();
       const formattedDate = `${currentDate.toLocaleString("en-US", {
         month: "long",
@@ -148,12 +139,13 @@ const QuestionPage = ({ route }) => {
 
       const { error } = await supabase.from("sameQ-chats").insert([
         {
-          course: course.course,
+          course: question.course,
           question: question.question,
           sender: "You",
           message: message,
           time: formattedDate,
           device_id: deviceIdentifier,
+          question_id: question.question_id,
         },
       ]);
 
@@ -175,61 +167,63 @@ const QuestionPage = ({ route }) => {
     }
   };
 
-  const addCollab = async (course, question) => {
+  const addCollab = async (course, questionObj) => {
+    //question_id not passed into params
     try {
-      console.log("device in in addCollab", deviceIdentifier);
-      console.log("course to add:", course.course);
-      console.log("question to add:", question.question);
-
-      const { error } = await supabase.from("sameQ-app-questions").upsert([
+      const { error } = await supabase.from("sameQ-app-collab").insert([
         {
-          course: course.course,
-          question: question.question,
-          author: question.author,
-          num_collaborators: question.num_collab + 1,
-          num_huddle: question.num_huddle,
-          created: question.created,
-          expected_help: question.expected_help,
+          question: questionObj.question,
+          created: "January 1, 2023, 3:00 PM",
+          author: questionObj.author,
+          num_collaborators: 0,
+          num_huddle: 0,
+          expected_help: "3:15 PM",
           collab_status: "TRUE",
-          device_id: deviceIdentifier,
+          course: `${course.course}`,
+          collaborators: {},
+          huddlers: {},
+          question_id: `${question.question_id}`,
+          device_id: `${deviceIdentifier}`,
         },
       ]);
-
-      setNumCollaborators(
-        (prevActualNumCollaborators) => prevActualNumCollaborators + 1
-      );
-
       if (error) {
         throw new Error(error.message);
       }
     } catch (error) {
-      console.error("Error adding data into Supabase:", error.message);
+      console.log(error);
     }
   };
 
   const deleteCollab = async (course, question) => {
+    console.log("delete collab pressed");
     try {
-      console.log("course to delete:", course.course);
-      console.log("question to delete:", question.question);
+      const { old, error1 } = await supabase
+        .from("sameQ-app-collab")
+        .select("*")
+        .eq("question_id", question.question_id)
+        .eq("question", question.question);
+      console.log("TEST DATA EXIST", question);
+
       const { error } = await supabase
-        .from("sameQ-app-questions")
-        .update([
+        .from("sameQ-app-collab")
+        .delete([
           {
             collab_status: "FALSE",
             num_collaborators: question.num_collab,
+            device_id: "000",
           },
         ])
         .eq("device_id", deviceIdentifier)
-        .eq("course", course.course)
-        .eq("question", question.question);
+        .eq("question_id", question.question_id);
+      // .eq("question", question.question);
 
-      setNumCollaborators(
-        (prevActualNumCollaborators) => prevActualNumCollaborators - 1
-      );
+      // setNumCollaborators(
+      //   (prevActualNumCollaborators) => prevActualNumCollaborators - 1
+      // );
 
-      if (error) {
-        throw new Error(error.message);
-      }
+      // if (error) {
+      //   throw new Error(error.message);
+      // }
     } catch (error) {
       console.error("Error deleting data from Supabase:", error.message);
     }
@@ -238,9 +232,10 @@ const QuestionPage = ({ route }) => {
   const getCollabStatus = async () => {
     try {
       const { data, error } = await supabase
-        .from("sameQ-app-questions")
+        .from("sameQ-app-collab")
         .select("collab_status", "num_collaborators")
         .eq("question", question.question)
+        .eq("question_id", question.question_id)
         .eq("device_id", deviceIdentifier);
 
       if (data && data.length > 0) {
@@ -260,39 +255,42 @@ const QuestionPage = ({ route }) => {
     getCollabStatus();
   }, [isFocused]);
 
-  useEffect(() => {
-    if (isFocused) {
-      getDefaultChats();
-      getChats();
-      getCollabStatus();
-    }
-  }, [isFocused]);
-
   useFocusEffect(
     React.useCallback(() => {
-      getDefaultChats();
-      getChats();
-      getCollabStatus(); // fetch the collaboration status when navigating back into modal
+      const fetchData = async () => {
+        // Fetch or update data when the component comes into focus
+        await getCollabStatus();
+        await getDefaultChats();
+        await getChats();
+      };
+
+      fetchData(); // Call the fetchData function
     }, [])
   );
 
   useEffect(() => {
-    if (messagesRef.current) {
+    if (messagesRef.current && !keyboardVisible) {
       messagesRef.current.scrollToEnd({ animated: true });
     }
-  }, [chatsArray]);
+  }, [chatsArray, keyboardVisible]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
       () => {
-        setBottomMargin(Platform.OS === "ios" ? 0 : 0); // make keyboard and input box smooth
+        if (messagesRef.current) {
+          setTimeout(() => {
+            messagesRef.current.scrollToEnd({ animated: true });
+          }, 100); // Introduce a delay to ensure the keyboard is fully shown
+        }
       }
     );
     const keyboardDidHideListener = Keyboard.addListener(
       "keyboardDidHide",
       () => {
-        setBottomMargin(0);
+        if (messagesRef.current) {
+          messagesRef.current.scrollToEnd({ animated: true });
+        }
       }
     );
 
@@ -301,6 +299,14 @@ const QuestionPage = ({ route }) => {
       keyboardDidHideListener.remove();
     };
   }, []);
+
+  const toggleMuted = () => {
+    setMuted((prevMuted) => !prevMuted);
+  };
+
+  const handleToggleHuddle = () => {
+    setInHuddle((prevIsInHuddle) => !prevIsInHuddle);
+  };
 
   const navigation = useNavigation();
 
@@ -335,6 +341,7 @@ const QuestionPage = ({ route }) => {
     // combine default and new chats and images if any
     const combinedChats = [...sortedChatsArray, ...chatsArray];
     var int = 0;
+
     return combinedChats.map((chat) => {
       if (chat.image) {
         int += 1;
@@ -391,7 +398,7 @@ const QuestionPage = ({ route }) => {
       const newStatus =
         prevStatus[0] === "Collaborate" ? ["Uncollaborate"] : ["Collaborate"];
 
-      console.log("newStatus:", newStatus);
+      console.log("newStatus:", question);
 
       if (newStatus[0] === "Collaborate") {
         deleteCollab(course, question);
@@ -404,27 +411,47 @@ const QuestionPage = ({ route }) => {
 
   const handleBackCourse = (course, deviceIdentifier) => {
     console.log(`Navigating to CoursePage with course: ${course.course}`);
-    navigation.navigate("CoursePage", { course, deviceIdentifier });
+    if (inHuddle) {
+      Alert.alert(
+        "Cannot Leave Question Page",
+        "Please leave the huddle before exiting the question.",
+        [{ text: "OK", onPress: () => {} }]
+      );
+    } else {
+      navigation.navigate("CoursePage", { course, deviceIdentifier });
+    }
   };
 
   const handleBackCollab = () => {
-    console.log(`Navigating to Collaborating Page`);
     navigation.navigate("CollabPage");
   };
 
   const handleMessageSend = async (course, question, message) => {
     try {
-      console.log(
-        "Sending new message:",
-        message,
-        "to course:",
-        course.course,
-        "in question:",
-        question.question
-      );
+      if (collabStatus[0] === "Collaborate") {
+        Alert.alert(
+          "Cannot Send Message",
+          "Begin collaborating on the question first!",
+          [{ text: "OK", onPress: () => {} }]
+        );
+      } else {
+        console.log(
+          "Sending new message:",
+          message,
+          "to course:",
+          course.course,
+          "in question:",
+          question.question
+        );
 
-      await addMessage(course, question, message);
-      setText("");
+        await addMessage(course, question, message);
+        setText("");
+        if (messagesRef.current) {
+          setTimeout(() => {
+            messagesRef.current.scrollToEnd({ animated: true });
+          }, 100); // delay to ensure message is added before scrolling
+        }
+      }
     } catch (error) {
       console.error("Error sending message:", error.message);
     }
@@ -485,7 +512,7 @@ const QuestionPage = ({ route }) => {
       const newUri = `${directory}${Date.now()}.jpg`;
       await FileSystem.moveAsync({ from: uri, to: newUri });
 
-      console.log("FileSystem", FileSystem.documentDirectory);
+      // console.log("FileSystem", FileSystem.documentDirectory);
       setCapturedImageUri(newUri);
       // closeCamera();
       // setCapturedImageUri(uri);
@@ -511,6 +538,88 @@ const QuestionPage = ({ route }) => {
   const retakeImage = () => {
     setCapturedImageUri(null);
   };
+  const handleLeaveHuddle = () => {
+    setInHuddle(false);
+    stopHuddleSound();
+  };
+
+  const [sound, setSound] = useState(null);
+  const isSoundLoaded = useRef(false);
+  const [soundDidLoad, setSoundDidLoad] = useState(false);
+
+  const loadSoundAsync = async () => {
+    try {
+      const { sound: newSound } = await Audio.Sound.createAsync(
+        require("../assets/school_dialogue_trimmed.mp3")
+      );
+      isSoundLoaded.current = true;
+      setSound(newSound); // Set the sound after loading
+      setSoundDidLoad(true);
+      console.log("Sound loaded successfully");
+    } catch (error) {
+      console.error("Error loading sound:", error.message);
+    }
+  };
+
+  const unloadSoundAsync = async () => {
+    try {
+      if (sound) {
+        await sound.unloadAsync();
+        setSound(null); // Clear the sound after unloading
+        console.log("Sound unloaded successfully");
+      }
+    } catch (error) {
+      console.error("Error unloading sound:", error.message);
+    }
+  };
+
+  const playHuddleOpenSound = async () => {
+    try {
+      console.log("inHuddle:", inHuddle);
+      console.log("isSoundLoaded.current:", isSoundLoaded.current);
+      console.log("sound:", sound);
+      console.log("soundDidLoad:", soundDidLoad);
+      if (inHuddle && isSoundLoaded.current && sound && soundDidLoad) {
+        await sound.playAsync({ positionMillis: 0 });
+        // await loadSoundAsync();
+        console.log("Sound played successfully");
+      } else {
+        console.warn(
+          "Cannot play sound. Check inHuddle and sound loading status."
+        );
+      }
+    } catch (error) {
+      console.error("Error playing sound:", error.message);
+    }
+  };
+
+  const stopHuddleSound = async () => {
+    try {
+      if (sound) {
+        await sound.stopAsync();
+        await unloadSoundAsync();
+        console.log("Sound stopped and unloaded successfully");
+      }
+    } catch (error) {
+      console.error("Error stopping sound:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    // Load the sound when the component mounts
+    loadSoundAsync();
+
+    // Unload the sound when the component unmounts
+    return () => {
+      unloadSoundAsync();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (inHuddle) {
+      playHuddleOpenSound();
+    }
+  }, [inHuddle, sound, soundDidLoad]);
 
   const renderCamera = () => {
     if (hasPermission === null) {
@@ -592,6 +701,7 @@ const QuestionPage = ({ route }) => {
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       enabled
       style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -500}
     >
       {isCameraOpen ? (
         renderCamera()
@@ -640,6 +750,7 @@ const QuestionPage = ({ route }) => {
                 Asked by: {question.author}
               </Text>
               <View style={styles.numInHuddle}>
+                {inHuddle && <BlinkingDot inHuddle={inHuddle} />}
                 <TouchableOpacity onPress={clickHuddleModal}>
                   <View style={styles.backArrow}>
                     <Icon name="earphones" size={30} color="#000" />
@@ -667,14 +778,25 @@ const QuestionPage = ({ route }) => {
               color="#000"
               style={styles.emojiIcon}
             />
-            <TouchableOpacity onPress={() => openCamera()}>
-              <Icon
-                name="camera"
-                size={26}
-                color="#000"
-                style={styles.emojiIcon}
-              />
-            </TouchableOpacity>
+            {collabStatus[0] === "Collaborate" ? (
+              <TouchableOpacity>
+                <Icon
+                  name="camera"
+                  size={26}
+                  color="#000"
+                  style={styles.emojiIcon}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => openCamera()}>
+                <Icon
+                  name="camera"
+                  size={26}
+                  color="#000"
+                  style={styles.emojiIcon}
+                />
+              </TouchableOpacity>
+            )}
 
             {collabStatus[0] === "Collaborate" ? (
               <Text style={styles.input2}>
@@ -763,10 +885,18 @@ const QuestionPage = ({ route }) => {
                     <View style={styles.huddleModalContent}>
                       <Text style={styles.collabModalHeaderText}>Huddle</Text>
                       <Text style={styles.collabModalBodyText}>
-                        {question.num_huddle + 1} in huddle {"\n"}
-                        {question.num_huddle} others in huddle with you {"\n"}
-                        <HuddleUI huddlers={question.huddlers} />
+                        {inHuddle
+                          ? `${question.num_huddle} others in huddle with you.`
+                          : `Join ${question.num_huddle} others in huddle.`}
                       </Text>
+                      <HuddleUI
+                        huddlers={question.huddlers}
+                        isMuted={isMuted}
+                        toggleMuted={toggleMuted}
+                        isInHuddle={inHuddle}
+                        onToggleHuddle={handleToggleHuddle}
+                        onLeaveHuddle={handleLeaveHuddle}
+                      />
                     </View>
                   )}
                 </TouchableWithoutFeedback>
