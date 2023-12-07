@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
+  Image,
   TouchableOpacity,
   Modal,
   TouchableWithoutFeedback,
@@ -25,6 +26,11 @@ const HomePage = () => {
   const navigateToCollabPage = () => {
     //  console.log("device id in navigateToCollab:", deviceIdentifier);
     navigation.navigate("CollabPage", { deviceIdentifier });
+  };
+
+  const handleFakePagePress = (prevPage) => {
+    console.log(`Navigating to Filler Page`);
+    navigation.navigate("FillerPage", { prevPage });
   };
 
   const clickMenuModal = () => {
@@ -100,7 +106,7 @@ const HomePage = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Device identifier: {deviceIdentifier}</Text>
+      {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
       <View style={styles.appBar}>
         <TouchableOpacity onPress={clickMenuModal}>
           <View style={styles.backArrow}>
@@ -155,7 +161,60 @@ const HomePage = () => {
           <View style={styles.menuModalOverlay}>
             <TouchableWithoutFeedback onPress={() => {}}>
               <View style={styles.menuModalContent}>
-                <Text style={styles.menuModalTEXT}>TEST</Text>
+                <View style={styles.menuModalTop}>
+                  <Image
+                    style={styles.menuModalImage}
+                    source={require("../assets/avatar-2.png")}
+                  />
+                  <Text style={styles.menuModalHeader}>Welcome, Emma!</Text>
+                </View>
+
+                <View style={styles.menuModalBottom}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      closeModal();
+                      handleFakePagePress("HomePage");
+                    }}
+                    style={styles.fakePage}
+                  >
+                    <Icon name="user" size={30} color="#000" />
+                    <Text style={styles.menuModalBody}> Profile</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      closeModal();
+                      handleFakePagePress("HomePage");
+                    }}
+                    style={styles.fakePage}
+                  >
+                    <Icon name="heart" size={30} color="#000" />
+                    <Text style={styles.menuModalBody}>
+                      {" "}
+                      Most Frequently Collaborateed
+                    </Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      closeModal();
+                      handleFakePagePress("HomePage");
+                    }}
+                    style={styles.fakePage}
+                  >
+                    <Image
+                      style={styles.canvasImage}
+                      source={require("../assets/canvas.png")}
+                    />
+                    <Text style={styles.menuModalBody}> Canvas</Text>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.logoutButtonContainer}>
+                  <TouchableOpacity style={styles.logoutButton}>
+                    <Text style={styles.logoutButtonText}>Logout</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </TouchableWithoutFeedback>
           </View>

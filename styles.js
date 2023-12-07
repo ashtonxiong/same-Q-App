@@ -166,15 +166,81 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
   },
   menuModalContent: {
+    flex: 1,
     width: screenWidth * 0.7,
     height: screenHeight,
     backgroundColor: "#DDCFFF",
     borderRadius: 20, // round corners
+    padding: "10%",
+    alignItems: "center",
+    justifyContent: "space-around",
   },
-  menuModalTEXT: {
-    marginTop: "75%",
+  menuModalTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: "-40%",
+  },
+  menuModalBottom: {
+    alignItems: "center",
+    marginTop: "-60%",
+    flexDirection: "column",
+  },
+  menuModalHeader: {
+    marginTop: "50%",
+    fontSize: scaleFactor * 27,
     textAlign: "center",
+    fontWeight: "bold",
   },
+  menuModalBody: {
+    marginTop: "20%",
+    textAlign: "center",
+    fontSize: scaleFactor * 20,
+    //  borderColor: 'orange',
+    //  borderWidth: 2,
+    marginTop: 5,
+  },
+  menuModalImage: {
+    width: 75,
+    height: 75,
+    borderRadius: 15,
+    marginTop: "50%",
+  },
+  logoutButtonContainer: {
+    justifyContent: "flex-end",
+    width: "40%",
+    alignItems: "center",
+  },
+  logoutButton: {
+    borderRadius: 25,
+    backgroundColor: "#5E42A6",
+    padding: 10,
+    width: "150%",
+    textAlign: "center",
+    alignItems: "center",
+    alignContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  logoutButtonText: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+    textAlign: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+  canvasImage: {
+    width: 30,
+    height: 30,
+  },
+  fakePage: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: "25%",
+  },
+  // ----------HomePage----------
 
   // ----------CoursePage----------
   questionBox: {
@@ -235,18 +301,30 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
     width: screenWidth * 0.95,
-    // height: screenHeight * 0.2,
     borderWidth: 2,
-    borderColor: "#b986ee",
+    borderColor: "#5E42A6",
     borderRadius: 10,
     backgroundColor: "#FFFFFF",
-    // justifyContent: 'space-between',
-    // maxHeight: '35%',
+    shadowColor: "#000",
+    shadowOffset: { width: 1, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
-
   queueTopRow: {
+    flex: 1,
     flexDirection: "row", // align items along the row
-    justifyContent: "space-between", // space between icon and help time
+    justifyContent: "flex-start", // space between icon and help time
+    // alignContent: 'flex-start'
+  },
+  queueTopRowText: {
+    marginLeft: "1.5%",
+    fontSize: scaleFactor * 15,
+    marginTop: "-0.5%",
+  },
+  queueTopRowTextEnd: {
+    fontSize: scaleFactor * 15,
+    marginTop: "-0.5%",
+    justifyContent: "flex-end",
   },
   queueEarphone: {
     flexDirection: "row",
@@ -261,9 +339,10 @@ const styles = StyleSheet.create({
     overflow: "hidden", // Hide overflow content
     flexDirection: "row",
     justifyContent: "center", // align items along the row
+    marginTop: "2%",
   },
   queueBot: {
-    marginTop: 5,
+    marginTop: "2%",
     flexWrap: "wrap", // Allow text to wrap
     overflow: "hidden", // Hide overflow content
     flexDirection: "row",
@@ -277,8 +356,8 @@ const styles = StyleSheet.create({
     width: "30%",
     alignItems: "center",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.25,
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
     shadowRadius: 4,
   },
   queueButtonText: {
@@ -542,17 +621,15 @@ const styles = StyleSheet.create({
     // borderWidth: 3,
   },
   collabBox: {
-    padding: 5,
+    padding: 10,
     margin: 10,
     width: screenWidth * 0.95,
     borderWidth: 2,
     borderColor: "#5E42A6",
     borderRadius: 10,
-    backgroundColor: "white",
-    justifyContent: "space-between",
-    height: screenWidth * 0.25,
+    backgroundColor: "#FFFFFF",
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 10 },
+    shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.2,
     shadowRadius: 4,
   },
@@ -560,9 +637,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center", // align items along the row
   },
-  collabEarphone: {
+  collabIcons: {
+    flex: 1,
     flexDirection: "row",
-    justifyContent: "center", // align items along the row
+  },
+  collabIcons: {
+    flex: 1,
+    flexDirection: "row",
   },
   collabPeopleIcon: {
     flexDirection: "row",
@@ -573,6 +654,7 @@ const styles = StyleSheet.create({
     overflow: "hidden", // Hide overflow content
     flexDirection: "row",
     justifyContent: "center", // align items along the row
+    marginTop: "2%",
   },
   collabBot: {
     marginTop: 5,

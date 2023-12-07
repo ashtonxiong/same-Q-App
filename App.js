@@ -9,6 +9,8 @@ import AskPage from "./components/askPage";
 import QuestionPage from "./components/QuestionPage";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import CollabPage from "./components/CollabPage";
+import FillerPage from "./components/FillerPage";
+import SettingsPage from "./components/SettingsPage";
 import { DeviceIdentifierProvider } from "./components/deviceID";
 
 const Stack = createStackNavigator();
@@ -26,6 +28,8 @@ const MainStack = () => {
       <Stack.Screen name="QuestionPage" component={QuestionPage} />
       <Stack.Screen name="CollabPage" component={CollabPage} />
       <Stack.Screen name="AskPage" component={AskPage} />
+      <Stack.Screen name="FillerPage" component={FillerPage} />
+      <Stack.Screen name="SettingsPage" component={SettingsPage} />
     </Stack.Navigator>
   );
 };
@@ -113,8 +117,8 @@ const App = () => {
             }}
           />
           <Tab.Screen
-            name="Account"
-            component={Notifications}
+            name="Settings"
+            component={SettingsPage}
             options={{
               tabBarIcon: ({ color, size, focused }) => (
                 <Icon

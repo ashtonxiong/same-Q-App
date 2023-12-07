@@ -158,36 +158,17 @@ const CollabPage = () => {
         }
       >
         {/* top row */}
-        <Text>{question.course}</Text>
+        {/* <Text>{question.course}</Text> */}
         <View style={styles.collabTopRow}>
-          <View style={styles.collabPeopleIcon}>
-            <Text style={{ fontSize: 17 * scaleFactor, fontWeight: "bold" }}>
-              {question.num_collab}
-            </Text>
-            <Icon name="people" size={20 * scaleFactor} />
+          <View style={styles.collabIcons}>
+            <Icon name="clock" size={15 * scaleFactor}/>
+              <Text style={styles.queueTopRowText}>{question.help}  </Text>
+
+              <Icon name="people" size={15 * scaleFactor}/>
+              <Text style={styles.queueTopRowText}>{question.num_collab}</Text>
           </View>
-          <Text
-            style={{
-              fontSize: 20 + scaleFactor,
-              marginLeft: 5 * scaleFactor,
-              marginRight: 5 * scaleFactor,
-            }}
-          >
-            Expected Help at{" "}
-            <Text style={{ fontWeight: "bold" }}>{question.help}</Text>
-          </Text>
-          <View style={styles.collabEarphone}>
-            <Icon name="earphones" size={20 * scaleFactor} />
-            <Text
-              style={{
-                fontSize: 20 * scaleFactor,
-                fontWeight: "bold",
-                marginLeft: 3,
-              }}
-            >
-              {question.num_huddle}
-            </Text>
-          </View>
+
+            <Text style={styles.queueTopRowTextEnd}>{question.course}</Text>
         </View>
 
         {/* middle row */}
@@ -222,7 +203,7 @@ const CollabPage = () => {
         <Text> Collaborating on {collabQuestions.length} questions</Text>
       </View>
 
-      <Text>Device identifier: {deviceIdentifier}</Text>
+      {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
 
       <ScrollView
         showsVerticalScrollIndicator={false}

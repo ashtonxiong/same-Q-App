@@ -12,6 +12,7 @@ import {
   Modal,
   Image,
   ImageBackground,
+  Alert,
 } from "react-native";
 import {
   useNavigation,
@@ -27,6 +28,8 @@ import * as FileSystem from "expo-file-system";
 
 const { parse, getTime } = require("date-fns");
 import HuddleUI from "./HuddleUI";
+import BlinkingDot from "./BlinkingDot";
+import { Audio } from "expo-av";
 import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 const QuestionPage = ({ route }) => {
@@ -38,6 +41,7 @@ const QuestionPage = ({ route }) => {
   const [actualNumCollaborators, setNumCollaborators] = useState(
     question.num_collab
   );
+  const [inHuddle, setInHuddle] = useState(false);
 
   const [chatsArray, setChatsArray] = useState([]);
   const [defaultChatsArray, setDefaultChatsArray] = useState([]);
@@ -46,6 +50,7 @@ const QuestionPage = ({ route }) => {
   const isFocused = useIsFocused();
 
   const [collabStatus, setCollabStatus] = useState(["Collaborate"]);
+  const [isMuted, setMuted] = useState(true);
 
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [type, setType] = useState(CameraType.back);
@@ -282,6 +287,14 @@ const QuestionPage = ({ route }) => {
     };
   }, []);
 
+  const toggleMuted = () => {
+    setMuted((prevMuted) => !prevMuted);
+  };
+
+  const handleToggleHuddle = () => {
+    setInHuddle((prevIsInHuddle) => !prevIsInHuddle);
+  };
+
   const navigation = useNavigation();
 
   const renderMessages = () => {
@@ -384,7 +397,19 @@ const QuestionPage = ({ route }) => {
   };
 
   const handleBackCourse = (course, deviceIdentifier) => {
-    navigation.navigate("CoursePage", { course, deviceIdentifier });
+    console.log(`Navigating to CoursePage with course: ${course.course}`);
+    // navigation.navigate("CoursePage", { course, deviceIdentifier });
+    if (inHuddle) {
+      // Show a pop-up message if inHuddle is true
+      Alert.alert(
+        "Cannot Leave Question Page",
+        "Please leave the huddle before exiting the question.",
+        [{ text: "OK", onPress: () => {} }]
+      );
+    } else {
+      // If not in the huddle, navigate to the CoursePage
+      navigation.navigate("CoursePage", { course, deviceIdentifier });
+    }
   };
 
   const handleBackCollab = () => {
@@ -392,9 +417,40 @@ const QuestionPage = ({ route }) => {
   };
 
   const handleMessageSend = async (course, question, message) => {
+    //  try {
+    //  console.log(
+    //    "Sending new message:",
+    //    message,
+    //    "to course:",
+    //    course.course,
+    //    "in question:",
+    //    question.question
+    //  );
+
+    //  await addMessage(course, question, message);
+    //  setText("");
     try {
-      await addMessage(course, question, message);
-      setText("");
+      if (collabStatus[0] === "Collaborate") {
+        // Show an alert if collaboration is required
+        Alert.alert(
+          "Cannot Send Message",
+          "Begin collaborating on the question first!",
+          [{ text: "OK", onPress: () => {} }]
+        );
+      } else {
+        // Send the message if collaboration is not required
+        console.log(
+          "Sending new message:",
+          message,
+          "to course:",
+          course.course,
+          "in question:",
+          question.question
+        );
+
+        await addMessage(course, question, message);
+        setText(""); // Clear the message input
+      }
     } catch (error) {
       console.error("Error sending message:", error.message);
     }
@@ -481,6 +537,89 @@ const QuestionPage = ({ route }) => {
   const retakeImage = () => {
     setCapturedImageUri(null);
   };
+  const handleLeaveHuddle = () => {
+    setInHuddle(false);
+    stopHuddleSound();
+  };
+
+  const [sound, setSound] = useState(null);
+  const isSoundLoaded = useRef(false);
+  const [soundDidLoad, setSoundDidLoad] = useState(false);
+
+  const loadSoundAsync = async () => {
+    try {
+      const { sound: newSound } = await Audio.Sound.createAsync(
+        require("../assets/school_dialogue_trimmed.mp3")
+      );
+      isSoundLoaded.current = true;
+      setSound(newSound); // Set the sound after loading
+      setSoundDidLoad(true);
+      console.log("Sound loaded successfully");
+    } catch (error) {
+      console.error("Error loading sound:", error.message);
+    }
+  };
+
+  const unloadSoundAsync = async () => {
+    try {
+      if (sound) {
+        await sound.unloadAsync();
+        setSound(null); // Clear the sound after unloading
+        console.log("Sound unloaded successfully");
+      }
+    } catch (error) {
+      console.error("Error unloading sound:", error.message);
+    }
+  };
+
+  const playHuddleOpenSound = async () => {
+    try {
+      console.log("inHuddle:", inHuddle);
+      console.log("isSoundLoaded.current:", isSoundLoaded.current);
+      console.log("sound:", sound);
+      console.log("soundDidLoad:", soundDidLoad);
+      if (inHuddle && isSoundLoaded.current && sound && soundDidLoad) {
+        await sound.playAsync({ positionMillis: 0 });
+        // await loadSoundAsync();
+        console.log("Sound played successfully");
+      } else {
+        console.warn(
+          "Cannot play sound. Check inHuddle and sound loading status."
+        );
+      }
+    } catch (error) {
+      console.error("Error playing sound:", error.message);
+    }
+  };
+
+  const stopHuddleSound = async () => {
+    try {
+      if (sound) {
+        await sound.stopAsync();
+        await unloadSoundAsync();
+        console.log("Sound stopped and unloaded successfully");
+      }
+    } catch (error) {
+      console.error("Error stopping sound:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    // Load the sound when the component mounts
+    loadSoundAsync();
+
+    // Unload the sound when the component unmounts
+    return () => {
+      unloadSoundAsync();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (inHuddle) {
+      playHuddleOpenSound();
+    }
+  }, [inHuddle, sound, soundDidLoad]);
+  // console.log('status:', inHuddle)
 
   const renderCamera = () => {
     if (hasPermission === null) {
@@ -610,6 +749,7 @@ const QuestionPage = ({ route }) => {
                 Asked by: {question.author}
               </Text>
               <View style={styles.numInHuddle}>
+                {inHuddle && <BlinkingDot inHuddle={inHuddle} />}
                 <TouchableOpacity onPress={clickHuddleModal}>
                   <View style={styles.backArrow}>
                     <Icon name="earphones" size={30} color="#000" />
@@ -744,10 +884,19 @@ const QuestionPage = ({ route }) => {
                     <View style={styles.huddleModalContent}>
                       <Text style={styles.collabModalHeaderText}>Huddle</Text>
                       <Text style={styles.collabModalBodyText}>
-                        {question.num_huddle + 1} in huddle {"\n"}
-                        {question.num_huddle} others in huddle with you {"\n"}
-                        <HuddleUI huddlers={question.huddlers} />
+                        {inHuddle
+                          ? `${question.num_huddle} others in huddle with you.`
+                          : `Join ${question.num_huddle} others in huddle.`}
                       </Text>
+                      <HuddleUI
+                        huddlers={question.huddlers}
+                        isMuted={isMuted}
+                        toggleMuted={toggleMuted}
+                        isInHuddle={inHuddle}
+                        onToggleHuddle={handleToggleHuddle}
+                        onLeaveHuddle={handleLeaveHuddle}
+                      />
+                      {/* </Text> */}
                     </View>
                   )}
                 </TouchableWithoutFeedback>

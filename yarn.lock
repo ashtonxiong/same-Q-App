@@ -3390,6 +3390,11 @@ expo-asset@~8.10.1:
     path-browserify "^1.0.0"
     url-parse "^1.5.9"
 
+expo-av@~13.4.1:
+  version "13.4.1"
+  resolved "https://registry.npmjs.org/expo-av/-/expo-av-13.4.1.tgz"
+  integrity sha512-0K8QEFzZeNGrppzYUs8wOtjOyPPkxzlVYbEHM6WzIQOG1uYYNOJkJB3aQHVFXHmz+AzoHwMrUjcschofwaMNeg==
+
 expo-camera@~13.4.4:
   version "13.4.4"
   resolved "https://registry.npmjs.org/expo-camera/-/expo-camera-13.4.4.tgz"
@@ -5719,6 +5724,11 @@ react-native-modal@^13.0.1:
   dependencies:
     prop-types "^15.6.2"
     react-native-animatable "1.3.3"
+
+react-native-pulse@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/react-native-pulse/-/react-native-pulse-1.0.7.tgz"
+  integrity sha512-PQvek/hC2YZddzJgyJT9FZbg37eZKl1rcYNlHbSItL3XZ0n3zF5jxFRrYLyGqHnRuRPHoY7qnrdHe4qVwy3Jnw==
 
 react-native-ratings@8.0.4:
   version "8.0.4"
