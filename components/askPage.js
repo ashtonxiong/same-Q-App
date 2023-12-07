@@ -48,6 +48,7 @@ const AskPage = ({ route }) => {
     device_id: "",
     course: "",
     question_id: "",
+    huddlers: "",
   });
 
   const addQuestion = async () => {
@@ -83,6 +84,7 @@ const AskPage = ({ route }) => {
           device_id: deviceIdentifier,
           course: selectedClass,
           question_id: `${num}`,
+          huddlers: "You",
         },
       ]);
 
@@ -99,6 +101,7 @@ const AskPage = ({ route }) => {
           device_id: deviceIdentifier,
           course: selectedClass,
           question_id: `${num}`,
+          huddlers: "You",
         },
       ]);
 
@@ -113,6 +116,7 @@ const AskPage = ({ route }) => {
         device_id: deviceIdentifier,
         course: selectedClass,
         question_id: `${num}`,
+        huddlers: "You",
       };
       setClassObject(info);
 
