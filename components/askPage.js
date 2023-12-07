@@ -16,7 +16,6 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
 import { supabase } from "../supabase";
 import { useDeviceIdentifier } from "./deviceID";
-import SimilarQuestions from "./similarQuestions";
 
 const AskPage = ({ route }) => {
   const deviceIdentifier = useDeviceIdentifier();
