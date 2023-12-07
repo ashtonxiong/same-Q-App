@@ -425,17 +425,6 @@ const AskPage = ({ route }) => {
             </TouchableOpacity>
           </View>
 
-          {/* <Modal transparent={true} visible={isModalVisible}>
-          <TouchableWithoutFeedback onPress={closeModal}>
-            <View style={styles.menuModalOverlay}>
-              <TouchableWithoutFeedback onPress={() => addQuestion()}>
-                <View style={styles.menuModalContent}>
-                  <Text style={styles.menuModalTEXT}>TEST</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal> */}
 
           <Modal transparent={true} visible={isSubmissionVisible}>
             <TouchableWithoutFeedback onPress={closeSubmission}>
