@@ -195,7 +195,7 @@ const Similar = ({ route }) => {
       <View style={styles.appBar}>
         <TouchableOpacity onPress={handleBackAsk}>
           <View style={styles.backArrow}>
-            <Icon name="arrow-left" size={20} color="#000" />
+            <Icon name="arrow-left" size={20} color="white" />
             <Text style={styles.backTEXT}>Ask</Text>
           </View>
         </TouchableOpacity>
