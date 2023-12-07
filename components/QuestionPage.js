@@ -896,7 +896,6 @@ const QuestionPage = ({ route }) => {
                         onToggleHuddle={handleToggleHuddle}
                         onLeaveHuddle={handleLeaveHuddle}
                       />
-                      {/* </Text> */}
                     </View>
                   )}
                 </TouchableWithoutFeedback>

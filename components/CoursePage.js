@@ -88,6 +88,7 @@ const CoursePage = ({ route }) => {
           author: item.author,
           num_collaborators: item.num_collaborators,
           num_huddle: item.num_huddle,
+          huddlers: item.huddlers,
           chats: item.chats,
           expected_help: item.expected_help,
           question_id: item.question_id,
