@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  ImageBackground
 } from "react-native";
 // import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import {
@@ -185,7 +186,7 @@ const CollabPage = () => {
 
   return (
     <View style={styles.collabContainer}>
-
+      <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover">
        <View style={styles.appBar}></View>
             <View style={styles.courseHeaderContainer}>
                 <Text style={styles.pageHeader}>Colloborating</Text>
@@ -198,7 +199,7 @@ const CollabPage = () => {
         // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
       >{renderCollab()} 
       </ScrollView>
-
+      </ImageBackground>
     </View>
   );
 };

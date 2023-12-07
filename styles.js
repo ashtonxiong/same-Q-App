@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
    height: "10%",
  },
  appBar: {
-   backgroundColor: "white",
+  //  backgroundColor: "white",
    height: 115 * scaleFactor,
    flexDirection: "row",
    alignItems: "center",
@@ -68,15 +68,30 @@ const styles = StyleSheet.create({
    marginTop: -50 * scaleFactor, // Moves the title up into header
  },
  pageHeader: {
+  color: 'white',
    textAlign: "center",
    fontSize: 40,
    fontWeight: "bold",
    // marginTop: -50 * scaleFactor, // Moves the title/course/class up into header
  },
+ pageHeader2: {
+  color: 'black',
+   textAlign: "center",
+   fontSize: 40,
+   fontWeight: "bold",
+ },
  sectionHeader: {
-   color: "black",
+  //  color: "black",
+  color: 'white',
    fontSize: 30,
-   fontWeight: "normal",
+   fontWeight: "600",
+   marginLeft: "5%",
+ },
+ sectionHeader2: {
+   color: "black",  
+  // color: 'white',
+   fontSize: 30,
+   fontWeight: "600",
    marginLeft: "5%",
  },
  backTEXT: {
@@ -108,8 +123,10 @@ const styles = StyleSheet.create({
    width: screenWidth * 0.95,
    borderRadius: 20,
    backgroundColor: "white",
-   borderColor: "#5E42A6",
-   borderWidth: 1.5,
+  //  borderColor: "#5E42A6",
+  borderColor: 'white',
+  borderWidth: 2,
+  //  borderWidth: 1.5,
    justifyContent: "space-between", // align items along the row
    shadowColor: "#000",
    shadowOffset: { width: 0, height: 2 },
@@ -119,38 +136,43 @@ const styles = StyleSheet.create({
  courseBoxTEXT: {
    fontSize: 24,
    fontWeight: "bold",
-   color: "black",
+  //  color: "black",
+  color: '#312450',
    textAlign: "left",
  },
  joinButton: {
    width: 70,
    borderRadius: 20,
-   backgroundColor: "#5E42A6",
+  //  backgroundColor: "#5E42A6",
+  borderColor: '#312450',
+  borderWidth: 2,
    justifyContent: "center",
    alignItems: "center",
-   shadowColor: "#000",
-   shadowOffset: { width: 0, height: 2 },
-   shadowOpacity: 0.5,
-   shadowRadius: 4,
+  //  shadowColor: "#000",
+  //  shadowOffset: { width: 0, height: 2 },
+  //  shadowOpacity: 0.5,
+  //  shadowRadius: 4,
  },
  joinButtonTEXT: {
-   color: "white",
+   color: "#312450",
    fontSize: 20 * scaleFactor,
    fontWeight: "bold",
  },
  askButton: {
    width: 70,
    borderRadius: 20,
-   backgroundColor: "#5E42A6",
+  //  backgroundColor: "#5E42A6",
+  borderColor: '#312450',
+  borderWidth: 2,
    justifyContent: "center",
    alignItems: "center",
-   shadowColor: "#000",
-   shadowOffset: { width: 0, height: 2 },
-   shadowOpacity: 0.5,
-   shadowRadius: 10,
+  //  shadowColor: "#000",
+  //  shadowOffset: { width: 0, height: 2 },
+  //  shadowOpacity: 0.5,
+  //  shadowRadius: 10,
  },
  askButtonTEXT: {
-   color: "white",
+   color: "#312450",
    fontSize: 20 * scaleFactor,
    fontWeight: "bold",
  },
@@ -164,7 +186,8 @@ const styles = StyleSheet.create({
   flex: 1,
    width: screenWidth * 0.7,
    height: screenHeight,
-   backgroundColor: "#DDCFFF",
+  //  backgroundColor: "#DDCFFF",
+  backgroundColor: "#312450",
    borderRadius: 20, // round corners
    padding: '10%',
    alignItems: 'center',
@@ -185,19 +208,21 @@ const styles = StyleSheet.create({
   fontSize: scaleFactor * 27,
   textAlign: 'center',
   fontWeight: 'bold',
+  color: 'white'
  },
  menuModalBody: {
    marginTop: "20%",
    textAlign: "center",
    fontSize: scaleFactor * 20,
-   marginTop: 5
+   marginTop: 5,
+   color: 'white'
  },
  menuModalImage: {
   width: 75, 
   height: 75, 
   borderRadius: 40,
   marginTop: "50%",
-  borderColor: '#5E42A6',
+  borderColor: 'white',
   borderWidth: 3,
  },
  logoutButtonContainer: {
@@ -207,7 +232,9 @@ const styles = StyleSheet.create({
  },
  logoutButton: {
   borderRadius: 25,
-  backgroundColor: "#5E42A6",
+  // backgroundColor: "#5E42A6",
+  borderColor: 'white',
+  borderWidth: 2,
   padding: 10,
   width: "150%", 
   textAlign: 'center',
@@ -215,7 +242,7 @@ const styles = StyleSheet.create({
   alignContent: 'center',
   shadowColor: "#000",
   shadowOffset: { width: 0, height: 10 },
-  shadowOpacity: 0.2,
+  shadowOpacity: 0.4,
   shadowRadius: 4,
  },
  logoutButtonText: {
@@ -414,6 +441,8 @@ fakePage: {
    textAlign: "center",
    fontWeight: "200",
    marginTop: '20%',
+   color: 'white',
+   fontSize: scaleFactor * 15,
  },
  // ------ Text Message Styling  --------
 
@@ -596,6 +625,8 @@ collabModalBodyText: {
    flex: 1,
    flexWrap: "wrap", // Allow text to wrap
    overflow: "hidden", // Hide overflow content
+   color: 'white',
+   fontSize: scaleFactor * 15,
  },
  NotiIcon: {
    marginLeft: "5%",
@@ -669,6 +700,10 @@ collabModalBodyText: {
   // ------ Collab Info --------
 
  // ------ Ask Page  --------
+ askContainer: {
+  flex: 1,
+  backgroundColor: '#5E42A6',
+ },
  tagsContainer: {
    justifyContent: "space-around",
    height: 0.2 * screenHeight,
@@ -683,8 +718,8 @@ collabModalBodyText: {
  },
  tagButton: {
    borderRadius: 30,
-   backgroundColor: "white",
-   borderColor: "#5E42A6",
+  //  backgroundColor: "white",
+   borderColor: "white",
    padding: 3,
    paddingHorizontal: 10,
    borderWidth: 2,
@@ -696,12 +731,12 @@ collabModalBodyText: {
    height: 0.35 * screenHeight,
  },
  questionInput: {
-   backgroundColor: "white",
+  //  backgroundColor: "white",
    height: "60%",
    margin: "10%",
    marginBottom: 0,
-   borderColor: "purple",
-   borderWidth: 0.5,
+   borderColor: "white",
+   borderWidth: 2,
    borderRadius: 20,
    shadowColor: "#000",
    shadowOffset: { width: 0, height: 10 },
@@ -709,7 +744,9 @@ collabModalBodyText: {
    shadowRadius: 4,
  },
  submitQuestionButton: {
-   backgroundColor: "#5E42A6",
+  //  backgroundColor: "#5E42A6",
+  borderColor: 'white',
+  borderWidth: 2,
    paddingHorizontal: "10%",
    paddingVertical: "1%",
    borderRadius: 40,
@@ -724,7 +761,7 @@ collabModalBodyText: {
    fontWeight: "bold",
  },
  selectedTag: {
-   backgroundColor: "#5E42A6", // Apply your desired background color for selected tags
+   backgroundColor: "white", // Apply your desired background color for selected tags
    borderColor: "white",
  },
  // ------ Ask Page  --------

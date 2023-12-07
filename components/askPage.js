@@ -7,6 +7,7 @@ import {
   Modal,
   TouchableWithoutFeedback,
   Dimensions,
+  ImageBackground
 } from "react-native";
 // import DropDownPicker from "react-native-dropdown-picker";
 import { useNavigation } from "@react-navigation/native";
@@ -195,7 +196,7 @@ const AskPage = ({ route }) => {
           <Text
             style={[
               {
-                color: selectedClass.includes(classItem) ? "white" : "black",
+                color: selectedClass.includes(classItem) ? "black" : "white",
                 fontSize: 14,
                 fontWeight: 600,
               }, // Set text color conditionally
@@ -220,9 +221,10 @@ const AskPage = ({ route }) => {
           <Text
             style={[
               {
-                color: selectedTags.includes(tag) ? "white" : "black",
+                color: selectedTags.includes(tag) ? "black" : "white",
                 fontSize: 14,
                 fontWeight: 600,
+                // color: 'white'
               }, // Set text color conditionally
             ]}
           >
@@ -241,7 +243,7 @@ const AskPage = ({ route }) => {
     text.length >= characterLimit ? (
       "Error: Character Limit has been reached"
     ) : (
-      <Text>
+      <Text style={{ color: 'white' }}>
         Character Limit: {text.length} / {characterLimit}{" "}
       </Text>
     );
@@ -269,9 +271,10 @@ const AskPage = ({ route }) => {
   };
 
   return (
-    <View style={{ backgroundColor: "#DDCFFF", flex: 1 }}>
+    <View style={styles.askContainer}>
       {/* <TouchableHighlight onPress={Keyboard.dismiss} style={{}}> */}
-      <View style={styles.container}>
+      <View style={styles.askContainer}>
+      {/* <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover"> */}
         <View style={styles.appBar}>
           {/* <TouchableOpacity onPress={clickMenuModal}>
             <View style={styles.backArrow}>
@@ -306,17 +309,17 @@ const AskPage = ({ route }) => {
               paddingBottom: 10 * scaleFactor,
             }}
           >
-            <Text style={{ fontSize: 20 * scaleFactor }}>Select Class</Text>
+            <Text style={{ fontSize: 20 * scaleFactor, color: 'white' }}>Select Class:</Text>
             <View style={{ flexDirection: "row" }}>{renderClasses()}</View>
           </View>
           <View style={[styles.tags]}>
-            <Text style={{ paddingRight: "5%", fontSize: 20 }}> Tags:</Text>
+            <Text style={{ paddingRight: "5%", fontSize: 20, color: 'white' }}> Tags:</Text>
             {renderTags()}
           </View>
         </View>
 
         <View style={[styles.questionBoxContainer]}>
-          <View style={[styles.questionInput, { borderColor: borderColor }]}>
+          <View style={[styles.questionInput, { borderColor: "white" }]}>
             <TextInput
               multiline
               style={{
@@ -328,9 +331,10 @@ const AskPage = ({ route }) => {
                 flexWrap: "wrap",
                 maxWidth: "100%",
                 marginBottom: 0,
+                color: 'white',
               }}
               placeholder="Press to start typing…"
-              placeholderTextColor={"black"}
+              placeholderTextColor={"white"}
               value={text}
               onChangeText={handleTextChange} // Use onChangeText instead of onChange
             />
@@ -360,14 +364,15 @@ const AskPage = ({ route }) => {
                   fontSize: 13,
                   fontWeight: "bold",
                   marginRight: "5%",
+                  color: 'white'
                 }}
               >
                 Make Question Private:
               </Text>
               {isChecked ? (
-                <Icon name="check" size={18} color="green" />
+                <Icon name="check" size={18} color="white" />
               ) : (
-                <Icon name="square-o" size={20} color="#5E42A6" />
+                <Icon name="square-o" size={20} color="white" />
               )}
             </TouchableOpacity>
             {/* ------ Private Question ----- */}
@@ -481,6 +486,7 @@ const AskPage = ({ route }) => {
             </View>
           </TouchableWithoutFeedback>
         </Modal>
+        {/* </ImageBackground> */}
       </View>
       {/* </TouchableHighlight> */}
     </View>

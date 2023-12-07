@@ -220,7 +220,7 @@ const CoursePage = ({ route }) => {
      <View>
        <View style={styles.classInfo}>
          <View style={styles.courseHeaderContainer}>
-           <Text style={styles.pageHeader}>{course.course}</Text>
+           <Text style={styles.pageHeader2}>{course.course}</Text>
          </View>
 
 
@@ -248,7 +248,7 @@ const CoursePage = ({ route }) => {
            }}
          >
            <Text
-             style={styles.sectionHeader}>Queue</Text>
+             style={styles.sectionHeader2}>Queue</Text>
          </View>
          <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
            <TouchableOpacity style={{ justifyContent: "flex-end" }}>
