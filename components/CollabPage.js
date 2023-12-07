@@ -116,13 +116,8 @@ const CollabPage = () => {
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
 
   const renderCollab = () => {
-    // console.log('Collab questions:', collabQuestions);
-    // console.log("TEST RENDER COLLAB", collabQuestions);
     if (collabQuestions.length === 0) {
-      return (
-        <Text style={styles.emptyChat}>Collaborate on a question!</Text>
-        // <Text>Device id: {deviceIdentifier}</Text>
-      );
+      return <Text style={styles.emptyChat}>Collaborate on a question!</Text>;
     }
 
     const sortedQuestions = [...collabQuestions].sort((a, b) => {
@@ -158,17 +153,16 @@ const CollabPage = () => {
         }
       >
         {/* top row */}
-        {/* <Text>{question.course}</Text> */}
         <View style={styles.collabTopRow}>
           <View style={styles.collabIcons}>
-            <Icon name="clock" size={15 * scaleFactor}/>
-              <Text style={styles.queueTopRowText}>{question.help}  </Text>
+            <Icon name="clock" size={15 * scaleFactor} />
+            <Text style={styles.queueTopRowText}>{question.help} </Text>
 
-              <Icon name="people" size={15 * scaleFactor}/>
-              <Text style={styles.queueTopRowText}>{question.num_collab}</Text>
+            <Icon name="people" size={15 * scaleFactor} />
+            <Text style={styles.queueTopRowText}>{question.num_collab}</Text>
           </View>
 
-            <Text style={styles.queueTopRowTextEnd}>{question.course}</Text>
+          <Text style={styles.queueTopRowTextEnd}>{question.course}</Text>
         </View>
 
         {/* middle row */}
@@ -193,17 +187,10 @@ const CollabPage = () => {
 
   return (
     <View style={styles.collabContainer}>
-      {/* <ScrollView 
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ alignItems: 'center', paddingBottom: '20%'}} 
-        // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
-        >         */}
-      <View style={styles.collabHeader}>
-        <Text style={styles.courseBoxTEXT}> Collaborating </Text>
-        <Text> Collaborating on {collabQuestions.length} questions</Text>
+      <View style={styles.appBar}></View>
+      <View style={styles.courseHeaderContainer}>
+        <Text style={styles.pageHeader}>Colloborating</Text>
       </View>
-
-      {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
 
       <ScrollView
         showsVerticalScrollIndicator={false}

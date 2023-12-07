@@ -195,8 +195,6 @@ const styles = StyleSheet.create({
     marginTop: "20%",
     textAlign: "center",
     fontSize: scaleFactor * 20,
-    //  borderColor: 'orange',
-    //  borderWidth: 2,
     marginTop: 5,
   },
   menuModalImage: {
@@ -413,6 +411,7 @@ const styles = StyleSheet.create({
   emptyChat: {
     textAlign: "center",
     fontWeight: "200",
+    marginTop: "20%",
   },
   // ------ Text Message Styling  --------
 
@@ -578,16 +577,13 @@ const styles = StyleSheet.create({
   // ------ Notification Info --------
   NotiContainer: {
     flex: 1,
-    alignItems: "center",
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: "20%",
+    backgroundColor: "#f2ecff",
   },
   NotificationInfo: {
     flexDirection: "row",
     width: 0.9 * ScreenWidth,
     height: "10%",
-    marginTop: "3%",
+    marginTop: "5%",
     marginBottom: "3%",
   },
   NotiText: {
@@ -604,21 +600,9 @@ const styles = StyleSheet.create({
   // ------ Notification Info --------
 
   // ------ Collab Info --------
-  collabScroll: {
-    marginLeft: 5,
-    marginRight: 5,
-    marginTop: "10%",
-  },
   collabContainer: {
-    marginTop: "20%",
-    height: "100%",
-    // borderColor: 'pink',
-    // borderWidth: 5,
-  },
-  collabHeader: {
-    marginBottom: 25,
-    // borderColor: "black",
-    // borderWidth: 3,
+    flex: 1,
+    backgroundColor: "#f2ecff",
   },
   collabBox: {
     padding: 10,
@@ -634,11 +618,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   collabTopRow: {
-    flexDirection: "row",
-    justifyContent: "center", // align items along the row
-  },
-  collabIcons: {
     flex: 1,
+    flexDirection: "row", // align items along the row
+    justifyContent: "space-around", // space between icon and help time
+    padding: "2%",
+  },
+  Earphone: {
     flexDirection: "row",
   },
   collabIcons: {

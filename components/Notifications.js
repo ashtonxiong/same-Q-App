@@ -3,12 +3,11 @@
 Notifications 
 import React from "react";
 import {
- StyleSheet,
  Dimensions,
  Text,
  View,
- TouchableOpacity,
-} from "react-native";
+} 
+from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import BottomBar from "./BottomBar";
 import styles from "../styles";
@@ -18,19 +17,17 @@ import Icon from "react-native-vector-icons/SimpleLineIcons";
 const Notifications = () => {
  const navigation = useNavigation();
 
-
- const handleJoinPress = (course) => {
-   navigation.navigate("CoursePage", { course });
- };
  const { width, height } = Dimensions.get("window");
  const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
 
 
  return (
    <View style={styles.NotiContainer}>
-     <View>
-       <Text style={styles.courseBoxTEXT}> Notifications </Text>
-     </View>
+      <View style={styles.appBar}></View>
+            <View style={styles.courseHeaderContainer}>
+                <Text style={styles.pageHeader}>Notifications</Text>
+            </View>
+
      <View style={styles.NotificationInfo}>
        <Icon
          name="people"
@@ -44,7 +41,6 @@ const Notifications = () => {
          files to AFS directory?” with you.{" "}
        </Text>
      </View>
-
 
      <View style={styles.NotificationInfo}>
        <Icon
@@ -60,7 +56,6 @@ const Notifications = () => {
        </Text>
      </View>
 
-
      <View style={styles.NotificationInfo}>
        <Icon
          name="people"
@@ -73,7 +68,6 @@ const Notifications = () => {
          Mia B. joined the huddle for “How do I upload files to AFS directory?”{" "}
        </Text>
      </View>
-
 
      <View style={styles.NotificationInfo}>
        <Icon

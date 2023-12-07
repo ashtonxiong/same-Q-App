@@ -295,18 +295,18 @@ const AskPage = ({ route }) => {
 
   return (
     <View style={{ backgroundColor: "#DDCFFF", flex: 1 }}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{}}>
-        <View style={styles.container}>
-          <View style={styles.appBar}>
-            <TouchableOpacity onPress={clickMenuModal}>
-              <View style={styles.backArrow}>
-                <SimpleLineIcon name="menu" size={20} color="#000" />
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.courseHeaderContainer}>
-            <Text style={[styles.pageHeader]}>Create Question</Text>
-          </View>
+      {/* <TouchableHighlight onPress={Keyboard.dismiss} style={{}}> */}
+      <View style={styles.container}>
+        <View style={styles.appBar}>
+          {/* <TouchableOpacity onPress={clickMenuModal}>
+            <View style={styles.backArrow}>
+              <SimpleLineIcon name="menu" size={20} color="#000" />
+            </View>
+          </TouchableOpacity> */}
+        </View>
+        <View style={styles.courseHeaderContainer}>
+          <Text style={[styles.pageHeader]}>Create Question</Text>
+        </View>
 
           <View style={styles.tagsContainer}>
             <View
@@ -425,17 +425,17 @@ const AskPage = ({ route }) => {
             </TouchableOpacity>
           </View>
 
-          <Modal transparent={true} visible={isModalVisible}>
-            <TouchableWithoutFeedback onPress={closeModal}>
-              <View style={styles.menuModalOverlay}>
-                <TouchableWithoutFeedback onPress={() => addQuestion()}>
-                  <View style={styles.menuModalContent}>
-                    <Text style={styles.menuModalTEXT}>TEST</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              </View>
-            </TouchableWithoutFeedback>
-          </Modal>
+        {/* <Modal transparent={true} visible={isModalVisible}>
+          <TouchableWithoutFeedback onPress={closeModal}>
+            <View style={styles.menuModalOverlay}>
+              <TouchableWithoutFeedback onPress={() => addQuestion()}>
+                <View style={styles.menuModalContent}>
+                  <Text style={styles.menuModalTEXT}>TEST</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal> */}
 
           <Modal transparent={true} visible={isSubmissionVisible}>
             <TouchableWithoutFeedback onPress={closeSubmission}>
