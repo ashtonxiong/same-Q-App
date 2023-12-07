@@ -199,7 +199,7 @@ const CollabPage = () => {
     <View style={styles.collabContainer}>
       <View style={styles.appBar}></View>
       <View style={styles.courseHeaderContainer}>
-        <Text style={styles.pageHeader}>Colloborating</Text>
+        <Text style={styles.pageHeader}>Collaborating</Text>
       </View>
 
       <ScrollView

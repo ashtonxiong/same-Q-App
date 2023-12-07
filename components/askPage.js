@@ -16,6 +16,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import SimpleLineIcon from "react-native-vector-icons/SimpleLineIcons";
 import { supabase } from "../supabase";
 import { useDeviceIdentifier } from "./deviceID";
+import SimilarQuestions from "./similarQuestions";
 
 const AskPage = ({ route }) => {
   const deviceIdentifier = useDeviceIdentifier();
@@ -205,6 +206,23 @@ const AskPage = ({ route }) => {
       prevPage,
     });
   };
+
+  const handleSimilarQuestions = (
+    course,
+    question,
+    deviceIdentifier,
+    prevPage
+  ) => {
+    closeSubmission();
+    console.log(`Navigating to Similar with question:`, question);
+    navigation.navigate("Similar", {
+      question,
+      question,
+      deviceIdentifier,
+      prevPage,
+    });
+  };
+
   const renderClasses = () => {
     return classes.map((classItem) => (
       <TouchableOpacity
@@ -421,21 +439,9 @@ const AskPage = ({ route }) => {
               //----- NEED TO ADD NAVIGATING TO A CLASSES OFFICE HOURS
               //----- CREATE CLASSES DROPDOWN FOR WHICH QUESTION TO ASK
             >
-              <Text style={styles.submitQuestionButtonText}>Submit</Text>
+              <Text style={styles.submitQuestionButtonText}>Next</Text>
             </TouchableOpacity>
           </View>
-
-          {/* <Modal transparent={true} visible={isModalVisible}>
-          <TouchableWithoutFeedback onPress={closeModal}>
-            <View style={styles.menuModalOverlay}>
-              <TouchableWithoutFeedback onPress={() => addQuestion()}>
-                <View style={styles.menuModalContent}>
-                  <Text style={styles.menuModalTEXT}>TEST</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal> */}
 
           <Modal transparent={true} visible={isSubmissionVisible}>
             <TouchableWithoutFeedback onPress={closeSubmission}>
@@ -444,64 +450,126 @@ const AskPage = ({ route }) => {
                   alignItems: "center",
                   flex: 1,
                   justifyContent: "center",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)", // semi-transparent black background
+                  backgroundColor: "rgba(0, 0, 0, 0.3)", // semi-transparent black background
                 }}
               >
                 {/* <TouchableWithoutFeedback onPress={() => addQuestion()}> */}
                 <View
                   style={[
                     styles.submissionModalContent,
-                    { flexDirection: "column" },
+                    {
+                      flexDirection: "column",
+                      // borderColor: "blue",
+                      // borderWidth: 3,
+                      height: "30%",
+                      justifyContent: "center",
+                      width: "75%",
+                    },
                   ]}
                 >
-                  <View
+                  {/* <View
                     style={{
                       alignItems: "center",
                       justifyContent: "center",
                       height: "50%",
+                      borderColor: "orange",
+                      borderWidth: 3,
                     }}
                   >
                     <Text style={{ fontSize: 20 * scaleFactor }}>
                       Question added to Queue
                     </Text>
-                  </View>
-                  <TouchableOpacity
+                  </View> */}
+                  <View
                     style={{
+                      // borderWidth: 1,
+                      // borderColor: "red",
                       flex: 1,
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-end",
-                      height: "100%",
-                      paddingBottom: "10%",
+                      // flexDirection: "row",
                     }}
-                    onPress={() =>
-                      handleViewQuestion(
-                        classObject,
-                        classObject,
-                        deviceIdentifier,
-                        "CollabPage"
-                      )
-                    }
                   >
-                    <View
+                    <TouchableOpacity
                       style={{
-                        borderWidth: 1,
-                        paddingHorizontal: "5%",
-                        paddingVertical: "1%",
-                        borderRadius: 10,
-                        backgroundColor: "#5E42A6",
+                        flex: 1,
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        // paddingBottom: "5%",
+                        shadowColor: "#000",
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.5,
+                        shadowRadius: 4,
                       }}
+                      onPress={() =>
+                        handleViewQuestion(
+                          classObject,
+                          classObject,
+                          deviceIdentifier,
+                          "CollabPage"
+                        )
+                      }
                     >
-                      <Text
+                      <View
                         style={{
-                          color: "white",
-                          fontSize: 15 * scaleFactor,
+                          borderWidth: 1,
+                          paddingHorizontal: "5%",
+                          paddingVertical: "1%",
+                          borderRadius: 15,
+                          backgroundColor: "#5E42A6",
                         }}
                       >
-                        View Question
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 20 * scaleFactor,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Submit Question
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        paddingBottom: "20%",
+                        shadowColor: "#000",
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.5,
+                        shadowRadius: 4,
+                      }}
+                      onPress={() =>
+                        handleSimilarQuestions(
+                          classObject,
+                          classObject,
+                          deviceIdentifier,
+                          "SimilarQuestions"
+                        )
+                      }
+                    >
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          paddingHorizontal: "5%",
+                          paddingVertical: "1%",
+                          borderRadius: 15,
+                          backgroundColor: "#5E42A6",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 20 * scaleFactor,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          View Similar Questions
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 {/* </TouchableWithoutFeedback> */}
               </View>
