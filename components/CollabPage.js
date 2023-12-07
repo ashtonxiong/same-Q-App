@@ -199,7 +199,7 @@ const CollabPage = () => {
   return (
     <View style={styles.collabContainer}>
       <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover">
-       <View style={styles.appBar}></View>
+       <View style={styles.appBarHome}></View>
             <View style={styles.courseHeaderContainer}>
                 <Text style={styles.pageHeader}>Colloborating</Text>
             </View>

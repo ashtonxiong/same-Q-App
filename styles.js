@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
  // ----------ALL----------
  container: {
    flex: 1,
-   backgroundColor: "#f2ecff",
+   backgroundColor: "white",
  },
  tabBarContainer: {
    backgroundColor: "white",
@@ -27,12 +27,19 @@ const styles = StyleSheet.create({
    height: "10%",
  },
  appBar: {
-  //  backgroundColor: "white",
+   backgroundColor: "#5E42A6",
    height: 115 * scaleFactor,
    flexDirection: "row",
    alignItems: "center",
    paddingHorizontal: "5%",
  },
+ appBarHome: {
+  // backgroundColor: "#5E42A6",
+  height: 115 * scaleFactor,
+  flexDirection: "row",
+  alignItems: "center",
+  paddingHorizontal: "5%",
+},
  backArrow: {
    flexDirection: "row",
    justifyContent: "left",
@@ -73,7 +80,7 @@ const styles = StyleSheet.create({
    // marginTop: -50 * scaleFactor, // Moves the title/course/class up into header
  },
  pageHeader2: {
-  color: 'black',
+  color: 'white',
    textAlign: "center",
    fontSize: 40,
    fontWeight: "bold",
@@ -95,6 +102,7 @@ const styles = StyleSheet.create({
  backTEXT: {
    fontSize: 18,
    marginLeft: 5,
+   color: 'white',
  },
 
 
@@ -141,9 +149,9 @@ const styles = StyleSheet.create({
  joinButton: {
    width: 70,
    borderRadius: 20,
-  //  backgroundColor: "#5E42A6",
-  borderColor: '#312450',
-  borderWidth: 2,
+   backgroundColor: "#5E42A6",
+  // borderColor: '#312450',
+  // borderWidth: 2,
    justifyContent: "center",
    alignItems: "center",
   //  shadowColor: "#000",
@@ -152,16 +160,16 @@ const styles = StyleSheet.create({
   //  shadowRadius: 4,
  },
  joinButtonTEXT: {
-   color: "#312450",
+   color: "white",
    fontSize: 20 * scaleFactor,
    fontWeight: "bold",
  },
  askButton: {
    width: 70,
    borderRadius: 20,
-  //  backgroundColor: "#5E42A6",
-  borderColor: '#312450',
-  borderWidth: 2,
+   backgroundColor: "#5E42A6",
+  // borderColor: '#312450',
+  // borderWidth: 2,
    justifyContent: "center",
    alignItems: "center",
   //  shadowColor: "#000",
@@ -170,7 +178,7 @@ const styles = StyleSheet.create({
   //  shadowRadius: 10,
  },
  askButtonTEXT: {
-   color: "#312450",
+   color: "white",
    fontSize: 20 * scaleFactor,
    fontWeight: "bold",
  },
@@ -230,8 +238,8 @@ const styles = StyleSheet.create({
  },
  logoutButton: {
   borderRadius: 25,
-  // backgroundColor: "#5E42A6",
-  borderColor: 'white',
+  backgroundColor: "#5E42A6",
+  // borderColor: 'white',
   borderWidth: 2,
   padding: 10,
   width: "150%", 
@@ -240,7 +248,7 @@ const styles = StyleSheet.create({
   alignContent: 'center',
   shadowColor: "#000",
   shadowOffset: { width: 0, height: 10 },
-  shadowOpacity: 0.4,
+  shadowOpacity: 0.2,
   shadowRadius: 4,
  },
  logoutButtonText: {
@@ -300,10 +308,11 @@ fakePage: {
     flex: 1,
   },
   questionPageBox: {
-    borderBottomColor: "#5E42A6",
+    // borderBottomColor: "#5E42A6",
+    backgroundColor: "#5E42A6",
     borderBottomWidth: 2,
-    backgroundColor: "white",
-    height: screenHeight * 0.23,
+    // backgroundColor: "white",
+    height: screenHeight * 0.2,
   },
   questionPageBoxHeader: {
     flexDirection: "row",
@@ -402,7 +411,7 @@ fakePage: {
  grayMessage: {
    borderRadius: 10,
    padding: 10,
-   backgroundColor: "white",
+   backgroundColor: "#DDD",
    maxWidth: "50%",
  },
  grayMessageInitials: {
@@ -422,7 +431,7 @@ fakePage: {
  purpleMessage: {
    borderRadius: 10,
    padding: 10,
-   backgroundColor: "#B74E91",
+   backgroundColor: "#5E42A6",
    maxWidth: "50%",
    marginRight: 5,
  },
@@ -467,11 +476,13 @@ fakePage: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+    // color: 'white',
   },
   modalHeaderTEXT2: {
     margin: 20,
     fontSize: 20,
     textAlign: "center",
+    // color: 'white',
   },
   modalCollabUncollabTEXT: {
     width: 175,
@@ -565,6 +576,7 @@ fakePage: {
   questionHost: {
     fontSize: 18,
     fontWeight: "200",
+    color: 'white',
   },
   numCollaborators: {
     flexDirection: "row",
@@ -620,6 +632,7 @@ fakePage: {
    flex: 1,
    flexWrap: "wrap", // Allow text to wrap
    overflow: "hidden", // Hide overflow content
+   color: 'white',
  },
  NotiIcon: {
    marginLeft: "5%",

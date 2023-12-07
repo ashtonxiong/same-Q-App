@@ -25,7 +25,7 @@ const Notifications = () => {
  return (
    <View style={styles.NotiContainer}>
     <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover">
-      <View style={styles.appBar}></View>
+      <View style={styles.appBarHome}></View>
             <View style={styles.courseHeaderContainer}>
                 <Text style={styles.pageHeader}>Notifications</Text>
             </View>

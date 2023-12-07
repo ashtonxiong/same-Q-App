@@ -201,7 +201,7 @@ const CoursePage = ({ route }) => {
       <View style={styles.appBar}>
         <TouchableOpacity onPress={handleBackHome}>
           <View style={styles.backArrow}>
-            <Icon name="arrow-left" size={20} color="#000" />
+            <Icon name="arrow-left" size={20} color="white" />
             <Text style={styles.backTEXT}>Home</Text>
           </View>
         </TouchableOpacity>

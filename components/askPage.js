@@ -334,11 +334,11 @@ const AskPage = ({ route }) => {
                 paddingBottom: 10 * scaleFactor,
               }}
             >
-              <Text style={{ fontSize: 20 * scaleFactor }}>Select Class</Text>
+              <Text style={{ fontSize: 20 * scaleFactor, color: 'white' }}>Select Class</Text>
               <View style={{ flexDirection: "row" }}>{renderClasses()}</View>
             </View>
             <View style={[styles.tags]}>
-              <Text style={{ paddingRight: "5%", fontSize: 20 }}> Tags:</Text>
+              <Text style={{ paddingRight: "5%", fontSize: 20, color: 'white' }}> Tags:</Text>
               {renderTags()}
             </View>
           </View>

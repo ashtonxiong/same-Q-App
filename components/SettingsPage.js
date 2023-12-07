@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         padding: '5%',
     },
       appBar: {
-        backgroundColor: "white",
+        // backgroundColor: "white",
         height: 115 * scaleFactor,
         flexDirection: "row",
         alignItems: "center",

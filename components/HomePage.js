@@ -110,7 +110,7 @@ const HomePage = () => {
    <View style={styles.container}>
     <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover">
      {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
-     <View style={styles.appBar}>
+     <View style={styles.appBarHome}>
        <TouchableOpacity onPress={clickMenuModal}>
          <View style={styles.backArrow}>
            <Icon name="menu" size={20} color="white" />
@@ -195,7 +195,7 @@ const HomePage = () => {
               </View>
 
               <View style={styles.logoutButtonContainer}>
-                <TouchableOpacity style={styles.logoutButton}>
+                <TouchableOpacity style={styles.logoutButton} onPress={() => { closeModal(); handleFakePagePress("HomePage"); }}>
                   <Text style={styles.logoutButtonText}>Logout</Text>
                 </TouchableOpacity>
               </View>
