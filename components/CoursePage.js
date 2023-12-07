@@ -201,53 +201,57 @@ const CoursePage = ({ route }) => {
       <View style={styles.appBar}>
         <TouchableOpacity onPress={handleBackHome}>
           <View style={styles.backArrow}>
-            <Icon name="arrow-left" size={20} color="#000" />
+            <Icon name="arrow-left" size={20} color="white" />
             <Text style={styles.backTEXT}>Home</Text>
           </View>
         </TouchableOpacity>
       </View>
 
-      <View>
-        <View style={styles.classInfo}>
-          <View style={styles.courseHeaderContainer}>
-            <Text style={styles.pageHeader}>{course.course}</Text>
-          </View>
 
-          <View style={styles.courseDetails}>
-            <View style={styles.courseDetailTop}>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={{ fontWeight: "bold" }}>Instructor: </Text>
-                <Text> {course.instructor} </Text>
-              </View>
-              <Text style={{ marginLeft: "auto" }}> 5 Questions in Queue</Text>
-            </View>
-            <View style={styles.courseDetailBottom}>
-              <View style={{ flexDirection: "row" }}>
-                <Text style={{ fontWeight: "bold" }}>Duration: </Text>
-                <Text> {course.duration} </Text>
-              </View>
-              <Text style={{ marginLeft: "auto" }}> 20 Active </Text>
-            </View>
-          </View>
-          <View
-            style={{
-              alignItems: "center",
-              flexDirection: "row",
-              //  justifyContent: "flex-end",
-            }}
-          >
-            <Text style={styles.sectionHeader}>Queue</Text>
-          </View>
-          <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
-            <TouchableOpacity style={{ justifyContent: "flex-end" }}>
-              <FontIcon
-                name="filter"
-                size={40}
-                style={{ marginTop: -110 * scaleFactor }}
-              ></FontIcon>
-            </TouchableOpacity>
-          </View>
-        </View>
+     <View>
+       <View style={styles.classInfo}>
+         <View style={styles.courseHeaderContainer}>
+           <Text style={styles.pageHeader2}>{course.course}</Text>
+         </View>
+
+
+         <View style={styles.courseDetails}>
+           <View style={styles.courseDetailTop}>
+             <View style={{ flexDirection: "row" }}>
+               <Text style={{ fontWeight: "bold" }}>Instructor: </Text>
+               <Text> {course.instructor} </Text>
+             </View>
+             <Text style={{ marginLeft: "auto" }}> 5 Questions in Queue</Text>
+           </View>
+           <View style={styles.courseDetailBottom}>
+             <View style={{ flexDirection: "row" }}>
+               <Text style={{ fontWeight: "bold" }}>Duration: </Text>
+               <Text> {course.duration} </Text>
+             </View>
+             <Text style={{ marginLeft: "auto" }}> 20 Active </Text>
+           </View>
+         </View>
+         <View
+           style={{
+             alignItems: "center",
+             flexDirection: "row",
+            //  justifyContent: "flex-end",
+           }}
+         >
+           <Text
+             style={styles.sectionHeader2}>Queue</Text>
+         </View>
+         <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+           <TouchableOpacity style={{ justifyContent: "flex-end" }}>
+             <FontIcon
+               name="filter"
+               size={40}
+               style={{ marginTop: -110 * scaleFactor }}
+             ></FontIcon>
+           </TouchableOpacity>
+         </View>
+       </View>
+
 
         <ScrollView
           contentContainerStyle={[

@@ -32,14 +32,14 @@ const FillerPage = ({ route }) => {
         {prevPage === "HomePage" ? (
           <TouchableOpacity onPress={handleBackHome}>
             <View style={styles.backArrow}>
-              <Icon name="arrow-left" size={20} color="#000" />
-              <Text style={styles.backTEXT}>Home</Text>
+              <Icon name="arrow-left" size={20} color="white" />
+              <Text style={[styles.backTEXT]}>Home</Text>
             </View>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={handleBackSettings}>
             <View style={styles.backArrow}>
-              <Icon name="arrow-left" size={20} color="#000" />
+              <Icon name="arrow-left" size={20} color="white" />
               <Text style={styles.backTEXT}>Settings</Text>
             </View>
           </TouchableOpacity>
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: "#f2ecff"
+        backgroundColor: "white"
     },
     container2: {
         flex: 1,
@@ -87,9 +87,10 @@ const styles = StyleSheet.create({
       backTEXT: {
         fontSize: 18,
         marginLeft: 5,
+        color: 'white',
       },
       appBar: {
-        backgroundColor: "white",
+        backgroundColor: "#5E42A6",
         height: 115 * scaleFactor,
         flexDirection: "row",
         alignItems: "center",

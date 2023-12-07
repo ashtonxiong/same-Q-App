@@ -716,7 +716,7 @@ const QuestionPage = ({ route }) => {
                   onPress={() => handleBackCourse(course, deviceIdentifier)}
                 >
                   <View style={styles.backArrow}>
-                    <Icon name="arrow-left" size={20} color="#000" />
+                    <Icon name="arrow-left" size={20} color="white" />
                     <Text style={styles.backTEXT}>{course.course}</Text>
                   </View>
                 </TouchableOpacity>
@@ -724,14 +724,14 @@ const QuestionPage = ({ route }) => {
                 // if course.course is undefined, we came from the collab page
                 <TouchableOpacity onPress={handleBackCollab}>
                   <View style={styles.backArrow}>
-                    <Icon name="arrow-left" size={20} color="#000" />
+                    <Icon name="arrow-left" size={20} color="white" />
                     <Text style={styles.backTEXT}>Collaborating</Text>
                   </View>
                 </TouchableOpacity>
               )}
               <TouchableOpacity onPress={clickMoreModal}>
                 <View style={styles.backArrow}>
-                  <Icon name="exclamation" size={20} color="#000" />
+                  <Icon name="exclamation" size={20} color="white" />
                   <Text style={styles.backTEXT}>More Info</Text>
                 </View>
               </TouchableOpacity>
@@ -741,7 +741,7 @@ const QuestionPage = ({ route }) => {
               <View style={styles.numCollaborators}>
                 <TouchableOpacity onPress={clickPeopleModal}>
                   <View style={styles.backArrow}>
-                    <Icon name="people" size={30} color="#000" />
+                    <Icon name="people" size={30} color="white" />
                   </View>
                 </TouchableOpacity>
                 <Text style={{ fontSize: 20 }}> {actualNumCollaborators} </Text>
@@ -753,14 +753,14 @@ const QuestionPage = ({ route }) => {
                 {inHuddle && <BlinkingDot inHuddle={inHuddle} />}
                 <TouchableOpacity onPress={clickHuddleModal}>
                   <View style={styles.backArrow}>
-                    <Icon name="earphones" size={30} color="#000" />
+                    <Icon name="earphones" size={30} color="white" />
                   </View>
                 </TouchableOpacity>
               </View>
             </View>
 
             <View style={{ alignItems: "center" }}>
-              <Text style={{ fontSize: 17 }}>{question.question}</Text>
+              <Text style={{ fontSize: 17, color:'white' }}>{question.question}</Text>
             </View>
           </View>
 

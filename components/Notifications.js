@@ -6,6 +6,7 @@ import {
  Dimensions,
  Text,
  View,
+ ImageBackground
 } 
 from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -23,7 +24,8 @@ const Notifications = () => {
 
  return (
    <View style={styles.NotiContainer}>
-      <View style={styles.appBar}></View>
+    <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover">
+      <View style={styles.appBarHome}></View>
             <View style={styles.courseHeaderContainer}>
                 <Text style={styles.pageHeader}>Notifications</Text>
             </View>
@@ -32,7 +34,7 @@ const Notifications = () => {
        <Icon
          name="people"
          size={55 * scaleFactor}
-         color={"#000"}
+         color={"white"}
          style={styles.NotiIcon}
        />
        <Text style={styles.NotiText}>
@@ -46,7 +48,7 @@ const Notifications = () => {
        <Icon
          name="earphones"
          size={50 * scaleFactor}
-         color={"#000"}
+         color={"white"}
          style={styles.NotiIcon}
        />
        <Text style={styles.NotiText}>
@@ -60,7 +62,7 @@ const Notifications = () => {
        <Icon
          name="people"
          size={55 * scaleFactor}
-         color={"#000"}
+         color={"white"}
          style={styles.NotiIcon}
        />
        <Text style={styles.NotiText}>
@@ -73,7 +75,7 @@ const Notifications = () => {
        <Icon
          name="earphones"
          size={50 * scaleFactor}
-         color={"#000"}
+         color={"white"}
          style={styles.NotiIcon}
        />
        <Text style={styles.NotiText}>
@@ -82,6 +84,7 @@ const Notifications = () => {
          greedy algorithms” with you.{" "}
        </Text>
      </View>
+     </ImageBackground>
    </View>
  );
 };

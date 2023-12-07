@@ -5,7 +5,8 @@ import {
  Image,
  StyleSheet, 
  TouchableOpacity,
- Dimensions
+ Dimensions,
+ ImageBackground
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
@@ -21,6 +22,7 @@ const SettingsPage = () => {
 
     return (
         <View style={styles.container}>
+            <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover">
             <View style={styles.appBar}></View>
             <View style={styles.courseHeaderContainer}>
                 <Text style={styles.pageHeader}>Settings</Text>
@@ -30,7 +32,7 @@ const SettingsPage = () => {
             <View style={styles.option}>
                 <TouchableOpacity onPress={() => handleFakePagePress("SettingsPage")} style={styles.rowContainer}>
                     <View style={styles.backArrow}>
-                        <Icon name="user" size={25} color="#000" />
+                        <Icon name="user" size={25} color="white" />
                     </View>
                     <Text style={styles.optionHeader}>Account</Text>
                 </TouchableOpacity>
@@ -38,7 +40,7 @@ const SettingsPage = () => {
             <View style={styles.option}>
                 <TouchableOpacity onPress={() => handleFakePagePress("SettingsPage")} style={styles.rowContainer}>
                     <View style={styles.backArrow}>
-                        <Icon name="bell" size={25} color="#000" />
+                        <Icon name="bell" size={25} color="white" />
                     </View>
                     <Text style={styles.optionHeader}>Notification Preferences</Text>
                 </TouchableOpacity>
@@ -46,7 +48,7 @@ const SettingsPage = () => {
             <View style={styles.option}>
                 <TouchableOpacity onPress={() => handleFakePagePress("SettingsPage")} style={styles.rowContainer}>
                     <View style={styles.backArrow}>
-                        <Icon name="equalizer" size={25} color="#000" />
+                        <Icon name="equalizer" size={25} color="white" />
                     </View>
                     <Text style={styles.optionHeader}>Appearance</Text>
                 </TouchableOpacity>
@@ -54,7 +56,7 @@ const SettingsPage = () => {
             <View style={styles.option}>
                 <TouchableOpacity onPress={() => handleFakePagePress("SettingsPage")} style={styles.rowContainer}>
                     <View style={styles.backArrow}>
-                        <Icon name="question" size={25} color="#000" />
+                        <Icon name="question" size={25} color="white" />
                     </View>
                     <Text style={styles.optionHeader}>Help and Support</Text>
                 </TouchableOpacity>
@@ -62,13 +64,13 @@ const SettingsPage = () => {
             <View style={styles.option}>
                 <TouchableOpacity onPress={() => handleFakePagePress("SettingsPage")} style={styles.rowContainer}>
                     <View style={styles.backArrow}>
-                        <Icon name="info" size={25} color="#000" />
+                        <Icon name="info" size={25} color="white" />
                     </View>
                     <Text style={styles.optionHeader}>About</Text>
                 </TouchableOpacity>
             </View>
         </View>
-
+        </ImageBackground>
         </View>
     )
 };
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
         padding: '5%',
     },
       appBar: {
-        backgroundColor: "white",
+        // backgroundColor: "white",
         height: 115 * scaleFactor,
         flexDirection: "row",
         alignItems: "center",
@@ -105,6 +107,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 40,
         fontWeight: "bold",
+        color: 'white'
       },
       backArrow: {
         marginRight: '5%', // space between icon and label
@@ -135,6 +138,7 @@ const styles = StyleSheet.create({
         fontSize: scaleFactor * 25,
         textAlign: 'left',
         justifyContent: 'center',
+        color: 'white'
     }
 });
 
