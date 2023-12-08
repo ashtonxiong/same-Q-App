@@ -323,6 +323,7 @@ fakePage: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+    paddingHorizontal: 5
   },
   scrollContainer: {
     alignItems: "center",
@@ -511,7 +512,6 @@ fakePage: {
     // color: 'white',
   },
   modalCollabUncollabTEXT: {
-    width: 175,
     borderRadius: 20,
     borderWidth: 2,
     marginTop: 10,
