@@ -288,7 +288,8 @@ fakePage: {
   flexDirection: 'row',
   alignItems: 'center',
   marginTop: "25%",
-}, ----------HomePage----------
+}, 
+  // ----------HomePage----------
   courseSection: {
     // marginBottom: 10,
     marginTop: 30,
