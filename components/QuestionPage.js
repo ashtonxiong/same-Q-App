@@ -671,8 +671,6 @@ const QuestionPage = ({ route }) => {
             style={{
               flex: 1,
               justifyContent: "flex-end",
-              borderWidth: 2,
-              borderColor: "red",
             }}
             type={type}
             ref={cameraRef}
