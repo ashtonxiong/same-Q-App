@@ -813,11 +813,6 @@ const QuestionPage = ({ route }) => {
                 </TouchableOpacity>
               </View>
             </View>
-            <View style={{ alignItems: "center" }}>
-              <Text style={{ fontSize: 17, color: "white" }}>
-                {question.question}
-              </Text>
-            </View>
           </View>
           {course.course ? ( // check if course.course is defined
               <TouchableOpacity style={styles.backArrowSeamus}
