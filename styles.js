@@ -607,6 +607,66 @@ const styles = StyleSheet.create({
   cameraIcon: {
     marginLeft: 5, // add space between the text input and camera icon
   },
+  cameraExitButton: {
+    borderWidth: 2,
+    borderColor: "blue",
+    position: "absolute",
+    top: 50 * scaleFactor,
+    left: 30 * scaleFactor,
+  },
+  takePictureButtonContainer: {
+    bottom: 0,
+    alignItems: "center",
+    paddingBottom: 10,
+  },
+  takePictureButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "white",
+    width: 75,
+    height: 75,
+    paddingBot: 10,
+  },
+  flipContainer: {
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    position: "absolute",
+    right: 0,
+  },
+  flipCameraButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: 20,
+  },
+  cameraExitButton: {
+    position: "absolute",
+    top: 60,
+    left: 30,
+  },
+  usePicButton: {
+    flexDirection: "row",
+    width: "50%",
+    color: "white",
+    justifyContent: "flex-end",
+  },
+  retakeButton: {
+    width: "50%",
+    color: "white",
+    paddingLeft: 65,
+    paddingBottom: 40,
+  },
+  bottomRowContainer: {
+    flexDirection: "row",
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+  },
   // ------ Question Page w/ Chat  --------
 
   // ------ Notification Info --------

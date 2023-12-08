@@ -87,6 +87,8 @@ const QuestionPage = ({ route }) => {
           timeSent: item.time,
           question_id: item.question_id,
         }));
+        console.log("NEW", newChats);
+
         setChatsArray(newChats);
       }
     } catch (error) {
@@ -120,6 +122,7 @@ const QuestionPage = ({ route }) => {
           question_id: item.question_id,
         }));
 
+        console.log("DEFAULT", newChats);
         setDefaultChatsArray(newChats);
       }
     } catch (error) {
@@ -340,6 +343,8 @@ const QuestionPage = ({ route }) => {
 
     // combine default and new chats and images if any
     const combinedChats = [...sortedChatsArray, ...chatsArray];
+    console.log("TEST", combinedChats);
+
     var int = 0;
 
     return combinedChats.map((chat) => {
@@ -667,6 +672,7 @@ const QuestionPage = ({ route }) => {
               flex: 1,
               justifyContent: "flex-end",
               borderWidth: 2,
+              borderColor: "red",
             }}
             type={type}
             ref={cameraRef}
@@ -760,7 +766,9 @@ const QuestionPage = ({ route }) => {
             </View>
 
             <View style={{ alignItems: "center" }}>
-              <Text style={{ fontSize: 17, color:'white' }}>{question.question}</Text>
+              <Text style={{ fontSize: 17, color: "white" }}>
+                {question.question}
+              </Text>
             </View>
           </View>
 
