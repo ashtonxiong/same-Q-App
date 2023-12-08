@@ -8,7 +8,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
 // import DropDownPicker from "react-native-dropdown-picker";
 import { useNavigation } from "@react-navigation/native";
@@ -21,7 +21,7 @@ import { useDeviceIdentifier } from "./deviceID";
 const AskPage = ({ route }) => {
   const deviceIdentifier = useDeviceIdentifier();
   const { width, height } = Dimensions.get("window");
-  const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
+  const scaleFactor = Math.min(width, height) / 375; // Adjusted 375 based on our design reference width
   const [isModalVisible, setModalVisible] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [isCS147Checked, setIsCS147Checked] = useState(false);
@@ -126,6 +126,8 @@ const AskPage = ({ route }) => {
       setText("");
       setSelectedClass("");
       setSelectedTags([]);
+
+      setIsClassSelected(true);
     } catch (error) {
       console.error("Error fetching data from Supabase:", error.message);
     }
@@ -161,10 +163,13 @@ const AskPage = ({ route }) => {
     }
   };
 
-  const handleClassPress = (selectedClass) => {
-    setSelectedClass(selectedClass);
-    if (!isClassSelected) {
-      setIsClassSelected(!isClassSelected);
+  const handleClassPress = (selectedClassItem) => {
+    if (selectedClass === selectedClassItem) {
+      // If the clicked class is already selected, unselect it
+      setSelectedClass("");
+    } else {
+      // If a different class is clicked or no class is currently selected, select the clicked class
+      setSelectedClass(selectedClassItem);
     }
   };
 
@@ -266,20 +271,34 @@ const AskPage = ({ route }) => {
 
   const errorMessage =
     text.length >= characterLimit ? (
-      "Error: Character Limit has been reached"
+      <Text style={{ color: "red" }}>
+        Error: Character Limit has been reached
+      </Text>
     ) : (
-      <Text style={{ color: 'white' }}>
-        Character Limit: {text.length} / {characterLimit}{" "}
+      <Text style={{ color: "white" }}>
+        Character Limit: {text.length} / {characterLimit}
       </Text>
     );
 
+  // const noClassSelected = () => {
+  //   return isClassSelected === false ? (
+  //     <Text style={{ color: "red", fontSize: 20 * scaleFactor }}>
+  //       Please select a class.
+  //     </Text>
+  //   ) : (
+  //     <Text></Text>
+  //   );
+  // };
+
   const noClassSelected = () => {
-    return isClassSelected === false ? (
+    return !isClassSelected ? (
       <Text style={{ color: "red", fontSize: 20 * scaleFactor }}>
-        Please select a class.
+        Error: Please Select a Class
       </Text>
     ) : (
-      <Text></Text>
+      <Text style={{ fontSize: 20 * scaleFactor, color: "white" }}>
+        Select Class
+      </Text>
     );
   };
 
@@ -295,13 +314,18 @@ const AskPage = ({ route }) => {
     );
   };
 
+  const handleEnterPress = () => {
+    Keyboard.dismiss();
+  };
+
   return (
-    <View style={styles.askContainer}>
-      {/* <TouchableHighlight onPress={Keyboard.dismiss} style={{}}> */}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.askContainer}>
-      {/* <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover"> */}
-        <View style={styles.appBar}>
-          {/* <TouchableOpacity onPress={clickMenuModal}>
+        {/* <TouchableHighlight onPress={Keyboard.dismiss} style={{}}> */}
+        <View style={styles.askContainer}>
+          {/* <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover"> */}
+          <View style={styles.appBar}>
+            {/* <TouchableOpacity onPress={clickMenuModal}>
             <View style={styles.backArrow}>
               <SimpleLineIcon name="menu" size={20} color="#000" />
             </View>
@@ -312,198 +336,257 @@ const AskPage = ({ route }) => {
           </View>
 
           <View style={styles.tagsContainer}>
-            <View
-              style={{
-                // borderWidth: 2,
-                alignItems: "center",
-                flex: 1,
-                justifyContent: "flex-end",
-              }}
-            >
-              {noClassSelected()}
-            </View>
+            {/* <View
+            style={{
+              // borderWidth: 2,
+              alignItems: "center",
+              flex: 1,
+              justifyContent: "flex-end",
+            }}
+          >
+            {noClassSelected()}
+          </View> */}
+
+            {/* <View
+            style={{
+              // borderWidth: 2,
+              width: "100%",
+              alignItems: "flex-start",
+              // margin: 5 * scaleFactor,
+              paddingTop: 10 * scaleFactor,
+              paddingBottom: 10 * scaleFactor,
+            }}
+          >
+            <Text style={{ fontSize: 20 * scaleFactor, color: "white" }}>
+              Select Class
+            </Text>
+          </View> */}
+
             <View
               style={{
                 // borderWidth: 2,
                 width: "100%",
-                flexDirection: "row",
-                alignItems: "center",
-                margin: 5 * scaleFactor,
-                // marginBottom: 5 * scaleFactor,
-                paddingTop: 20 * scaleFactor,
+                alignItems: "flex-start",
+                // margin: 5 * scaleFactor,
+                paddingTop: 10 * scaleFactor,
                 paddingBottom: 10 * scaleFactor,
               }}
             >
-              <Text style={{ fontSize: 20 * scaleFactor, color: 'white' }}>Select Class</Text>
-              <View style={{ flexDirection: "row" }}>{renderClasses()}</View>
+              {noClassSelected()}
             </View>
-            <View style={[styles.tags]}>
-              <Text style={{ paddingRight: "5%", fontSize: 20, color: 'white' }}> Tags:</Text>
-              {renderTags()}
-            </View>
-          </View>
 
-        <View style={[styles.questionBoxContainer]}>
-          <View style={[styles.questionInput, { borderColor: "white" }]}>
-            <TextInput
-              multiline
-              style={{
-                height: "100%",
-                marginTop: "2%",
-                borderRadius: 40,
-                padding: 20,
-                justifyContent: "flex-start",
-                flexWrap: "wrap",
-                maxWidth: "100%",
-                marginBottom: 0,
-                color: 'white',
-              }}
-              placeholder="Press to start typing…"
-              placeholderTextColor={"white"}
-              value={text}
-              onChangeText={handleTextChange} // Use onChangeText instead of onChange
-            />
-          </View>
-          <View>
             <View
               style={{
-                alignItems: "center",
+                flexDirection: "row",
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
               }}
             >
-              <Text style={{ fontSize: 15 * scaleFactor, marginTop: "5%" }}>
-                {errorMessage}
+              {renderClasses()}
+            </View>
+
+            <View
+              style={{
+                // borderWidth: 2,
+                width: "100%",
+                alignItems: "flex-start",
+                // margin: 5 * scaleFactor,
+                paddingTop: 10 * scaleFactor,
+                paddingBottom: 10 * scaleFactor,
+              }}
+            >
+              <Text style={{ fontSize: 20 * scaleFactor, color: "white" }}>
+                Select Tag
               </Text>
             </View>
-            {/* ------ Private Question ----- */}
-            <TouchableOpacity
+
+            <View
               style={{
                 flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-                padding: 10,
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
               }}
-              onPress={handleCheckboxToggle}
             >
-              <Text
+              {renderTags()}
+            </View>
+
+            {/* <View style={[styles.tags]}>
+            <Text
+              style={{
+                fontSize: 20,
+                color: "white",
+              }}
+            >
+              {" "}
+              Tags:
+            </Text>
+            {renderTags()}
+          </View>
+        </View> */}
+          </View>
+
+          <View style={[styles.questionBoxContainer]}>
+            <View style={[styles.questionInput, { borderColor: "white" }]}>
+              <TextInput
+                multiline={false}
                 style={{
-                  fontSize: 13,
-                  fontWeight: "bold",
-                  marginRight: "5%",
-                  color: 'white'
+                  // Remove height property
+                  borderRadius: 40,
+                  padding: 20,
+                  justifyContent: "flex-start",
+                  flexWrap: "wrap",
+                  maxWidth: "100%",
+                  alignItems: "flex-start",
+                  marginBottom: 0,
+                  color: "white",
+                  textAlignVertical: "top", // Set textAlignVertical to "top"
+                }}
+                placeholder="Press to start typing…"
+                placeholderTextColor={"white"}
+                value={text}
+                onChangeText={handleTextChange}
+                onSubmitEditing={() => Keyboard.dismiss()}
+              />
+            </View>
+            <View>
+              <View
+                style={{
+                  alignItems: "center",
                 }}
               >
-                Make Question Private:
-              </Text>
-              {isChecked ? (
-                <Icon name="check" size={18} color="white" />
-              ) : (
-                <Icon name="square-o" size={20} color="white" />
-              )}
-            </TouchableOpacity>
-            {/* ------ Private Question ----- */}
+                <Text style={{ fontSize: 15 * scaleFactor, marginTop: "5%" }}>
+                  {errorMessage}
+                </Text>
+              </View>
+              {/* ------ Private Question ----- */}
+              <TouchableOpacity
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: 10,
+                }}
+                onPress={handleCheckboxToggle}
+              >
+                <Text
+                  style={{
+                    fontSize: 16,
+                    marginRight: "2%",
+                    color: "white",
+                  }}
+                >
+                  Make Question Private:
+                </Text>
+                {isChecked ? (
+                  <Icon name="check" size={18} color="white" />
+                ) : (
+                  <Icon name="square-o" size={20} color="white" />
+                )}
+              </TouchableOpacity>
+              {/* ------ Private Question ----- */}
+            </View>
           </View>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            paddingBottom: "7%",
-          }}
-        >
           <View
             style={{
               flex: 1,
               alignItems: "center",
-              justifyContent: "flex-end",
-              paddingBottom: "5%",
+              paddingBottom: "7%",
             }}
           >
-            {noQuestion()}
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "flex-end",
+                paddingBottom: "5%",
+              }}
+            >
+              {noQuestion()}
+            </View>
+            <TouchableOpacity
+              style={styles.submitQuestionButton}
+              onPress={addQuestion}
+              //----- NEED TO ADD NAVIGATING TO A CLASSES OFFICE HOURS
+              //----- CREATE CLASSES DROPDOWN FOR WHICH QUESTION TO ASK
+            >
+              <Text style={styles.submitQuestionButtonText}>Submit</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.submitQuestionButton}
-            onPress={addQuestion}
-            //----- NEED TO ADD NAVIGATING TO A CLASSES OFFICE HOURS
-            //----- CREATE CLASSES DROPDOWN FOR WHICH QUESTION TO ASK
-          >
-            <Text style={styles.submitQuestionButtonText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
 
-
-        <Modal transparent={true} visible={isSubmissionVisible}>
-          <TouchableWithoutFeedback onPress={closeSubmission}>
-            <View style={styles.submissionModal}>
-              {/* <TouchableWithoutFeedback onPress={() => addQuestion()}> */}
-              <View
-                style={[
-                  styles.submissionModalContent,
-                  { flexDirection: "column" },
-                ]}
-              >
+          <Modal transparent={true} visible={isSubmissionVisible}>
+            <TouchableWithoutFeedback onPress={closeSubmission}>
+              <View style={styles.submissionModal}>
+                {/* <TouchableWithoutFeedback onPress={() => addQuestion()}> */}
                 <View
-                  style={{
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: "50%",
-                  }}
-                >
-                  <Text style={{ fontSize: 20 * scaleFactor }}>
-                    Question added to Queue
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  style={{
-                    flex: 1,
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "flex-end",
-                    height: "100%",
-                    paddingBottom: "10%",
-                  }}
-                  // onPress={navigation.navigate("QuestionPage", {
-                  //   course: classObject.course,
-                  //   question: classObject.question,
-                  //   deviceIdentifier: deviceIdentifier,
-                  //   prevPage: "AskPage",
-                  // })}
-                  onPress={() =>
-                    handleViewQuestion(
-                      classObject,
-                      classObject,
-                      deviceIdentifier,
-                      "CollabPage"
-                    )
-                  }
+                  style={[
+                    styles.submissionModalContent,
+                    { flexDirection: "column" },
+                  ]}
                 >
                   <View
                     style={{
-                      borderWidth: 1,
-                      paddingHorizontal: "5%",
-                      paddingVertical: "1%",
-                      borderRadius: 10,
-                      backgroundColor: "#5E42A6",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      height: "50%",
                     }}
                   >
-                    <Text
-                      style={{
-                        color: "white",
-                        fontSize: 15 * scaleFactor,
-                      }}
-                    >
-                      View Question
+                    <Text style={{ fontSize: 20 * scaleFactor }}>
+                      Question added to Queue
                     </Text>
                   </View>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      flex: 1,
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                      height: "100%",
+                      paddingBottom: "10%",
+                    }}
+                    // onPress={navigation.navigate("QuestionPage", {
+                    //   course: classObject.course,
+                    //   question: classObject.question,
+                    //   deviceIdentifier: deviceIdentifier,
+                    //   prevPage: "AskPage",
+                    // })}
+                    onPress={() =>
+                      handleViewQuestion(
+                        classObject,
+                        classObject,
+                        deviceIdentifier,
+                        "CollabPage"
+                      )
+                    }
+                  >
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        paddingHorizontal: "5%",
+                        paddingVertical: "1%",
+                        borderRadius: 10,
+                        backgroundColor: "#5E42A6",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: "white",
+                          fontSize: 15 * scaleFactor,
+                        }}
+                      >
+                        View Question
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                {/* </TouchableWithoutFeedback> */}
               </View>
-              {/* </TouchableWithoutFeedback> */}
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
-        {/* </ImageBackground> */}
+            </TouchableWithoutFeedback>
+          </Modal>
+          {/* </ImageBackground> */}
+        </View>
+        {/* </TouchableHighlight> */}
       </View>
-      {/* </TouchableHighlight> */}
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

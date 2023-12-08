@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
 // import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import {
@@ -51,7 +51,7 @@ const CollabPage = () => {
         // .eq("collab_status", "TRUE")
         .eq("device_id", deviceIdentifier);
 
-      // console.log("DATA IN COLLAB PAGE", question);
+      console.log("DATA IN COLLAB PAGE", question);
 
       if (data) {
         // 'data' is an array of objects with 'id' and 'course' columns
@@ -198,19 +198,23 @@ const CollabPage = () => {
 
   return (
     <View style={styles.collabContainer}>
-      <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover">
-       <View style={styles.appBarHome}></View>
-            <View style={styles.courseHeaderContainer}>
-                <Text style={styles.pageHeader}>Colloborating</Text>
-            </View>
-
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ alignItems: "center", paddingBottom: "20%" }}
-        // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
+      <ImageBackground
+        style={styles.container}
+        source={require("../assets/gradient.png")}
+        resizeMode="cover"
       >
-        {renderCollab()}
-      </ScrollView>
+        <View style={styles.appBarHome}></View>
+        <View style={styles.courseHeaderContainer}>
+          <Text style={styles.pageHeader}>Colloborating</Text>
+        </View>
+
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ alignItems: "center", paddingBottom: "20%" }}
+          // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
+        >
+          {renderCollab()}
+        </ScrollView>
       </ImageBackground>
     </View>
   );

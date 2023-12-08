@@ -9,268 +9,265 @@ const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
- // ----------ALL----------
- container: {
-   flex: 1,
-   backgroundColor: "white",
- },
- tabBarContainer: {
-   backgroundColor: "white",
-   borderTopLeftRadius: 20,
-   borderTopRightRadius: 20,
-   overflow: "hidden", // Clip the content within the rounded borders
-   shadowColor: "#000",
-   shadowOffset: { width: 0, height: -2 },
-   shadowOpacity: 0.25,
-   shadowRadius: 4,
-   elevation: 5, // For Android
-   height: "10%",
- },
- appBar: {
-   backgroundColor: "#5E42A6",
-   height: 115 * scaleFactor,
-   flexDirection: "row",
-   alignItems: "center",
-   paddingHorizontal: "5%",
- },
- appBarHome: {
-  // backgroundColor: "#5E42A6",
-  height: 115 * scaleFactor,
-  flexDirection: "row",
-  alignItems: "center",
-  paddingHorizontal: "5%",
-},
- backArrow: {
-   flexDirection: "row",
-   justifyContent: "left",
-   shadowColor: "#000",
-   shadowOffset: { width: 0, height: 10 },
-   shadowOpacity: 0.2,
-   shadowRadius: 4,
- },
- headerContainer: {
-   flex: 1,
-   alignItems: "center",
- },
- classNameText: {
-   fontSize: 20 * scaleFactor,
- },
- // ---------- ^^ Top Header ^^ ----------
- classInfo: {
-   flexDirection: "column",
- },
- courseDetails: {
-   margin: "3%",
-   flexDirection: "column",
- },
- courseDetailTop: {
-   flexDirection: "row",
- },
- courseDetailBottom: {
-   flexDirection: "row",
- },
- courseHeaderContainer: {
-   marginTop: -50 * scaleFactor, // Moves the title up into header
- },
- pageHeader: {
-  color: 'white',
-   textAlign: "center",
-   fontSize: 40,
-   fontWeight: "bold",
-   // marginTop: -50 * scaleFactor, // Moves the title/course/class up into header
- },
- pageHeader2: {
-  color: 'white',
-   textAlign: "center",
-   fontSize: 40,
-   fontWeight: "bold",
- },
- sectionHeader: {
-  //  color: "black",
-  color: 'white',
-   fontSize: 30,
-   fontWeight: "600",
-   marginLeft: "5%",
- },
- sectionHeader2: {
-   color: "black",  
-  // color: 'white',
-   fontSize: 30,
-   fontWeight: "600",
-   marginLeft: "5%",
- },
- backTEXT: {
-   fontSize: 18,
-   marginLeft: 5,
-   color: 'white',
- },
+  // ----------ALL----------
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  tabBarContainer: {
+    backgroundColor: "white",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: "hidden", // Clip the content within the rounded borders
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5, // For Android
+    height: "10%",
+  },
+  appBar: {
+    backgroundColor: "#5E42A6",
+    height: 115 * scaleFactor,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: "5%",
+  },
+  appBarHome: {
+    // backgroundColor: "#5E42A6",
+    height: 115 * scaleFactor,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: "5%",
+  },
+  backArrow: {
+    flexDirection: "row",
+    justifyContent: "left",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  headerContainer: {
+    flex: 1,
+    alignItems: "center",
+  },
+  classNameText: {
+    fontSize: 20 * scaleFactor,
+  },
+  // ---------- ^^ Top Header ^^ ----------
+  classInfo: {
+    flexDirection: "column",
+  },
+  courseDetails: {
+    margin: "3%",
+    flexDirection: "column",
+  },
+  courseDetailTop: {
+    flexDirection: "row",
+  },
+  courseDetailBottom: {
+    flexDirection: "row",
+  },
+  courseHeaderContainer: {
+    marginTop: -50 * scaleFactor, // Moves the title up into header
+  },
+  pageHeader: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 40,
+    fontWeight: "bold",
+    // marginTop: -50 * scaleFactor, // Moves the title/course/class up into header
+  },
+  pageHeader2: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 40,
+    fontWeight: "bold",
+  },
+  sectionHeader: {
+    //  color: "black",
+    color: "white",
+    fontSize: 30,
+    fontWeight: "600",
+    marginLeft: "5%",
+  },
+  sectionHeader2: {
+    color: "black",
+    // color: 'white',
+    fontSize: 30,
+    fontWeight: "600",
+    marginLeft: "5%",
+  },
+  backTEXT: {
+    fontSize: 18,
+    marginLeft: 5,
+    color: "white",
+  },
 
-
- // ----------HomePage----------
- courseSection: {
-   // marginBottom: 10,
-   marginTop: 30,
-   flex: 1,
-   justifyContent: "flex-start",
-   alignItems: "left",
- },
- bottomSection: {
-   justifyContent: "flex-end",
-   height: "100%",
-   marginBottom: "40%", // adjust space from bottom of screen
- },
- courseContainer: {
-   marginTop: 5,
- },
- courseBox: {
-   flexDirection: "row", // have course name and join button in one row
-   padding: 30,
-   margin: 10,
-   width: screenWidth * 0.95,
-   borderRadius: 10,
-   backgroundColor: "white",
-  //  borderColor: "#5E42A6",
-  borderColor: 'white',
-  borderWidth: 2,
-  //  borderWidth: 1.5,
-   justifyContent: "space-between", // align items along the row
-   shadowColor: "#000",
-   shadowOffset: { width: 0, height: 2 },
-   shadowOpacity: 0.5,
-   shadowRadius: 4,
- },
- courseBoxTEXT: {
-   fontSize: 24,
-   fontWeight: "bold",
-  //  color: "black",
-  color: '#312450',
-   textAlign: "left",
- },
- joinButton: {
-   width: 70,
-   borderRadius: 20,
-   backgroundColor: "#5E42A6",
-  // borderColor: '#312450',
-  // borderWidth: 2,
-   justifyContent: "center",
-   alignItems: "center",
-  //  shadowColor: "#000",
-  //  shadowOffset: { width: 0, height: 2 },
-  //  shadowOpacity: 0.5,
-  //  shadowRadius: 4,
- },
- joinButtonTEXT: {
-   color: "white",
-   fontSize: 20 * scaleFactor,
-   fontWeight: "bold",
- },
- askButton: {
-   width: 70,
-   borderRadius: 20,
-   backgroundColor: "#5E42A6",
-  // borderColor: '#312450',
-  // borderWidth: 2,
-   justifyContent: "center",
-   alignItems: "center",
-  //  shadowColor: "#000",
-  //  shadowOffset: { width: 0, height: 2 },
-  //  shadowOpacity: 0.5,
-  //  shadowRadius: 10,
- },
- askButtonTEXT: {
-   color: "white",
-   fontSize: 20 * scaleFactor,
-   fontWeight: "bold",
- },
- menuModalOverlay: {
-   ...StyleSheet.absoluteFillObject, // apply fill to custom modal
-   justifyContent: "center",
-   alignItems: "left",
-   backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
- },
- menuModalContent: {
-  flex: 1,
-   width: screenWidth * 0.7,
-   height: screenHeight,
-  //  backgroundColor: "#DDCFFF",
-  backgroundColor: "#312450",
-   borderRadius: 20, // round corners
-   padding: '10%',
-   alignItems: 'center',
-   justifyContent: 'space-around'
- },
- menuModalTop: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  marginTop: '-40%',
- },
- menuModalBottom: {
-  alignItems: 'center',
-  marginTop: '-60%',
-  flexDirection: 'column',
- },
- menuModalHeader: {
-  marginTop: '50%',
-  fontSize: scaleFactor * 27,
-  textAlign: 'center',
-  fontWeight: 'bold',
-  color: 'white'
- },
- menuModalBody: {
-   marginTop: "20%",
-   textAlign: "center",
-   fontSize: scaleFactor * 20,
-   marginTop: 5,
-   color: 'white'
- },
- menuModalImage: {
-  width: 75, 
-  height: 75, 
-  borderRadius: 40,
-  marginTop: "50%",
-  borderColor: 'white',
-  borderWidth: 3,
- },
- logoutButtonContainer: {
-  justifyContent: 'flex-end',
-  width: "40%", 
-  alignItems: 'center'
- },
- logoutButton: {
-  borderRadius: 25,
-  backgroundColor: "#5E42A6",
-  // borderColor: 'white',
-  borderWidth: 2,
-  padding: 10,
-  width: "150%", 
-  textAlign: 'center',
-  alignItems: 'center',
-  alignContent: 'center',
-  shadowColor: "#000",
-  shadowOffset: { width: 0, height: 10 },
-  shadowOpacity: 0.2,
-  shadowRadius: 4,
- },
- logoutButtonText: {
-  color: "white",
-  fontSize: 20 * scaleFactor,
-  fontWeight: "bold",
-  textAlign: 'center',
-  alignItems: 'center',
-  alignContent: 'center'
-},
-canvasImage: {
-  width: 30,
-  height: 30,
-},
-fakePage: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  marginTop: "25%",
-},
-// ----------HomePage----------
-
-
+  // ----------HomePage----------
+  courseSection: {
+    // marginBottom: 10,
+    marginTop: 30,
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "left",
+  },
+  bottomSection: {
+    justifyContent: "flex-end",
+    height: "100%",
+    marginBottom: "40%", // adjust space from bottom of screen
+  },
+  courseContainer: {
+    marginTop: 5,
+  },
+  courseBox: {
+    flexDirection: "row", // have course name and join button in one row
+    padding: 30,
+    margin: 10,
+    width: screenWidth * 0.95,
+    borderRadius: 10,
+    backgroundColor: "white",
+    //  borderColor: "#5E42A6",
+    borderColor: "white",
+    borderWidth: 2,
+    //  borderWidth: 1.5,
+    justifyContent: "space-between", // align items along the row
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+  },
+  courseBoxTEXT: {
+    fontSize: 24,
+    fontWeight: "bold",
+    //  color: "black",
+    color: "#312450",
+    textAlign: "left",
+  },
+  joinButton: {
+    width: 70,
+    borderRadius: 20,
+    backgroundColor: "#5E42A6",
+    // borderColor: '#312450',
+    // borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    //  shadowColor: "#000",
+    //  shadowOffset: { width: 0, height: 2 },
+    //  shadowOpacity: 0.5,
+    //  shadowRadius: 4,
+  },
+  joinButtonTEXT: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
+  askButton: {
+    width: 70,
+    borderRadius: 20,
+    backgroundColor: "#5E42A6",
+    // borderColor: '#312450',
+    // borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    //  shadowColor: "#000",
+    //  shadowOffset: { width: 0, height: 2 },
+    //  shadowOpacity: 0.5,
+    //  shadowRadius: 10,
+  },
+  askButtonTEXT: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
+  menuModalOverlay: {
+    ...StyleSheet.absoluteFillObject, // apply fill to custom modal
+    justifyContent: "center",
+    alignItems: "left",
+    backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
+  },
+  menuModalContent: {
+    flex: 1,
+    width: screenWidth * 0.7,
+    height: screenHeight,
+    //  backgroundColor: "#DDCFFF",
+    backgroundColor: "#312450",
+    borderRadius: 20, // round corners
+    padding: "10%",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  menuModalTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: "-40%",
+  },
+  menuModalBottom: {
+    alignItems: "center",
+    marginTop: "-60%",
+    flexDirection: "column",
+  },
+  menuModalHeader: {
+    marginTop: "50%",
+    fontSize: scaleFactor * 27,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "white",
+  },
+  menuModalBody: {
+    marginTop: "20%",
+    textAlign: "center",
+    fontSize: scaleFactor * 20,
+    marginTop: 5,
+    color: "white",
+  },
+  menuModalImage: {
+    width: 75,
+    height: 75,
+    borderRadius: 40,
+    marginTop: "50%",
+    borderColor: "white",
+    borderWidth: 3,
+  },
+  logoutButtonContainer: {
+    justifyContent: "flex-end",
+    width: "40%",
+    alignItems: "center",
+  },
+  logoutButton: {
+    borderRadius: 25,
+    backgroundColor: "#5E42A6",
+    // borderColor: 'white',
+    borderWidth: 2,
+    padding: 10,
+    width: "150%",
+    textAlign: "center",
+    alignItems: "center",
+    alignContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  logoutButtonText: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+    textAlign: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+  canvasImage: {
+    width: 30,
+    height: 30,
+  },
+  fakePage: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: "25%",
+  },
+  // ----------HomePage----------
 
   // ----------CoursePage----------
   questionBox: {
@@ -398,59 +395,57 @@ fakePage: {
   },
   // ------ Queue Box Scrolling Info --------
 
-
- // ------ Text Message Styling  --------
- messageAndTimeContainer: {
-   flexDirection: "column",
- },
- grayTextMessageContainer: {
-   width: "100%",
-   flexDirection: "row",
-   padding: 5,
- },
- grayMessage: {
-   borderRadius: 10,
-   padding: 10,
-   backgroundColor: "#DDD",
-   maxWidth: "50%",
- },
- grayMessageInitials: {
-   marginLeft: "2%",
-   marginRight: "4%",
- },
- grayTextMessageTime: {
-   textAlign: "left",
-   paddingLeft: "10%",
- },
- purpleTextMessageContainer: {
-   width: "100%",
-   flexDirection: "row",
-   padding: 5,
-   justifyContent: "flex-end",
- },
- purpleMessage: {
-   borderRadius: 10,
-   padding: 10,
-   backgroundColor: "#5E42A6",
-   maxWidth: "50%",
-   marginRight: 5,
- },
- purpleTextMessageTime: {
-   textAlign: "right",
-   paddingRight: "4%",
- },
- purpleMessageText: {
-   color: 'white',
- },
- emptyChat: {
-   textAlign: "center",
-   fontWeight: "200",
-   marginTop: '20%',
-   color: 'white',
-   fontSize: scaleFactor * 15,
- },
- // ------ Text Message Styling  --------
-
+  // ------ Text Message Styling  --------
+  messageAndTimeContainer: {
+    flexDirection: "column",
+  },
+  grayTextMessageContainer: {
+    width: "100%",
+    flexDirection: "row",
+    padding: 5,
+  },
+  grayMessage: {
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: "#DDD",
+    maxWidth: "50%",
+  },
+  grayMessageInitials: {
+    marginLeft: "2%",
+    marginRight: "4%",
+  },
+  grayTextMessageTime: {
+    textAlign: "left",
+    paddingLeft: "10%",
+  },
+  purpleTextMessageContainer: {
+    width: "100%",
+    flexDirection: "row",
+    padding: 5,
+    justifyContent: "flex-end",
+  },
+  purpleMessage: {
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: "#5E42A6",
+    maxWidth: "50%",
+    marginRight: 5,
+  },
+  purpleTextMessageTime: {
+    textAlign: "right",
+    paddingRight: "4%",
+  },
+  purpleMessageText: {
+    color: "white",
+  },
+  emptyChat: {
+    textAlign: "center",
+    fontWeight: "200",
+    marginTop: "20%",
+    color: "white",
+    fontSize: scaleFactor * 15,
+  },
+  // ------ Text Message Styling  --------
 
   // ------ Question Page w/ Chat  --------
   customModalOverlay: {
@@ -576,7 +571,7 @@ fakePage: {
   questionHost: {
     fontSize: 18,
     fontWeight: "200",
-    color: 'white',
+    color: "white",
   },
   numCollaborators: {
     flexDirection: "row",
@@ -614,30 +609,29 @@ fakePage: {
   },
   // ------ Question Page w/ Chat  --------
 
- // ------ Notification Info --------
- NotiContainer: {
-   flex: 1,
-   backgroundColor: '#f2ecff',
- },
- NotificationInfo: {
-   flexDirection: "row",
-   width: 0.9 * ScreenWidth,
-   height: "10%",
-   marginTop: "5%",
-   marginBottom: "3%",
- },
- NotiText: {
-   height: "100%",
-   marginLeft: "5%",
-   flex: 1,
-   flexWrap: "wrap", // Allow text to wrap
-   overflow: "hidden", // Hide overflow content
-   color: 'white',
- },
- NotiIcon: {
-   marginLeft: "5%",
- },
-
+  // ------ Notification Info --------
+  NotiContainer: {
+    flex: 1,
+    backgroundColor: "#f2ecff",
+  },
+  NotificationInfo: {
+    flexDirection: "row",
+    width: 0.9 * ScreenWidth,
+    height: "10%",
+    marginTop: "5%",
+    marginBottom: "3%",
+  },
+  NotiText: {
+    height: "100%",
+    marginLeft: "5%",
+    flex: 1,
+    flexWrap: "wrap", // Allow text to wrap
+    overflow: "hidden", // Hide overflow content
+    color: "white",
+  },
+  NotiIcon: {
+    marginLeft: "5%",
+  },
 
   // ------ Notification Info --------
 
@@ -703,72 +697,76 @@ fakePage: {
   },
   // ------ Collab Info --------
 
- // ------ Ask Page  --------
- askContainer: {
-  flex: 1,
-  backgroundColor: '#5E42A6',
- },
- tagsContainer: {
-   justifyContent: "space-around",
-   height: 0.2 * screenHeight,
-   flexWrap: "wrap",
- },
- tags: {
-   marginLeft: "10%",
-   // maxWidth: "100%",
-   flexDirection: "row",
-   alignItems: "center",
-   flexWrap: "wrap",
- },
- tagButton: {
-   borderRadius: 30,
-  //  backgroundColor: "white",
-   borderColor: "white",
-   padding: 3,
-   paddingHorizontal: 10,
-   borderWidth: 2,
-   margin: 2,
-   marginRight: 8,
-   marginLeft: 8,
- },
- questionBoxContainer: {
-   height: 0.35 * screenHeight,
- },
- questionInput: {
-  //  backgroundColor: "white",
-   height: "60%",
-   margin: "10%",
-   marginBottom: 0,
-   borderColor: "white",
-   borderWidth: 2,
-   borderRadius: 20,
-   shadowColor: "#000",
-   shadowOffset: { width: 0, height: 10 },
-   shadowOpacity: 0.2,
-   shadowRadius: 4,
- },
- submitQuestionButton: {
-  //  backgroundColor: "#5E42A6",
-  borderColor: 'white',
-  borderWidth: 2,
-   paddingHorizontal: "10%",
-   paddingVertical: "1%",
-   borderRadius: 40,
-   shadowColor: "#000",
-   shadowOffset: { width: 0, height: 10 },
-   shadowOpacity: 0.2,
-   shadowRadius: 4,
- },
- submitQuestionButtonText: {
-   color: "white",
-   fontSize: 20 * scaleFactor,
-   fontWeight: "bold",
- },
- selectedTag: {
-   backgroundColor: "white", // Apply your desired background color for selected tags
-   borderColor: "white",
- },
- // ------ Ask Page  --------
+  // ------ Ask Page  --------
+  askContainer: {
+    flex: 1,
+    backgroundColor: "#5E42A6",
+  },
+  tagsContainer: {
+    justifyContent: "space-around",
+    height: 0.2 * screenHeight,
+    flexWrap: "wrap",
+    marginLeft: "10%",
+  },
+  tags: {
+    marginLeft: "10%",
+    // maxWidth: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  tagButton: {
+    borderRadius: 30,
+    //  backgroundColor: "white",
+    borderColor: "white",
+    padding: 3,
+    paddingHorizontal: 10,
+    borderWidth: 2,
+    margin: 2,
+    marginRight: 8,
+    marginLeft: 8,
+  },
+  questionBoxContainer: {
+    height: 0.35 * screenHeight,
+  },
+  questionInput: {
+    //  backgroundColor: "white",
+    height: "60%",
+    marginLeft: "10%",
+    marginTop: "5%",
+    marginRight: "10%",
+
+    marginBottom: 0,
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 20,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 10 },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 4,
+  },
+  submitQuestionButton: {
+    //  backgroundColor: "#5E42A6",
+    borderColor: "white",
+    borderWidth: 2,
+    paddingHorizontal: "10%",
+    paddingVertical: "1%",
+    borderRadius: 40,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  submitQuestionButtonText: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
+  selectedTag: {
+    backgroundColor: "white", // Apply your desired background color for selected tags
+    borderColor: "white",
+  },
+  // ------ Ask Page  --------
 });
 
 export default styles;
