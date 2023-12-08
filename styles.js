@@ -288,10 +288,169 @@ fakePage: {
   flexDirection: 'row',
   alignItems: 'center',
   marginTop: "25%",
-},
-// ----------HomePage----------
-
-
+}, ----------HomePage----------
+  courseSection: {
+    // marginBottom: 10,
+    marginTop: 30,
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "left",
+  },
+  bottomSection: {
+    justifyContent: "flex-end",
+    height: "100%",
+    marginBottom: "40%", // adjust space from bottom of screen
+  },
+  courseContainer: {
+    marginTop: 5,
+  },
+  courseBox: {
+    flexDirection: "row", // have course name and join button in one row
+    padding: 30,
+    margin: 10,
+    width: screenWidth * 0.95,
+    borderRadius: 10,
+    backgroundColor: "white",
+    //  borderColor: "#5E42A6",
+    borderColor: "white",
+    borderWidth: 2,
+    //  borderWidth: 1.5,
+    justifyContent: "space-between", // align items along the row
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+  },
+  courseBoxTEXT: {
+    fontSize: 24,
+    fontWeight: "bold",
+    //  color: "black",
+    color: "#312450",
+    textAlign: "left",
+  },
+  joinButton: {
+    width: 70,
+    borderRadius: 20,
+    backgroundColor: "#5E42A6",
+    // borderColor: '#312450',
+    // borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    //  shadowColor: "#000",
+    //  shadowOffset: { width: 0, height: 2 },
+    //  shadowOpacity: 0.5,
+    //  shadowRadius: 4,
+  },
+  joinButtonTEXT: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
+  askButton: {
+    width: 70,
+    borderRadius: 20,
+    backgroundColor: "#5E42A6",
+    // borderColor: '#312450',
+    // borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    //  shadowColor: "#000",
+    //  shadowOffset: { width: 0, height: 2 },
+    //  shadowOpacity: 0.5,
+    //  shadowRadius: 10,
+  },
+  askButtonTEXT: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
+  menuModalOverlay: {
+    ...StyleSheet.absoluteFillObject, // apply fill to custom modal
+    justifyContent: "center",
+    alignItems: "left",
+    backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
+  },
+  menuModalContent: {
+    flex: 1,
+    width: screenWidth * 0.7,
+    height: screenHeight,
+    //  backgroundColor: "#DDCFFF",
+    backgroundColor: "#312450",
+    borderRadius: 20, // round corners
+    padding: "10%",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  menuModalTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: "-40%",
+  },
+  menuModalBottom: {
+    alignItems: "center",
+    marginTop: "-60%",
+    flexDirection: "column",
+  },
+  menuModalHeader: {
+    marginTop: "50%",
+    fontSize: scaleFactor * 27,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "white",
+  },
+  menuModalBody: {
+    marginTop: "20%",
+    textAlign: "center",
+    fontSize: scaleFactor * 20,
+    marginTop: 5,
+    color: "white",
+  },
+  menuModalImage: {
+    width: 75,
+    height: 75,
+    borderRadius: 40,
+    marginTop: "50%",
+    borderColor: "white",
+    borderWidth: 3,
+  },
+  logoutButtonContainer: {
+    justifyContent: "flex-end",
+    width: "40%",
+    alignItems: "center",
+  },
+  logoutButton: {
+    borderRadius: 25,
+    backgroundColor: "#5E42A6",
+    // borderColor: 'white',
+    borderWidth: 2,
+    padding: 10,
+    width: "150%",
+    textAlign: "center",
+    alignItems: "center",
+    alignContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  logoutButtonText: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+    textAlign: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+  canvasImage: {
+    width: 30,
+    height: 30,
+  },
+  fakePage: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: "25%",
+  },
+  // ----------HomePage----------
 
   // ----------CoursePage----------
   questionBox: {
@@ -424,59 +583,57 @@ fakePage: {
   },
   // ------ Queue Box Scrolling Info --------
 
-
- // ------ Text Message Styling  --------
- messageAndTimeContainer: {
-   flexDirection: "column",
- },
- grayTextMessageContainer: {
-   width: "100%",
-   flexDirection: "row",
-   padding: 5,
- },
- grayMessage: {
-   borderRadius: 10,
-   padding: 10,
-   backgroundColor: "#DDD",
-   maxWidth: "50%",
- },
- grayMessageInitials: {
-   marginLeft: "2%",
-   marginRight: "4%",
- },
- grayTextMessageTime: {
-   textAlign: "left",
-   paddingLeft: "10%",
- },
- purpleTextMessageContainer: {
-   width: "100%",
-   flexDirection: "row",
-   padding: 5,
-   justifyContent: "flex-end",
- },
- purpleMessage: {
-   borderRadius: 10,
-   padding: 10,
-   backgroundColor: "#5E42A6",
-   maxWidth: "50%",
-   marginRight: 5,
- },
- purpleTextMessageTime: {
-   textAlign: "right",
-   paddingRight: "4%",
- },
- purpleMessageText: {
-   color: 'white',
- },
- emptyChat: {
-   textAlign: "center",
-   fontWeight: "200",
-   marginTop: '20%',
-   color: 'white',
-   fontSize: scaleFactor * 15,
- },
- // ------ Text Message Styling  --------
-
+  // ------ Text Message Styling  --------
+  messageAndTimeContainer: {
+    flexDirection: "column",
+  },
+  grayTextMessageContainer: {
+    width: "100%",
+    flexDirection: "row",
+    padding: 5,
+  },
+  grayMessage: {
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: "#DDD",
+    maxWidth: "50%",
+  },
+  grayMessageInitials: {
+    marginLeft: "2%",
+    marginRight: "4%",
+  },
+  grayTextMessageTime: {
+    textAlign: "left",
+    paddingLeft: "10%",
+  },
+  purpleTextMessageContainer: {
+    width: "100%",
+    flexDirection: "row",
+    padding: 5,
+    justifyContent: "flex-end",
+  },
+  purpleMessage: {
+    borderRadius: 10,
+    padding: 10,
+    backgroundColor: "#5E42A6",
+    maxWidth: "50%",
+    marginRight: 5,
+  },
+  purpleTextMessageTime: {
+    textAlign: "right",
+    paddingRight: "4%",
+  },
+  purpleMessageText: {
+    color: "white",
+  },
+  emptyChat: {
+    textAlign: "center",
+    fontWeight: "200",
+    marginTop: "20%",
+    color: "white",
+    fontSize: scaleFactor * 15,
+  },
+  // ------ Text Message Styling  --------
 
   // ------ Question Page w/ Chat  --------
   customModalOverlay: {
@@ -603,7 +760,7 @@ fakePage: {
   questionHost: {
     fontSize: 18,
     fontWeight: "200",
-    color: 'white',
+    color: "white",
   },
   numCollaborators: {
     flexDirection: "row",
@@ -639,32 +796,91 @@ fakePage: {
   cameraIcon: {
     marginLeft: 5, // add space between the text input and camera icon
   },
+  cameraExitButton: {
+    borderWidth: 2,
+    borderColor: "blue",
+    position: "absolute",
+    top: 50 * scaleFactor,
+    left: 30 * scaleFactor,
+  },
+  takePictureButtonContainer: {
+    bottom: 0,
+    alignItems: "center",
+    paddingBottom: 10,
+  },
+  takePictureButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "white",
+    width: 75,
+    height: 75,
+    paddingBot: 10,
+  },
+  flipContainer: {
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    position: "absolute",
+    right: 0,
+  },
+  flipCameraButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: 20,
+  },
+  cameraExitButton: {
+    position: "absolute",
+    top: 60,
+    left: 30,
+  },
+  usePicButton: {
+    flexDirection: "row",
+    width: "50%",
+    color: "white",
+    justifyContent: "flex-end",
+  },
+  retakeButton: {
+    width: "50%",
+    color: "white",
+    paddingLeft: 65,
+    paddingBottom: 40,
+  },
+  bottomRowContainer: {
+    flexDirection: "row",
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+  },
   // ------ Question Page w/ Chat  --------
 
- // ------ Notification Info --------
- NotiContainer: {
-   flex: 1,
-   backgroundColor: '#f2ecff',
- },
- NotificationInfo: {
-   flexDirection: "row",
-   width: 0.9 * ScreenWidth,
-   height: "10%",
-   marginTop: "5%",
-   marginBottom: "3%",
- },
- NotiText: {
-   height: "100%",
-   marginLeft: "5%",
-   flex: 1,
-   flexWrap: "wrap", // Allow text to wrap
-   overflow: "hidden", // Hide overflow content
-   color: 'white',
- },
- NotiIcon: {
-   marginLeft: "5%",
- },
-
+  // ------ Notification Info --------
+  NotiContainer: {
+    flex: 1,
+    backgroundColor: "#f2ecff",
+  },
+  NotificationInfo: {
+    flexDirection: "row",
+    width: 0.9 * ScreenWidth,
+    height: "10%",
+    marginTop: "5%",
+    marginBottom: "3%",
+  },
+  NotiText: {
+    height: "100%",
+    marginLeft: "5%",
+    flex: 1,
+    flexWrap: "wrap", // Allow text to wrap
+    overflow: "hidden", // Hide overflow content
+    color: "white",
+  },
+  NotiIcon: {
+    marginLeft: "5%",
+  },
 
   // ------ Notification Info --------
 
@@ -729,8 +945,6 @@ fakePage: {
     fontWeight: "bold",
   },
   // ------ Collab Info --------
-
- // ------ Ask Page  --------
  askContainer: {
   flex: 1,
   backgroundColor: '#5E42A6',
@@ -863,6 +1077,71 @@ fakePage: {
         right: 5,
         padding: 10
       },
+  // ------ Ask Page  --------
+  askContainer: {
+    flex: 1,
+    backgroundColor: "#5E42A6",
+  },
+  tagsContainer: {
+    justifyContent: "space-around",
+    height: 0.2 * screenHeight,
+    flexWrap: "wrap",
+  },
+  tags: {
+    marginLeft: "10%",
+    // maxWidth: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  tagButton: {
+    borderRadius: 30,
+    //  backgroundColor: "white",
+    borderColor: "white",
+    padding: 3,
+    paddingHorizontal: 10,
+    borderWidth: 2,
+    margin: 2,
+    //  marginRight: 8,
+    //  marginLeft: 8,
+  },
+  questionBoxContainer: {
+    height: 0.35 * screenHeight,
+  },
+  questionInput: {
+    //  backgroundColor: "white",
+    height: "60%",
+    margin: "10%",
+    marginBottom: 0,
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  submitQuestionButton: {
+    //  backgroundColor: "#5E42A6",
+    borderColor: "white",
+    borderWidth: 2,
+    paddingHorizontal: "10%",
+    paddingVertical: "1%",
+    borderRadius: 40,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  submitQuestionButtonText: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
+  selectedTag: {
+    backgroundColor: "white", // Apply your desired background color for selected tags
+    borderColor: "white",
+  },
 });
 
 export default styles;
