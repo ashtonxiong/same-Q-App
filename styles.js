@@ -47,10 +47,16 @@ backArrow: {
   paddingBottom: 10,
   paddingRight: 50
 },
+backArrowBigButton: {
+  flexDirection: 'row',
+  justifyContent: 'left',
+  paddingBottom: 10,
+  paddingRight: 0
+},
 backArrowSeamus: {
   position: 'absolute',
   top: 40 * scaleFactor,
-  left: 20 *scaleFactor,
+  left: 0,
   padding: 20
 },
 backTextBar: {
@@ -299,6 +305,11 @@ fakePage: {
   },
   questionTEXT: {
     fontSize: 22,
+    alignItems: 'center',
+    paddingLeft: 40,
+    paddingRight: 40,
+    marginTop: 54,
+    marginBottom: 20
   },
   courseCollabButton: {
     width: 145,
@@ -326,15 +337,15 @@ fakePage: {
     // borderBottomColor: "#5E42A6",
     backgroundColor: "#5E42A6",
     borderBottomWidth: 2,
+    // minHeight: screenHeight * 0.1,
     // backgroundColor: "white",
-    height: screenHeight * 0.2,
   },
   questionPageBoxHeader: {
-    flexDirection: "row",
-    marginTop: 45,
-    marginLeft: 15,
-    marginRight: 15,
-    justifyContent: "space-between",
+    // flexDirection: "row",
+    // marginTop: 40,
+    // marginLeft: 0,
+    // marginRight: 15,
+    // justifyContent: "space-between",
   },
   chatArea: {
     flex: 1,
@@ -502,13 +513,11 @@ fakePage: {
   modalCollabUncollabTEXT: {
     width: 175,
     borderRadius: 20,
-    backgroundColor: "#5E42A6",
+    borderWidth: 2,
+    marginTop: 10,
+    borderColor: 'white',
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
   },
   modalCollabUncollab: {
     flex: 1,
@@ -583,10 +592,13 @@ fakePage: {
     fontWeight: "200",
   },
   questionInfoHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 15,
-    marginTop: 5,
+    flexDirection: "column",
+    padding: 5,
+    paddingRight: 15,
+    paddingTop: 10,
+    right: -0,
+    top: 50,
+    position: 'absolute'
   },
   questionHost: {
     fontSize: 18,
@@ -844,6 +856,12 @@ fakePage: {
         color: 'white',
         fontSize: 20 * scaleFactor,
         fontWeight: 'bold',
+      },
+      infoButton: {
+        position: 'absolute',
+        top: 40,
+        right: 5,
+        padding: 10
       },
 });
 

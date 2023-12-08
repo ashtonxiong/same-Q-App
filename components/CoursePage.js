@@ -124,6 +124,41 @@ const CoursePage = ({ route }) => {
     });
   };
 
+  const deleteCollab = async (course, question) => {
+    console.log("delete collab pressed");
+    try {
+      const { old, error1 } = await supabase
+        .from("sameQ-app-collab")
+        .select("*")
+        .eq("question_id", question.question_id)
+        .eq("question", question.question);
+      console.log("TEST DATA EXIST", question);
+
+      const { error } = await supabase
+        .from("sameQ-app-collab")
+        .delete([
+          {
+            collab_status: "FALSE",
+            num_collaborators: question.num_collab,
+            device_id: "000",
+          },
+        ])
+        .eq("device_id", deviceIdentifier)
+        .eq("question_id", question.question_id);
+      // .eq("question", question.question);
+
+      // setNumCollaborators(
+      //   (prevActualNumCollaborators) => prevActualNumCollaborators - 1
+      // );
+
+      // if (error) {
+      //   throw new Error(error.message);
+      // }
+    } catch (error) {
+      console.error("Error deleting data from Supabase:", error.message);
+    }
+  };
+
   const handleBackHome = (home) => {
     navigation.navigate("HomePage");
   };
@@ -194,19 +229,31 @@ const CoursePage = ({ route }) => {
 
               {/* bottom row */}
               <View style={styles.queueBot}>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => handleCollabPress(
-                    course,
-                    question,
-                    deviceIdentifier,
-                    "CoursePage"
-                  )}
-                >
-                  <Text style={styles.buttonText}> Collaborate </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+          {question.collab_status ? ( // check if you are collaborating
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => deleteCollab(
+                course,
+                question
+              )}
+            >
+              <Text style={styles.buttonText}> Leave Question </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleCollabPress(
+                course,
+                question,
+                deviceIdentifier,
+                "CoursePage"
+              )}
+            >
+              <Text style={styles.buttonText}> View </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
       // <View key={question.uid} style={styles.queueBox}>
       //   {/* top row */}
       //   <View style={styles.queueTopRow}>
