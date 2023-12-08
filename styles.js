@@ -1015,7 +1015,7 @@ fakePage: {
         margin: 10,
         width: screenWidth * 0.95,
         justifyContent: 'space-between',
-        maxHeight: '35%',
+        // maxHeight: '35%',
 
         backgroundColor: '#fff',
         borderRadius: 10,

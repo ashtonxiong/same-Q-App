@@ -42,6 +42,8 @@ const BlinkingDot = ({ inHuddle }) => {
         height: 20,
         backgroundColor: 'red', // or any color you prefer
         borderRadius: 20,
+        marginRight: -22,
+        marginTop: 2,
         opacity,
       }}
     />

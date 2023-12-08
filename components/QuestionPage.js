@@ -60,8 +60,7 @@ const QuestionPage = ({ route }) => {
   const [capturedImageUri, setCapturedImageUri] = useState(null);
   const [messageArray, setMessageArray] = useState([]);
 
-
-  const [collabStatus, setCollabStatus] = useState('Join Question');
+  const [collabStatus, setCollabStatus] = useState(["Collaborate"]);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -311,7 +310,7 @@ const QuestionPage = ({ route }) => {
 
       if (data && data.length > 0) {
         setCollabStatus([
-          data[0].collab_status ? "Join Question" : "Leave Question",
+          data[0].collab_status ? "Uncollaborate" : "Collaborate",
         ]);
         setNumCollaborators(data[0].num_collaborators);
       }
@@ -319,6 +318,7 @@ const QuestionPage = ({ route }) => {
       console.error("Error fetching data from Supabase:", error.message);
     }
   };
+
 
   useEffect(() => {
     getDefaultChats();
@@ -469,11 +469,11 @@ const QuestionPage = ({ route }) => {
     setCollabStatus((prevStatus) => {
       // toggle between "Collaborate" and "Uncollaborate"
       const newStatus =
-        prevStatus[0] === "Join Question" ? ["Leave Question"] : ["Join Question"];
+        prevStatus[0] === "Collaborate" ? ["Uncollaborate"] : ["Collaborate"];
 
-      console.log("newStatus:", newStatus);
+      console.log("newStatus:", question);
 
-      if (newStatus[0] === "Join Question") {
+      if (newStatus[0] === "Collaborate") {
         deleteCollab(course, question);
       } else {
         addCollab(course, question);
