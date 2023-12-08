@@ -118,7 +118,11 @@ const HomePage = () => {
        </TouchableOpacity>
      </View>
      <View style={styles.courseHeaderContainer}>
-       <Text style={styles.pageHeader}>Courses</Text>
+       {/* <Text style={styles.pageHeader}>Courses</Text> */}
+       <Image
+          style={styles.logoImage}
+          source={require("../assets/logo.png")}
+        />
      </View>
 
 

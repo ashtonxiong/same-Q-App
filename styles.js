@@ -76,6 +76,11 @@ backTextBar: {
  classNameText: {
    fontSize: 20 * scaleFactor,
  },
+ logoImage: {
+  width: 60,
+  height: 60,
+  alignSelf: 'center',
+ },
  // ---------- ^^ Top Header ^^ ----------
  classInfo: {
    flexDirection: "column",
