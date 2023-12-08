@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  Modal,
-  TouchableWithoutFeedback,
+ Text,
+ View,
+ Image,
+ TouchableOpacity,
+ Modal,
+ TouchableWithoutFeedback,
+ ImageBackground,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
@@ -104,38 +105,43 @@ const HomePage = () => {
     getInactive();
   }, []);
 
-  return (
-    <View style={styles.container}>
-      {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
-      <View style={styles.appBar}>
-        <TouchableOpacity onPress={clickMenuModal}>
-          <View style={styles.backArrow}>
-            <Icon name="menu" size={20} color="#000" />
-          </View>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.courseHeaderContainer}>
-        <Text style={styles.pageHeader}>Courses</Text>
-      </View>
 
-      {/*  ------- active office hours --------- */}
-      <View style={[styles.courseSection, { marginTop: "20%" }]}>
-        <Text style={[styles.sectionHeader]}>Active Office Hours</Text>
-        <View style={styles.courseContainer}>
-          {activeClasses.map((course) => (
-            <View key={course.id} style={styles.courseBox}>
-              <Text style={styles.courseBoxTEXT}>{course.course}</Text>
-              <TouchableOpacity
-                style={styles.joinButton}
-                onPress={() => handleJoinPress(course, deviceIdentifier)}
-              >
-                <Text style={styles.joinButtonTEXT}>Join</Text>
-              </TouchableOpacity>
-            </View>
-          ))}
-        </View>
-      </View>
-      {/*  ------- active office hours --------- */}
+ return (
+   <View style={styles.container}>
+    <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover">
+     {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
+     <View style={styles.appBarHome}>
+       <TouchableOpacity onPress={clickMenuModal}>
+         <View style={styles.backArrow}>
+           <Icon name="menu" size={20} color="white" />
+         </View>
+       </TouchableOpacity>
+     </View>
+     <View style={styles.courseHeaderContainer}>
+       <Text style={styles.pageHeader}>Courses</Text>
+     </View>
+
+
+     {/*  ------- active office hours --------- */}
+     <View style={[styles.courseSection, { marginTop: "20%" }]}>
+       <Text style={[styles.sectionHeader]}>Active Office Hours</Text>
+       <View style={styles.courseContainer}>
+         {activeClasses.map((course) => (
+           <View key={course.id} style={styles.courseBox}>
+             <Text style={styles.courseBoxTEXT}>{course.course}</Text>
+             <TouchableOpacity
+               style={styles.joinButton}
+               onPress={() => handleJoinPress(course, deviceIdentifier)}
+               activeOpacity={0.7}
+             >
+               <Text style={styles.joinButtonTEXT}>Join</Text>
+             </TouchableOpacity>
+           </View>
+         ))}
+       </View>
+     </View>
+     {/*  ------- active office hours --------- */}
+
 
       {/* ------- inactive office hours --------- */}
       <View style={[styles.courseSection]}>
@@ -169,59 +175,39 @@ const HomePage = () => {
                   <Text style={styles.menuModalHeader}>Welcome, Emma!</Text>
                 </View>
 
-                <View style={styles.menuModalBottom}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      closeModal();
-                      handleFakePagePress("HomePage");
-                    }}
-                    style={styles.fakePage}
-                  >
-                    <Icon name="user" size={30} color="#000" />
-                    <Text style={styles.menuModalBody}> Profile</Text>
-                  </TouchableOpacity>
+              <View style={styles.menuModalBottom}>
 
-                  <TouchableOpacity
-                    onPress={() => {
-                      closeModal();
-                      handleFakePagePress("HomePage");
-                    }}
-                    style={styles.fakePage}
-                  >
-                    <Icon name="heart" size={30} color="#000" />
-                    <Text style={styles.menuModalBody}>
-                      {" "}
-                      Most Frequently Collaborateed
-                    </Text>
-                  </TouchableOpacity>
+              <TouchableOpacity onPress={() => { closeModal(); handleFakePagePress("HomePage"); }} style={styles.fakePage}>
+                <Icon name="user" size={30} color="white" />
+                <Text style={styles.menuModalBody}> Profile</Text>
+              </TouchableOpacity>
 
-                  <TouchableOpacity
-                    onPress={() => {
-                      closeModal();
-                      handleFakePagePress("HomePage");
-                    }}
-                    style={styles.fakePage}
-                  >
-                    <Image
-                      style={styles.canvasImage}
-                      source={require("../assets/canvas.png")}
-                    />
-                    <Text style={styles.menuModalBody}> Canvas</Text>
-                  </TouchableOpacity>
-                </View>
+              <TouchableOpacity onPress={() => { closeModal(); handleFakePagePress("HomePage"); }} style={styles.fakePage}>
+                <Icon name="heart" size={30} color="white" />
+                <Text style={styles.menuModalBody}> Most Frequently Collaborateed</Text>
+              </TouchableOpacity>
 
-                <View style={styles.logoutButtonContainer}>
-                  <TouchableOpacity style={styles.logoutButton}>
-                    <Text style={styles.logoutButtonText}>Logout</Text>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity onPress={() => { closeModal(); handleFakePagePress("HomePage"); }} style={styles.fakePage}>
+                  <Image style={styles.canvasImage} source={require("../assets/canvas_white.png")} />
+                  <Text style={styles.menuModalBody}> Canvas</Text>
+                </TouchableOpacity>
+
               </View>
-            </TouchableWithoutFeedback>
-          </View>
-        </TouchableWithoutFeedback>
-      </Modal>
-    </View>
-  );
+
+              <View style={styles.logoutButtonContainer}>
+                <TouchableOpacity style={styles.logoutButton} onPress={() => { closeModal(); handleFakePagePress("HomePage"); }}>
+                  <Text style={styles.logoutButtonText}>Logout</Text>
+                </TouchableOpacity>
+              </View>
+
+             </View>
+           </TouchableWithoutFeedback>
+         </View>
+       </TouchableWithoutFeedback>
+     </Modal>
+     </ImageBackground>
+   </View>
+ );
 };
 
 export default HomePage;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,44 +6,39 @@ import {
   ScrollView,
   Dimensions,
 } from "react-native";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import {
+  useNavigation,
+  useIsFocused,
+  useFocusEffect,
+} from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { supabase } from "../supabase";
-import { de } from "date-fns/locale";
-import FontIcon from "react-native-vector-icons/FontAwesome";
+import { get } from "react-native/Libraries/TurboModule/TurboModuleRegistry";
+const { parse, getTime } = require("date-fns");
+import { useDeviceIdentifier } from "./deviceID";
 
-const CoursePage = ({ route }) => {
-  const { course, deviceIdentifier } = route.params;
-  const courseName = course.course;
-
-  const navigation = useNavigation();
+const Similar = ({ route }) => {
+  const deviceIdentifier = useDeviceIdentifier();
+  const [questions, setQuestions] = useState([]);
+  const [defaultQuestions, setDefaultQuestions] = useState([]);
+  const question = route.params.question;
   const { width, height } = Dimensions.get("window");
   const scaleFactor = Math.min(width, height) / 375; // Adjust 375 based on your design reference width
 
-  const [questions, setQuestions] = useState([]);
-  const [defaultQuestions, setDefaultQuestions] = useState([]);
+  const navigation = useNavigation();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const fetchData = async () => {
-        // Fetch or update data when the component comes into focus
-        await getQuestions();
-        await getDefaultQuestions();
-      };
-
-      fetchData();
-    }, [])
-  );
+  const handleBackAsk = (ask) => {
+    navigation.navigate("AskPage");
+  };
 
   const getQuestions = async () => {
-    // console.log("device id in getQuestions:", deviceIdentifier);
     try {
       // sortedQuestionsArray([]);
       const { data, error } = await supabase
         .from("sameQ-app-questions")
         .select("*")
-        .eq("course", courseName)
+        .eq("course", question.course)
         .eq("device_id", deviceIdentifier);
 
       if (error) {
@@ -64,7 +59,7 @@ const CoursePage = ({ route }) => {
           expected_help: item.expected_help,
           question_id: item.question_id,
         }));
-
+        console.log("Made Chats", questionInfoArray);
         setQuestions(questionInfoArray);
       }
     } catch (error) {
@@ -78,7 +73,7 @@ const CoursePage = ({ route }) => {
       const { data, error } = await supabase
         .from("sameQ-app-questions")
         .select("*")
-        .eq("course", courseName)
+        .eq("course", question.course)
         .eq("device_id", "000");
 
       if (error) {
@@ -101,7 +96,7 @@ const CoursePage = ({ route }) => {
           question_id: item.question_id,
         }));
         // console.log("in getQuestions 3", questionInfoArray);
-
+        console.log("Default Qs", questionInfoArray);
         setDefaultQuestions(questionInfoArray);
       }
     } catch (error) {
@@ -109,11 +104,12 @@ const CoursePage = ({ route }) => {
     }
   };
 
-  useEffect(() => {
-    getDefaultQuestions();
-    getQuestions();
-  }, []);
-
+  const parseTime = (timeString) => {
+    const [time, period] = timeString.split(" ");
+    const [hours, minutes] = time.split(":").map(Number);
+    const hours24 = period === "PM" ? hours + 12 : hours;
+    return [hours24, minutes];
+  };
   const handleCollabPress = (course, question, deviceIdentifier, prevPage) => {
     navigation.navigate("QuestionPage", {
       course,
@@ -122,19 +118,6 @@ const CoursePage = ({ route }) => {
       prevPage,
     });
   };
-
-  const handleBackHome = (home) => {
-    navigation.navigate("HomePage");
-  };
-
-  // func to parse "HH:MM a" formatted help times
-  const parseTime = (timeString) => {
-    const [time, period] = timeString.split(" ");
-    const [hours, minutes] = time.split(":").map(Number);
-    const hours24 = period === "PM" ? hours + 12 : hours;
-    return [hours24, minutes];
-  };
-
   const renderQuestions = () => {
     if (questions.length === 0 && defaultQuestions.length === 0) {
       return (
@@ -181,7 +164,7 @@ const CoursePage = ({ route }) => {
             style={styles.queueButton}
             onPress={() =>
               handleCollabPress(
-                course,
+                question,
                 question,
                 deviceIdentifier,
                 "CoursePage"
@@ -195,75 +178,40 @@ const CoursePage = ({ route }) => {
     ));
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        // Fetch or update data when the component comes into focus
+        await getQuestions();
+        await getDefaultQuestions();
+      };
+
+      fetchData();
+    }, [])
+  );
+
   return (
-    <View style={[styles.container]}>
-      {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
+    <View style={styles.collabContainer}>
       <View style={styles.appBar}>
-        <TouchableOpacity onPress={handleBackHome}>
+        <TouchableOpacity onPress={handleBackAsk}>
           <View style={styles.backArrow}>
             <Icon name="arrow-left" size={20} color="white" />
-            <Text style={styles.backTEXT}>Home</Text>
+            <Text style={styles.backTEXT}>Ask</Text>
           </View>
         </TouchableOpacity>
       </View>
-
-
-     <View>
-       <View style={styles.classInfo}>
-         <View style={styles.courseHeaderContainer}>
-           <Text style={styles.pageHeader2}>{course.course}</Text>
-         </View>
-
-
-         <View style={styles.courseDetails}>
-           <View style={styles.courseDetailTop}>
-             <View style={{ flexDirection: "row" }}>
-               <Text style={{ fontWeight: "bold" }}>Instructor: </Text>
-               <Text> {course.instructor} </Text>
-             </View>
-             <Text style={{ marginLeft: "auto" }}> 5 Questions in Queue</Text>
-           </View>
-           <View style={styles.courseDetailBottom}>
-             <View style={{ flexDirection: "row" }}>
-               <Text style={{ fontWeight: "bold" }}>Duration: </Text>
-               <Text> {course.duration} </Text>
-             </View>
-             <Text style={{ marginLeft: "auto" }}> 20 Active </Text>
-           </View>
-         </View>
-         <View
-           style={{
-             alignItems: "center",
-             flexDirection: "row",
-            //  justifyContent: "flex-end",
-           }}
-         >
-           <Text
-             style={styles.sectionHeader2}>Queue</Text>
-         </View>
-         <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
-           <TouchableOpacity style={{ justifyContent: "flex-end" }}>
-             <FontIcon
-               name="filter"
-               size={40}
-               style={{ marginTop: -110 * scaleFactor }}
-             ></FontIcon>
-           </TouchableOpacity>
-         </View>
-       </View>
-
-
-        <ScrollView
-          contentContainerStyle={[
-            styles.scrollContainer,
-            { paddingBottom: "65%" },
-          ]}
-        >
-          {renderQuestions()}
-        </ScrollView>
+      <View style={styles.courseHeaderContainer}>
+        <Text style={styles.pageHeader}>Similar Questions</Text>
       </View>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ alignItems: "center", paddingBottom: "20%" }}
+        // PADDING BOTTOM ALLOWS FOR SCROLL TO SEE ALL ITEMS
+      >
+        {renderQuestions()}
+      </ScrollView>
     </View>
   );
 };
 
-export default CoursePage;
+export default Similar;

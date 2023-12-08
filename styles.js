@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   // ----------ALL----------
   container: {
     flex: 1,
-    backgroundColor: "#f2ecff",
+    backgroundColor: "white",
   },
   tabBarContainer: {
     backgroundColor: "white",
@@ -27,7 +27,14 @@ const styles = StyleSheet.create({
     height: "10%",
   },
   appBar: {
-    backgroundColor: "white",
+    backgroundColor: "#5E42A6",
+    height: 115 * scaleFactor,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: "5%",
+  },
+  appBarHome: {
+    // backgroundColor: "#5E42A6",
     height: 115 * scaleFactor,
     flexDirection: "row",
     alignItems: "center",
@@ -66,21 +73,36 @@ const styles = StyleSheet.create({
     marginTop: -50 * scaleFactor, // Moves the title up into header
   },
   pageHeader: {
+    color: "white",
     textAlign: "center",
     fontSize: 40,
     fontWeight: "bold",
-
     // marginTop: -50 * scaleFactor, // Moves the title/course/class up into header
   },
+  pageHeader2: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 40,
+    fontWeight: "bold",
+  },
   sectionHeader: {
-    color: "black",
+    //  color: "black",
+    color: "white",
     fontSize: 30,
-    fontWeight: "normal",
+    fontWeight: "600",
+    marginLeft: "5%",
+  },
+  sectionHeader2: {
+    color: "black",
+    // color: 'white',
+    fontSize: 30,
+    fontWeight: "600",
     marginLeft: "5%",
   },
   backTEXT: {
     fontSize: 18,
     marginLeft: 5,
+    color: "white",
   },
 
   // ----------HomePage----------
@@ -104,10 +126,12 @@ const styles = StyleSheet.create({
     padding: 30,
     margin: 10,
     width: screenWidth * 0.95,
-    borderRadius: 20,
+    borderRadius: 10,
     backgroundColor: "white",
-    borderColor: "#5E42A6",
-    borderWidth: 1.5,
+    //  borderColor: "#5E42A6",
+    borderColor: "white",
+    borderWidth: 2,
+    //  borderWidth: 1.5,
     justifyContent: "space-between", // align items along the row
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -117,19 +141,22 @@ const styles = StyleSheet.create({
   courseBoxTEXT: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "black",
+    //  color: "black",
+    color: "#312450",
     textAlign: "left",
   },
   joinButton: {
     width: 70,
     borderRadius: 20,
     backgroundColor: "#5E42A6",
+    // borderColor: '#312450',
+    // borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
+    //  shadowColor: "#000",
+    //  shadowOffset: { width: 0, height: 2 },
+    //  shadowOpacity: 0.5,
+    //  shadowRadius: 4,
   },
   joinButtonTEXT: {
     color: "white",
@@ -140,12 +167,14 @@ const styles = StyleSheet.create({
     width: 70,
     borderRadius: 20,
     backgroundColor: "#5E42A6",
+    // borderColor: '#312450',
+    // borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
+    //  shadowColor: "#000",
+    //  shadowOffset: { width: 0, height: 2 },
+    //  shadowOpacity: 0.5,
+    //  shadowRadius: 10,
   },
   askButtonTEXT: {
     color: "white",
@@ -162,7 +191,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: screenWidth * 0.7,
     height: screenHeight,
-    backgroundColor: "#DDCFFF",
+    //  backgroundColor: "#DDCFFF",
+    backgroundColor: "#312450",
     borderRadius: 20, // round corners
     padding: "10%",
     alignItems: "center",
@@ -183,19 +213,21 @@ const styles = StyleSheet.create({
     fontSize: scaleFactor * 27,
     textAlign: "center",
     fontWeight: "bold",
+    color: "white",
   },
   menuModalBody: {
     marginTop: "20%",
     textAlign: "center",
     fontSize: scaleFactor * 20,
     marginTop: 5,
+    color: "white",
   },
   menuModalImage: {
     width: 75,
     height: 75,
     borderRadius: 40,
     marginTop: "50%",
-    borderColor: "#5E42A6",
+    borderColor: "white",
     borderWidth: 3,
   },
   logoutButtonContainer: {
@@ -206,6 +238,8 @@ const styles = StyleSheet.create({
   logoutButton: {
     borderRadius: 25,
     backgroundColor: "#5E42A6",
+    // borderColor: 'white',
+    borderWidth: 2,
     padding: 10,
     width: "150%",
     textAlign: "center",
@@ -271,10 +305,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   questionPageBox: {
-    borderBottomColor: "#5E42A6",
+    // borderBottomColor: "#5E42A6",
+    backgroundColor: "#5E42A6",
     borderBottomWidth: 2,
-    backgroundColor: "white",
-    height: screenHeight * 0.23,
+    // backgroundColor: "white",
+    height: screenHeight * 0.2,
   },
   questionPageBoxHeader: {
     flexDirection: "row",
@@ -372,7 +407,7 @@ const styles = StyleSheet.create({
   grayMessage: {
     borderRadius: 10,
     padding: 10,
-    backgroundColor: "white",
+    backgroundColor: "#DDD",
     maxWidth: "50%",
   },
   grayMessageInitials: {
@@ -392,7 +427,7 @@ const styles = StyleSheet.create({
   purpleMessage: {
     borderRadius: 10,
     padding: 10,
-    backgroundColor: "#B74E91",
+    backgroundColor: "#5E42A6",
     maxWidth: "50%",
     marginRight: 5,
   },
@@ -407,6 +442,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "200",
     marginTop: "20%",
+    color: "white",
+    fontSize: scaleFactor * 15,
   },
   // ------ Text Message Styling  --------
 
@@ -434,11 +471,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+    // color: 'white',
   },
   modalHeaderTEXT2: {
     margin: 20,
     fontSize: 20,
     textAlign: "center",
+    // color: 'white',
   },
   modalCollabUncollabTEXT: {
     width: 175,
@@ -532,6 +571,7 @@ const styles = StyleSheet.create({
   questionHost: {
     fontSize: 18,
     fontWeight: "200",
+    color: "white",
   },
   numCollaborators: {
     flexDirection: "row",
@@ -567,6 +607,66 @@ const styles = StyleSheet.create({
   cameraIcon: {
     marginLeft: 5, // add space between the text input and camera icon
   },
+  cameraExitButton: {
+    borderWidth: 2,
+    borderColor: "blue",
+    position: "absolute",
+    top: 50 * scaleFactor,
+    left: 30 * scaleFactor,
+  },
+  takePictureButtonContainer: {
+    bottom: 0,
+    alignItems: "center",
+    paddingBottom: 10,
+  },
+  takePictureButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: "white",
+    width: 75,
+    height: 75,
+    paddingBot: 10,
+  },
+  flipContainer: {
+    position: "absolute",
+    bottom: 0,
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    position: "absolute",
+    right: 0,
+  },
+  flipCameraButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: 20,
+  },
+  cameraExitButton: {
+    position: "absolute",
+    top: 60,
+    left: 30,
+  },
+  usePicButton: {
+    flexDirection: "row",
+    width: "50%",
+    color: "white",
+    justifyContent: "flex-end",
+  },
+  retakeButton: {
+    width: "50%",
+    color: "white",
+    paddingLeft: 65,
+    paddingBottom: 40,
+  },
+  bottomRowContainer: {
+    flexDirection: "row",
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+  },
   // ------ Question Page w/ Chat  --------
 
   // ------ Notification Info --------
@@ -587,6 +687,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexWrap: "wrap", // Allow text to wrap
     overflow: "hidden", // Hide overflow content
+    color: "white",
   },
   NotiIcon: {
     marginLeft: "5%",
@@ -657,6 +758,10 @@ const styles = StyleSheet.create({
   // ------ Collab Info --------
 
   // ------ Ask Page  --------
+  askContainer: {
+    flex: 1,
+    backgroundColor: "#5E42A6",
+  },
   tagsContainer: {
     justifyContent: "space-around",
     height: 0.2 * screenHeight,
@@ -671,23 +776,25 @@ const styles = StyleSheet.create({
   },
   tagButton: {
     borderRadius: 30,
-    backgroundColor: "white",
-    borderColor: "#5E42A6",
+    //  backgroundColor: "white",
+    borderColor: "white",
     padding: 3,
     paddingHorizontal: 10,
     borderWidth: 2,
     margin: 2,
+    //  marginRight: 8,
+    //  marginLeft: 8,
   },
   questionBoxContainer: {
     height: 0.35 * screenHeight,
   },
   questionInput: {
-    backgroundColor: "white",
+    //  backgroundColor: "white",
     height: "60%",
     margin: "10%",
     marginBottom: 0,
-    borderColor: "purple",
-    borderWidth: 0.5,
+    borderColor: "white",
+    borderWidth: 2,
     borderRadius: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 10 },
@@ -695,7 +802,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   submitQuestionButton: {
-    backgroundColor: "#5E42A6",
+    //  backgroundColor: "#5E42A6",
+    borderColor: "white",
+    borderWidth: 2,
     paddingHorizontal: "10%",
     paddingVertical: "1%",
     borderRadius: 40,
@@ -710,76 +819,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   selectedTag: {
-    backgroundColor: "#5E42A6", // Apply your desired background color for selected tags
+    backgroundColor: "white", // Apply your desired background color for selected tags
     borderColor: "white",
-  },
-  submissionModalContent: {
-    width: screenWidth * 0.7,
-    height: screenHeight * 0.5,
-    backgroundColor: "#DDCFFF",
-    borderRadius: 20, // round corners
-  },
-  submissionModalTEXT: {
-    marginTop: "75%",
-    textAlign: "center",
   },
   // ------ Ask Page  --------
-
-  // ------ Camera Page ------
-  takePictureButtonContainer: {
-    bottom: 0,
-    alignItems: "center",
-    paddingBottom: 10,
-  },
-  takePictureButton: {
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: "white",
-    width: 75,
-    height: 75,
-    paddingBot: 10,
-  },
-  flipContainer: {
-    position: "absolute",
-    bottom: 0,
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    position: "absolute",
-    right: 0,
-  },
-  flipCameraButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: 20,
-  },
-  cameraExitButton: {
-    position: "absolute",
-    top: 60,
-    left: 30,
-  },
-  usePicButton: {
-    flexDirection: "row",
-    width: "50%",
-    color: "white",
-    justifyContent: "flex-end",
-  },
-  retakeButton: {
-    width: "50%",
-    color: "white",
-    paddingLeft: 65,
-    paddingBottom: 40,
-  },
-  bottomRowContainer: {
-    flexDirection: "row",
-    position: "absolute",
-    width: "100%",
-    bottom: 0,
-  },
-  // ------ Camera Page ------
 });
 
 export default styles;

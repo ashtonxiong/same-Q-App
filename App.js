@@ -11,6 +11,7 @@ import Icon from "react-native-vector-icons/SimpleLineIcons";
 import CollabPage from "./components/CollabPage";
 import FillerPage from "./components/FillerPage";
 import SettingsPage from "./components/SettingsPage";
+import Similar from "./components/Similar";
 import { DeviceIdentifierProvider } from "./components/deviceID";
 
 const Stack = createStackNavigator();
@@ -30,6 +31,7 @@ const MainStack = () => {
       <Stack.Screen name="AskPage" component={AskPage} />
       <Stack.Screen name="FillerPage" component={FillerPage} />
       <Stack.Screen name="SettingsPage" component={SettingsPage} />
+      <Stack.Screen name="Similar" component={Similar} />
     </Stack.Navigator>
   );
 };
@@ -42,6 +44,17 @@ const CollabStackScreen = () => {
       <CollabStack.Screen name="CollabPage" component={CollabPage} />
       <CollabStack.Screen name="QuestionPage" component={QuestionPage} />
     </CollabStack.Navigator>
+  );
+};
+
+const AskStack = createStackNavigator();
+
+const AskStackScreen = () => {
+  return (
+    <AskStack.Navigator screenOptions={{ headerShown: false }}>
+      <AskStack.Screen name="AskPage" component={AskPage} />
+      <AskStack.Screen name="Similar" component={Similar} />
+    </AskStack.Navigator>
   );
 };
 
@@ -92,7 +105,7 @@ const App = () => {
           />
           <Tab.Screen
             name="Ask"
-            component={AskPage}
+            component={AskStackScreen}
             options={{
               tabBarIcon: ({ color, size, focused }) => (
                 <Icon

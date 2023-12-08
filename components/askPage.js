@@ -8,6 +8,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
+  ImageBackground,
 } from "react-native";
 // import DropDownPicker from "react-native-dropdown-picker";
 import { useNavigation } from "@react-navigation/native";
@@ -205,6 +206,23 @@ const AskPage = ({ route }) => {
       prevPage,
     });
   };
+
+  const handleSimilarQuestions = (
+    course,
+    question,
+    deviceIdentifier,
+    prevPage
+  ) => {
+    closeSubmission();
+    console.log(`Navigating to Similar with question:`, question);
+    navigation.navigate("Similar", {
+      question,
+      question,
+      deviceIdentifier,
+      prevPage,
+    });
+  };
+
   const renderClasses = () => {
     return classes.map((classItem) => (
       <TouchableOpacity
@@ -220,7 +238,7 @@ const AskPage = ({ route }) => {
           <Text
             style={[
               {
-                color: selectedClass.includes(classItem) ? "white" : "black",
+                color: selectedClass.includes(classItem) ? "black" : "white",
                 fontSize: 14,
                 fontWeight: 600,
               }, // Set text color conditionally
@@ -245,9 +263,10 @@ const AskPage = ({ route }) => {
           <Text
             style={[
               {
-                color: selectedTags.includes(tag) ? "white" : "black",
+                color: selectedTags.includes(tag) ? "black" : "white",
                 fontSize: 14,
                 fontWeight: 600,
+                // color: 'white'
               }, // Set text color conditionally
             ]}
           >
@@ -266,7 +285,7 @@ const AskPage = ({ route }) => {
     text.length >= characterLimit ? (
       "Error: Character Limit has been reached"
     ) : (
-      <Text>
+      <Text style={{ color: "white" }}>
         Character Limit: {text.length} / {characterLimit}{" "}
       </Text>
     );
@@ -294,9 +313,10 @@ const AskPage = ({ route }) => {
   };
 
   return (
-    <View style={{ backgroundColor: "#DDCFFF", flex: 1 }}>
+    <View style={styles.askContainer}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{}}>
-        <View style={styles.container}>
+        <View style={styles.askContainer}>
+          {/* <ImageBackground style={styles.container} source={require('../assets/gradient.png')} resizeMode="cover"> */}
           <View style={styles.appBar}>
             {/* <TouchableOpacity onPress={clickMenuModal}>
             <View style={styles.backArrow}>
@@ -331,17 +351,24 @@ const AskPage = ({ route }) => {
                 paddingBottom: 10 * scaleFactor,
               }}
             >
-              <Text style={{ fontSize: 20 * scaleFactor }}>Select Class</Text>
+              <Text style={{ fontSize: 20 * scaleFactor, color: "white" }}>
+                Select Class
+              </Text>
               <View style={{ flexDirection: "row" }}>{renderClasses()}</View>
             </View>
             <View style={[styles.tags]}>
-              <Text style={{ paddingRight: "5%", fontSize: 20 }}> Tags:</Text>
+              <Text
+                style={{ paddingRight: "5%", fontSize: 20, color: "white" }}
+              >
+                {" "}
+                Tags:
+              </Text>
               {renderTags()}
             </View>
           </View>
 
           <View style={[styles.questionBoxContainer]}>
-            <View style={[styles.questionInput, { borderColor: borderColor }]}>
+            <View style={[styles.questionInput, { borderColor: "white" }]}>
               <TextInput
                 multiline
                 style={{
@@ -353,9 +380,10 @@ const AskPage = ({ route }) => {
                   flexWrap: "wrap",
                   maxWidth: "100%",
                   marginBottom: 0,
+                  color: "white",
                 }}
                 placeholder="Press to start typing…"
-                placeholderTextColor={"black"}
+                placeholderTextColor={"white"}
                 value={text}
                 onChangeText={handleTextChange} // Use onChangeText instead of onChange
               />
@@ -385,14 +413,15 @@ const AskPage = ({ route }) => {
                     fontSize: 13,
                     fontWeight: "bold",
                     marginRight: "5%",
+                    color: "white",
                   }}
                 >
                   Make Question Private:
                 </Text>
                 {isChecked ? (
-                  <Icon name="check" size={18} color="green" />
+                  <Icon name="check" size={18} color="white" />
                 ) : (
-                  <Icon name="square-o" size={20} color="#5E42A6" />
+                  <Icon name="square-o" size={20} color="white" />
                 )}
               </TouchableOpacity>
               {/* ------ Private Question ----- */}
@@ -425,18 +454,6 @@ const AskPage = ({ route }) => {
             </TouchableOpacity>
           </View>
 
-          {/* <Modal transparent={true} visible={isModalVisible}>
-          <TouchableWithoutFeedback onPress={closeModal}>
-            <View style={styles.menuModalOverlay}>
-              <TouchableWithoutFeedback onPress={() => addQuestion()}>
-                <View style={styles.menuModalContent}>
-                  <Text style={styles.menuModalTEXT}>TEST</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal> */}
-
           <Modal transparent={true} visible={isSubmissionVisible}>
             <TouchableWithoutFeedback onPress={closeSubmission}>
               <View
@@ -444,64 +461,126 @@ const AskPage = ({ route }) => {
                   alignItems: "center",
                   flex: 1,
                   justifyContent: "center",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)", // semi-transparent black background
+                  backgroundColor: "rgba(0, 0, 0, 0.3)", // semi-transparent black background
                 }}
               >
                 {/* <TouchableWithoutFeedback onPress={() => addQuestion()}> */}
                 <View
                   style={[
                     styles.submissionModalContent,
-                    { flexDirection: "column" },
+                    {
+                      flexDirection: "column",
+                      // borderColor: "blue",
+                      // borderWidth: 3,
+                      height: "30%",
+                      justifyContent: "center",
+                      width: "75%",
+                    },
                   ]}
                 >
-                  <View
+                  {/* <View
                     style={{
                       alignItems: "center",
                       justifyContent: "center",
                       height: "50%",
+                      borderColor: "orange",
+                      borderWidth: 3,
                     }}
                   >
                     <Text style={{ fontSize: 20 * scaleFactor }}>
                       Question added to Queue
                     </Text>
-                  </View>
-                  <TouchableOpacity
+                  </View> */}
+                  <View
                     style={{
+                      // borderWidth: 1,
+                      // borderColor: "red",
                       flex: 1,
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "flex-end",
-                      height: "100%",
-                      paddingBottom: "10%",
+                      // flexDirection: "row",
                     }}
-                    onPress={() =>
-                      handleViewQuestion(
-                        classObject,
-                        classObject,
-                        deviceIdentifier,
-                        "CollabPage"
-                      )
-                    }
                   >
-                    <View
+                    <TouchableOpacity
                       style={{
-                        borderWidth: 1,
-                        paddingHorizontal: "5%",
-                        paddingVertical: "1%",
-                        borderRadius: 10,
-                        backgroundColor: "#5E42A6",
+                        flex: 1,
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        // paddingBottom: "5%",
+                        shadowColor: "#000",
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.5,
+                        shadowRadius: 4,
                       }}
+                      onPress={() =>
+                        handleViewQuestion(
+                          classObject,
+                          classObject,
+                          deviceIdentifier,
+                          "CollabPage"
+                        )
+                      }
                     >
-                      <Text
+                      <View
                         style={{
-                          color: "white",
-                          fontSize: 15 * scaleFactor,
+                          borderWidth: 1,
+                          paddingHorizontal: "5%",
+                          paddingVertical: "1%",
+                          borderRadius: 15,
+                          backgroundColor: "#5E42A6",
                         }}
                       >
-                        View Question
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 20 * scaleFactor,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Submit Question
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        paddingBottom: "20%",
+                        shadowColor: "#000",
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.5,
+                        shadowRadius: 4,
+                      }}
+                      onPress={() =>
+                        handleSimilarQuestions(
+                          classObject,
+                          classObject,
+                          deviceIdentifier,
+                          "SimilarQuestions"
+                        )
+                      }
+                    >
+                      <View
+                        style={{
+                          borderWidth: 1,
+                          paddingHorizontal: "5%",
+                          paddingVertical: "1%",
+                          borderRadius: 15,
+                          backgroundColor: "#5E42A6",
+                        }}
+                      >
+                        <Text
+                          style={{
+                            color: "white",
+                            fontSize: 20 * scaleFactor,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          View Similar Questions
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 {/* </TouchableWithoutFeedback> */}
               </View>
