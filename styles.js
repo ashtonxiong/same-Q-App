@@ -29,9 +29,10 @@ const styles = StyleSheet.create({
  appBar: {
    backgroundColor: "#5E42A6",
    height: 115 * scaleFactor,
-   flexDirection: "row",
-   alignItems: "center",
+   flexDirection: "column",
+  //  alignItems: "center",
    paddingHorizontal: "5%",
+   paddingTop: "10%"
  },
  appBarHome: {
   // backgroundColor: "#5E42A6",
@@ -40,14 +41,28 @@ const styles = StyleSheet.create({
   alignItems: "center",
   paddingHorizontal: "5%",
 },
- backArrow: {
-   flexDirection: "row",
-   justifyContent: "left",
-   shadowColor: "#000",
-   shadowOffset: { width: 0, height: 10 },
-   shadowOpacity: 0.2,
-   shadowRadius: 4,
- },
+backArrow: {
+  flexDirection: 'row',
+  justifyContent: 'left',
+  paddingBottom: 10,
+  paddingRight: 50
+},
+backArrowSeamus: {
+  position: 'absolute',
+  top: 40 * scaleFactor,
+  left: 20 *scaleFactor,
+  padding: 20
+},
+backTextBar: {
+  flexDirection: 'row', // Horizontal layout
+  alignItems: 'center', // Center items vertically
+},
+ backButton: {
+  position: 'absolute',
+  left: 5 * scaleFactor,
+  top: 50 * scaleFactor,
+  padding: 10
+},
  headerContainer: {
    flex: 1,
    alignItems: "center",
@@ -768,7 +783,68 @@ fakePage: {
    backgroundColor: "white", // Apply your desired background color for selected tags
    borderColor: "white",
  },
- // ------ Ask Page  --------
+ // ------ New Question Boxes  --------
+      queueBox: {
+        margin: 10,
+        width: screenWidth * 0.95,
+        justifyContent: 'space-between',
+        maxHeight: '35%',
+
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        elevation: 8, // Increased elevation for a more pronounced effect on Android
+        shadowColor: '#000', // iOS shadow
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.4, // Increased shadow opacity for a more pronounced effect on iOS
+        shadowRadius: 4,
+        padding: 10,
+
+
+      },
+      queueTopRow: {
+        // borderBlockColor: "green",
+        // borderWidth: 2,
+        flexDirection: "row",
+        justifyContent: 'space-between',
+        marginBottom: 5
+      },
+      questionNumsBlock: {
+        flexDirection: 'row',
+        alignSelf: 'flex-end'
+      },
+      iconBlock: {
+        flexDirection: "row",
+      },
+      questionIcon: {
+        alignSelf: "center"
+      },
+      expectedText: {
+        marginLeft: 5,
+        fontSize: 20,
+        alignSelf: 'flex-end',
+      },
+      queueBot: {
+        // borderBlockColor: "white",
+        // borderWidth: 2,
+        marginTop: 5,
+        flexWrap: 'wrap', // Allow text to wrap
+        overflow: 'hidden', // Hide overflow content
+        flexDirection: "row",
+        justifyContent: 'center', // align items along the row
+      },
+      button: {
+        //height: "100%",
+        borderRadius: 20,
+        backgroundColor: '#5e42a6',
+        padding: 5,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+      },
+      buttonText: {
+        color: 'white',
+        fontSize: 20 * scaleFactor,
+        fontWeight: 'bold',
+      },
 });
 
 export default styles;

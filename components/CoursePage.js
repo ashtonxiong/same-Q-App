@@ -5,13 +5,14 @@ import {
   TouchableOpacity,
   ScrollView,
   Dimensions,
+  TouchableWithoutFeedback
 } from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import styles from "../styles";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
 import { supabase } from "../supabase";
 import { de } from "date-fns/locale";
-import FontIcon from "react-native-vector-icons/FontAwesome";
+import FAIcon from "react-native-vector-icons/FontAwesome5";
 
 const CoursePage = ({ route }) => {
   const { course, deviceIdentifier } = route.params;
@@ -156,49 +157,110 @@ const CoursePage = ({ route }) => {
 
     return sortedQuestionsArray.map((question) => (
       <View key={question.uid} style={styles.queueBox}>
-        {/* top row */}
-        <View style={styles.queueTopRow}>
-          {/* <View style={styles.queueMiniBox}>
+              {/* top row */}
+              <View style={styles.queueTopRow}>
+                <View style={styles.questionNumsBlock}>
+                  <View style={styles.iconBlock}>
+                    <FAIcon name="clock" size={20 * scaleFactor} style={styles.questionIcon}/>
+                    <Text style={styles.expectedText}>{question.expected_help}  </Text>
+                  </View>
+                </View>
 
-        </View> */}
-          <Icon name="clock" size={15 * scaleFactor} />
-          <Text style={styles.queueTopRowText}>{question.expected_help} </Text>
+                <View style={styles.questionNumsBlock}>
+                <View style={styles.iconBlock}>
+                    <FAIcon name="user" size={20 * scaleFactor} style={styles.questionIcon}/>
+                    <Text
+                      style={styles.expectedText}>
+                       {question.num_collaborators}
+                    </Text>
+                  </View>
+                  {/* <View style={styles.iconBlock}>
+                    <FAIcon name="volume-up" size={20 * scaleFactor} style={styles.questionIcon}/>
+                    <Text style={styles.expectedText}>
+                      {time.earphone}  </Text>
+                    <FAIcon name="comments" size={20 * scaleFactor} style={styles.questionIcon}/>
+                    <Text style={styles.expectedText}>
+                      {time.earphone}</Text>
+                  </View> */}
+                </View>
+              </View>
 
-          <Icon name="people" size={15 * scaleFactor} />
-          <Text style={styles.queueTopRowText}>{question.num_collab}</Text>
-        </View>
+              {/* middle row */}
+              <View style={styles.queueMid}>
+                <Text style={{ fontSize: 20, color: "#000000" }}>
+                  {question.question}
+                </Text>
+              </View>
 
-        {/* middle row */}
-        <View style={styles.queueMid}>
-          <Text style={{ fontSize: 17 * scaleFactor, color: "#000000" }}>
-            {question.question}
-          </Text>
-        </View>
+              {/* bottom row */}
+              <View style={styles.queueBot}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => handleCollabPress(
+                    course,
+                    question,
+                    deviceIdentifier,
+                    "CoursePage"
+                  )}
+                >
+                  <Text style={styles.buttonText}> Collaborate </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+      // <View key={question.uid} style={styles.queueBox}>
+      //   {/* top row */}
+      //   <View style={styles.queueTopRow}>
+      //     {/* <View style={styles.queueMiniBox}>
 
-        {/* bottom row */}
-        <View style={styles.queueBot}>
-          <TouchableOpacity
-            style={styles.queueButton}
-            onPress={() =>
-              handleCollabPress(
-                course,
-                question,
-                deviceIdentifier,
-                "CoursePage"
-              )
-            }
-          >
-            <Text style={styles.queueButtonText}> View </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      //   </View> */}
+      //     <Icon name="clock" size={15 * scaleFactor} />
+      //     <Text style={styles.queueTopRowText}>{question.expected_help} </Text>
+
+      //     <Icon name="people" size={15 * scaleFactor} />
+      //     <Text style={styles.queueTopRowText}>{question.num_collab}</Text>
+      //   </View>
+
+      //   {/* middle row */}
+      //   <View style={styles.queueMid}>
+      //     <Text style={{ fontSize: 17 * scaleFactor, color: "#000000" }}>
+      //       {question.question}
+      //     </Text>
+      //   </View>
+
+      //   {/* bottom row */}
+      //   <View style={styles.queueBot}>
+      //     <TouchableOpacity
+      //       style={styles.queueButton}
+      //       onPress={() =>
+      //         handleCollabPress(
+      //           course,
+      //           question,
+      //           deviceIdentifier,
+      //           "CoursePage"
+      //         )
+      //       }
+      //     >
+      //       <Text style={styles.queueButtonText}> View </Text>
+      //     </TouchableOpacity>
+      //   </View>
+      // </View>
     ));
   };
 
   return (
     <View style={[styles.container]}>
-      {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
       <View style={styles.appBar}>
+        <Text style={styles.pageHeader}>{course.course}</Text>
+        <Text style={{ color: 'white', alignSelf: 'center' }}>{course.duration} • {course.instructor}</Text>
+
+      </View>
+      <TouchableOpacity style={styles.backArrowSeamus} onPress={handleBackHome}>
+        <View >
+          <Icon name="arrow-left" size={20} color="white" />
+        </View>
+      </TouchableOpacity>
+      {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
+      {/* <View style={styles.appBar}>
         <TouchableOpacity onPress={handleBackHome}>
           <View style={styles.backArrow}>
             <Icon name="arrow-left" size={20} color="white" />
@@ -241,7 +303,7 @@ const CoursePage = ({ route }) => {
            <Text
              style={styles.sectionHeader2}>Queue</Text>
          </View>
-         <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+         {/* <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
            <TouchableOpacity style={{ justifyContent: "flex-end" }}>
              <FontIcon
                name="filter"
@@ -250,18 +312,17 @@ const CoursePage = ({ route }) => {
              ></FontIcon>
            </TouchableOpacity>
          </View>
-       </View>
+       </View> */}
 
 
-        <ScrollView
-          contentContainerStyle={[
-            styles.scrollContainer,
-            { paddingBottom: "65%" },
-          ]}
-        >
-          {renderQuestions()}
-        </ScrollView>
-      </View>
+      <ScrollView
+        contentContainerStyle={[
+          styles.scrollContainer,
+          { paddingBottom: "65%" },
+        ]}
+      >
+        {renderQuestions()}
+      </ScrollView>
     </View>
   );
 };
