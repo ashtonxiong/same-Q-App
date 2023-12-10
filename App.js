@@ -13,6 +13,7 @@ import FillerPage from "./components/FillerPage";
 import SettingsPage from "./components/SettingsPage";
 import Similar from "./components/Similar";
 import { DeviceIdentifierProvider } from "./components/deviceID";
+// import "react-native-gesture-handler";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
