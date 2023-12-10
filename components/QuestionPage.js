@@ -50,8 +50,6 @@ const QuestionPage = ({ route }) => {
   const [message, setText] = useState("");
   const messagesRef = useRef(null);
   const isFocused = useIsFocused();
-
-  const [collabStatus, setCollabStatus] = useState(["Collaborate"]);
   const [isMuted, setMuted] = useState(true);
 
   const [isCameraOpen, setIsCameraOpen] = useState(false);
@@ -61,6 +59,74 @@ const QuestionPage = ({ route }) => {
   const cameraRef = useRef(null);
   const [capturedImageUri, setCapturedImageUri] = useState(null);
   const [messageArray, setMessageArray] = useState([]);
+
+  const [collabStatus, setCollabStatus] = useState(["Collaborate"]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const questionIDToCheck = question.question_id; // Replace with the actual question ID you want to check
+  //       const result = await determineCollaboration(questionIDToCheck);
+  //       console.log(result);
+  //       setCollabStatus(result);
+
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //       setCollabStatus('');
+  //     }
+  //   };
+
+  //   fetchData(); // Call the fetchData function when the component mounts
+  // }, []);
+
+  // const determineCollaboration = async (questionID) => {
+
+  //   try {
+  //     const questions = await getCollabQuestions();
+  
+  //     const hasObject = questions.some(item => item.question_id === questionID);
+  
+  //     return hasObject ? "Join Question" : "Leave Question";
+  //   } catch (error) {
+  //     return 'Error'; // Return a default value or handle the error in a way that makes sense for your application
+  //   }
+  // }
+
+  // const getCollabQuestions = async () => {
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from("sameQ-app-collab")
+  //       .select("*")
+  //       // .eq("collab_status", "TRUE")
+  //       .eq("device_id", deviceIdentifier);
+
+  //     // console.log("DATA IN COLLAB PAGE", question);
+
+  //     if (data) {
+  //       // 'data' is an array of objects with 'id' and 'course' columns
+  //       const collabQuestionsArray = data.map((item) => ({
+  //         uid: item.uid,
+  //         course: item.course,
+  //         question: item.question,
+  //         created: item.created,
+  //         author: item.author,
+  //         num_collaborators: item.num_collaborators,
+  //         num_huddle: item.num_huddle,
+  //         expected_help: item.expected_help,
+  //         collab_status: item.collab_status,
+  //         question_id: item.question_id,
+  //         device_id: deviceIdentifier,
+  //         huddlers: item.huddlers,
+  //       }));
+  //       // console.log("test collabQuestions", data);
+
+  //       setCollabQuestions(collabQuestionsArray);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data from Supabase:", error.message);
+  //   }
+  // };
+
 
   const getChats = async () => {
     try {
@@ -171,6 +237,7 @@ const QuestionPage = ({ route }) => {
   };
 
   const addCollab = async (course, questionObj) => {
+    console.log(question.question_id)
     //question_id not passed into params
     try {
       const { error } = await supabase.from("sameQ-app-collab").insert([
@@ -187,7 +254,7 @@ const QuestionPage = ({ route }) => {
           huddlers: {},
           question_id: `${question.question_id}`,
           device_id: `${deviceIdentifier}`,
-        },
+        }, 
       ]);
       if (error) {
         throw new Error(error.message);
@@ -251,6 +318,7 @@ const QuestionPage = ({ route }) => {
       console.error("Error fetching data from Supabase:", error.message);
     }
   };
+
 
   useEffect(() => {
     getDefaultChats();
@@ -433,13 +501,7 @@ const QuestionPage = ({ route }) => {
 
   const handleMessageSend = async (course, question, message) => {
     try {
-      if (collabStatus[0] === "Collaborate") {
-        Alert.alert(
-          "Cannot Send Message",
-          "Begin collaborating on the question first!",
-          [{ text: "OK", onPress: () => {} }]
-        );
-      } else {
+
         console.log(
           "Sending new message:",
           message,
@@ -456,7 +518,7 @@ const QuestionPage = ({ route }) => {
             messagesRef.current.scrollToEnd({ animated: true });
           }, 100); // delay to ensure message is added before scrolling
         }
-      }
+
     } catch (error) {
       console.error("Error sending message:", error.message);
     }
@@ -714,61 +776,56 @@ const QuestionPage = ({ route }) => {
           {/* <Text>Device identifier: {deviceIdentifier}</Text> */}
           <Image source={{ uri: capturedImageUri }} />
           <View style={styles.questionPageBox}>
-            <View style={styles.questionPageBoxHeader}>
-              {course.course ? ( // check if course.course is defined
-                <TouchableOpacity
-                  onPress={() => handleBackCourse(course, deviceIdentifier)}
-                >
-                  <View style={styles.backArrow}>
-                    <Icon name="arrow-left" size={20} color="white" />
-                    <Text style={styles.backTEXT}>{course.course}</Text>
-                  </View>
-                </TouchableOpacity>
-              ) : (
-                // if course.course is undefined, we came from the collab page
-                <TouchableOpacity onPress={handleBackCollab}>
-                  <View style={styles.backArrow}>
-                    <Icon name="arrow-left" size={20} color="white" />
-                    <Text style={styles.backTEXT}>Collaborating</Text>
-                  </View>
-                </TouchableOpacity>
-              )}
-              <TouchableOpacity onPress={clickMoreModal}>
-                <View style={styles.backArrow}>
-                  <Icon name="exclamation" size={20} color="white" />
-                  <Text style={styles.backTEXT}>More Info</Text>
-                </View>
-              </TouchableOpacity>
+            <View style={styles.questionTEXT}>
+              <Text style={{ fontSize: 17, color:'white' }}>{question.question}</Text>
+              <TouchableOpacity
+                      style={styles.modalCollabUncollabTEXT}
+                      onPress={() =>
+                        handleCollabUncollabPress(course, question)
+                      }
+                    >
+                      <Text style={styles.courseCollabButtonText}>
+                        {collabStatus} {question.time}
+                      </Text>
+                    </TouchableOpacity>
             </View>
 
-            <View style={styles.questionInfoHeader}>
-              <View style={styles.numCollaborators}>
+            <View style={[styles.questionInfoHeader]}>
+              {/* <View style={styles.numCollaborators}>
                 <TouchableOpacity onPress={clickPeopleModal}>
                   <View style={styles.backArrow}>
                     <Icon name="people" size={30} color="white" />
                   </View>
                 </TouchableOpacity>
                 <Text style={{ fontSize: 20 }}> {actualNumCollaborators} </Text>
-              </View>
-              <Text style={[styles.questionHost, { fontWeight: "bold" }]}>
-                Asked by: {question.author}
-              </Text>
+              </View> */}
+              {/* <TouchableOpacity onPress={clickMoreModal}>
+                <View style={styles.backArrowBigButton}>
+                  <Icon name="exclamation" size={30} color="white" />
+                </View>
+              </TouchableOpacity> */}
               <View style={styles.numInHuddle}>
                 {inHuddle && <BlinkingDot inHuddle={inHuddle} />}
                 <TouchableOpacity onPress={clickHuddleModal}>
-                  <View style={styles.backArrow}>
-                    <Icon name="earphones" size={30} color="white" />
+                  <View style={styles.backArrowBigButton}>
+                    <Icon name="earphones" size={25} color="white" />
                   </View>
                 </TouchableOpacity>
               </View>
             </View>
-
-            <View style={{ alignItems: "center" }}>
-              <Text style={{ fontSize: 17, color: "white" }}>
-                {question.question}
-              </Text>
-            </View>
           </View>
+          {course.course ? ( // check if course.course is defined
+              <TouchableOpacity style={styles.backArrowSeamus}
+                onPress={() => handleBackCourse(course, deviceIdentifier)}
+              >
+                <Icon name="arrow-left" size={20} color="white" />
+              </TouchableOpacity>
+            ) : (
+              // if course.course is undefined, we came from the collab page
+              <TouchableOpacity style={styles.backArrowSeamus} onPress={handleBackCollab}>
+                <Icon name="arrow-left" size={20} color="white" />
+              </TouchableOpacity>
+            )}
 
           <ScrollView
             ref={messagesRef}
@@ -784,7 +841,7 @@ const QuestionPage = ({ route }) => {
               color="#000"
               style={styles.emojiIcon}
             />
-            {collabStatus[0] === "Collaborate" ? (
+            {collabStatus[0] === "Join Question" ? (
               <TouchableOpacity>
                 <Icon
                   name="camera"
@@ -804,18 +861,12 @@ const QuestionPage = ({ route }) => {
               </TouchableOpacity>
             )}
 
-            {collabStatus[0] === "Collaborate" ? (
-              <Text style={styles.input2}>
-                Begin collaborating on the question first!
-              </Text>
-            ) : (
               <TextInput
                 style={styles.input}
                 placeholder="Click to start typing…"
                 value={message}
                 onChangeText={(newMessage) => setText(newMessage)}
               />
-            )}
 
             <TouchableOpacity
               onPress={() => handleMessageSend(course, question, message)}
@@ -854,7 +905,6 @@ const QuestionPage = ({ route }) => {
                     Current Collaborators: {actualNumCollaborators} {"\n"}{" "}
                     {"\n"}
                     {/* Total Collaborators: {question.num_collab} {'\n'} {'\n'} */}
-                    Last Active: XXX
                   </Text>
 
                   <View style={styles.modalCollabUncollab}>
@@ -878,16 +928,6 @@ const QuestionPage = ({ route }) => {
             <TouchableWithoutFeedback onPress={closeHuddleModal}>
               <View style={styles.customHuddleModalOverlay}>
                 <TouchableWithoutFeedback onPress={() => {}}>
-                  {collabStatus[0] === "Collaborate" ? (
-                    <View style={styles.huddleModalContent2}>
-                      <Text style={styles.huddleModalHeaderText}>
-                        Begin collaborating on the question first!
-                      </Text>
-                      <Text style={styles.huddleModalBodyText}>
-                        Click the 'More Info' to collaborate.
-                      </Text>
-                    </View>
-                  ) : (
                     <View style={styles.huddleModalContent}>
                       <Text style={styles.collabModalHeaderText}>Huddle</Text>
                       <Text style={styles.collabModalBodyText}>
@@ -904,7 +944,6 @@ const QuestionPage = ({ route }) => {
                         onLeaveHuddle={handleLeaveHuddle}
                       />
                     </View>
-                  )}
                 </TouchableWithoutFeedback>
               </View>
             </TouchableWithoutFeedback>

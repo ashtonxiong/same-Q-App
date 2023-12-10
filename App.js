@@ -13,6 +13,7 @@ import FillerPage from "./components/FillerPage";
 import SettingsPage from "./components/SettingsPage";
 import Similar from "./components/Similar";
 import { DeviceIdentifierProvider } from "./components/deviceID";
+// import "react-native-gesture-handler";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,6 +29,7 @@ const MainStack = () => {
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="QuestionPage" component={QuestionPage} />
       <Stack.Screen name="CollabPage" component={CollabPage} />
+      {/* <Stack.Screen name="AskPage" component={AskPage} /> */}
       <Stack.Screen name="AskPage" component={AskPage} />
       <Stack.Screen name="FillerPage" component={FillerPage} />
       <Stack.Screen name="SettingsPage" component={SettingsPage} />

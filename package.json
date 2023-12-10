@@ -19,12 +19,14 @@
     "@supabase/supabase-js": "^2.39.0",
     "date-fns": "^2.30.0",
     "expo": "~49.0.15",
+    "expo-av": "~13.4.1",
     "expo-camera": "~13.4.4",
     "expo-file-system": "~15.4.5",
     "expo-font": "~11.4.0",
     "expo-status-bar": "~1.6.0",
+    "expo-updates": "~0.18.17",
     "react": "18.2.0",
-    "react-native": "0.72.6",
+    "react-native": "0.72.5",
     "react-native-bottom-menu": "^0.1.8",
     "react-native-elements": "^3.4.3",
     "react-native-gesture-handler": "~2.12.0",
@@ -39,8 +41,7 @@
     "react-native-url-polyfill": "^2.0.0",
     "react-native-vector-icons": "^10.0.2",
     "uuid": "^9.0.1",
-    "uuidv4": "^6.2.13",
-    "expo-av": "~13.4.1"
+    "uuidv4": "^6.2.13"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

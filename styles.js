@@ -29,9 +29,18 @@ const styles = StyleSheet.create({
   appBar: {
     backgroundColor: "#5E42A6",
     height: 115 * scaleFactor,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: "column",
+    //  alignItems: "center",
     paddingHorizontal: "5%",
+    paddingTop: "10%",
+  },
+  appBarQuestion: {
+    backgroundColor: "transparent",
+    height: 115 * scaleFactor,
+    flexDirection: "column",
+    //  alignItems: "center",
+    paddingHorizontal: "5%",
+    paddingTop: "10%",
   },
   appBarHome: {
     // backgroundColor: "#5E42A6",
@@ -43,10 +52,30 @@ const styles = StyleSheet.create({
   backArrow: {
     flexDirection: "row",
     justifyContent: "left",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
+    paddingBottom: 10,
+    paddingRight: 50,
+  },
+  backArrowBigButton: {
+    flexDirection: "row",
+    justifyContent: "left",
+    paddingBottom: 10,
+    paddingRight: 0,
+  },
+  backArrowSeamus: {
+    position: "absolute",
+    top: 40 * scaleFactor,
+    left: 0,
+    padding: 20,
+  },
+  backTextBar: {
+    flexDirection: "row", // Horizontal layout
+    alignItems: "center", // Center items vertically
+  },
+  backButton: {
+    position: "absolute",
+    left: 5 * scaleFactor,
+    top: 50 * scaleFactor,
+    padding: 10,
   },
   headerContainer: {
     flex: 1,
@@ -54,6 +83,11 @@ const styles = StyleSheet.create({
   },
   classNameText: {
     fontSize: 20 * scaleFactor,
+  },
+  logoImage: {
+    width: 60,
+    height: 60,
+    alignSelf: "center",
   },
   // ---------- ^^ Top Header ^^ ----------
   classInfo: {
@@ -268,6 +302,168 @@ const styles = StyleSheet.create({
     marginTop: "25%",
   },
   // ----------HomePage----------
+  courseSection: {
+    // marginBottom: 10,
+    marginTop: 30,
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "left",
+  },
+  bottomSection: {
+    justifyContent: "flex-end",
+    height: "100%",
+    marginBottom: "40%", // adjust space from bottom of screen
+  },
+  courseContainer: {
+    marginTop: 5,
+  },
+  courseBox: {
+    flexDirection: "row", // have course name and join button in one row
+    padding: 30,
+    margin: 10,
+    width: screenWidth * 0.95,
+    borderRadius: 10,
+    backgroundColor: "white",
+    //  borderColor: "#5E42A6",
+    borderColor: "white",
+    borderWidth: 2,
+    //  borderWidth: 1.5,
+    justifyContent: "space-between", // align items along the row
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+  },
+  courseBoxTEXT: {
+    fontSize: 24,
+    fontWeight: "bold",
+    //  color: "black",
+    color: "#312450",
+    textAlign: "left",
+  },
+  joinButton: {
+    width: 70,
+    borderRadius: 20,
+    backgroundColor: "#5E42A6",
+    // borderColor: '#312450',
+    // borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    //  shadowColor: "#000",
+    //  shadowOffset: { width: 0, height: 2 },
+    //  shadowOpacity: 0.5,
+    //  shadowRadius: 4,
+  },
+  joinButtonTEXT: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
+  askButton: {
+    width: 70,
+    borderRadius: 20,
+    backgroundColor: "#5E42A6",
+    // borderColor: '#312450',
+    // borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    //  shadowColor: "#000",
+    //  shadowOffset: { width: 0, height: 2 },
+    //  shadowOpacity: 0.5,
+    //  shadowRadius: 10,
+  },
+  askButtonTEXT: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
+  menuModalOverlay: {
+    ...StyleSheet.absoluteFillObject, // apply fill to custom modal
+    justifyContent: "center",
+    alignItems: "left",
+    backgroundColor: "rgba(0, 0, 0, 0.3)", // value for transparency
+  },
+  menuModalContent: {
+    flex: 1,
+    width: screenWidth * 0.7,
+    height: screenHeight,
+    //  backgroundColor: "#DDCFFF",
+    backgroundColor: "#312450",
+    borderRadius: 20, // round corners
+    padding: "10%",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  menuModalTop: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: "-40%",
+  },
+  menuModalBottom: {
+    alignItems: "center",
+    marginTop: "-60%",
+    flexDirection: "column",
+  },
+  menuModalHeader: {
+    marginTop: "50%",
+    fontSize: scaleFactor * 27,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "white",
+  },
+  menuModalBody: {
+    marginTop: "20%",
+    textAlign: "center",
+    fontSize: scaleFactor * 20,
+    marginTop: 5,
+    color: "white",
+  },
+  menuModalImage: {
+    width: 75,
+    height: 75,
+    borderRadius: 40,
+    marginTop: "50%",
+    borderColor: "white",
+    borderWidth: 3,
+  },
+  logoutButtonContainer: {
+    justifyContent: "flex-end",
+    width: "40%",
+    alignItems: "center",
+  },
+  logoutButton: {
+    borderRadius: 25,
+    backgroundColor: "#5E42A6",
+    // borderColor: 'white',
+    borderWidth: 2,
+    padding: 10,
+    width: "150%",
+    textAlign: "center",
+    alignItems: "center",
+    alignContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  logoutButtonText: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+    textAlign: "center",
+    alignItems: "center",
+    alignContent: "center",
+  },
+  canvasImage: {
+    width: 30,
+    height: 30,
+  },
+  fakePage: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: "25%",
+  },
+  // ----------HomePage----------
 
   // ----------CoursePage----------
   questionBox: {
@@ -281,6 +477,11 @@ const styles = StyleSheet.create({
   },
   questionTEXT: {
     fontSize: 22,
+    alignItems: "center",
+    paddingLeft: 40,
+    paddingRight: 40,
+    marginTop: 54,
+    marginBottom: 20,
   },
   courseCollabButton: {
     width: 145,
@@ -294,6 +495,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+    paddingHorizontal: 5,
   },
   scrollContainer: {
     alignItems: "center",
@@ -308,15 +510,15 @@ const styles = StyleSheet.create({
     // borderBottomColor: "#5E42A6",
     backgroundColor: "#5E42A6",
     borderBottomWidth: 2,
+    // minHeight: screenHeight * 0.1,
     // backgroundColor: "white",
-    height: screenHeight * 0.2,
   },
   questionPageBoxHeader: {
-    flexDirection: "row",
-    marginTop: 45,
-    marginLeft: 15,
-    marginRight: 15,
-    justifyContent: "space-between",
+    // flexDirection: "row",
+    // marginTop: 40,
+    // marginLeft: 0,
+    // marginRight: 15,
+    // justifyContent: "space-between",
   },
   chatArea: {
     flex: 1,
@@ -480,15 +682,12 @@ const styles = StyleSheet.create({
     // color: 'white',
   },
   modalCollabUncollabTEXT: {
-    width: 175,
     borderRadius: 20,
-    backgroundColor: "#5E42A6",
+    borderWidth: 2,
+    marginTop: 10,
+    borderColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
   },
   modalCollabUncollab: {
     flex: 1,
@@ -563,10 +762,13 @@ const styles = StyleSheet.create({
     fontWeight: "200",
   },
   questionInfoHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 15,
-    marginTop: 5,
+    flexDirection: "column",
+    padding: 5,
+    paddingRight: 15,
+    paddingTop: 10,
+    right: -0,
+    top: 50,
+    position: "absolute",
   },
   questionHost: {
     fontSize: 18,
@@ -756,8 +958,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   // ------ Collab Info --------
-
-  // ------ Ask Page  --------
   askContainer: {
     flex: 1,
     backgroundColor: "#5E42A6",
@@ -782,16 +982,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderWidth: 2,
     margin: 2,
-    //  marginRight: 8,
-    //  marginLeft: 8,
+    marginRight: 8,
+    marginLeft: 8,
   },
   questionBoxContainer: {
     height: 0.35 * screenHeight,
   },
   questionInput: {
-    //  backgroundColor: "white",
+    backgroundColor: "white",
     height: "60%",
-    margin: "10%",
+    margin: "20%",
     marginBottom: 0,
     borderColor: "white",
     borderWidth: 2,
@@ -822,7 +1022,163 @@ const styles = StyleSheet.create({
     backgroundColor: "white", // Apply your desired background color for selected tags
     borderColor: "white",
   },
+  // ------ New Question Boxes  --------
+  queueBox: {
+    margin: 10,
+    width: screenWidth * 0.95,
+    justifyContent: "space-between",
+    // maxHeight: '35%',
+
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    elevation: 8, // Increased elevation for a more pronounced effect on Android
+    shadowColor: "#000", // iOS shadow
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4, // Increased shadow opacity for a more pronounced effect on iOS
+    shadowRadius: 4,
+    padding: 10,
+  },
+  queueTopRow: {
+    // borderBlockColor: "green",
+    // borderWidth: 2,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 5,
+  },
+  questionNumsBlock: {
+    flexDirection: "row",
+    alignSelf: "flex-end",
+  },
+  iconBlock: {
+    flexDirection: "row",
+  },
+  questionIcon: {
+    alignSelf: "center",
+  },
+  expectedText: {
+    marginLeft: 5,
+    fontSize: 20,
+    alignSelf: "flex-end",
+  },
+  queueBot: {
+    // borderBlockColor: "white",
+    // borderWidth: 2,
+    marginTop: 5,
+    flexWrap: "wrap", // Allow text to wrap
+    overflow: "hidden", // Hide overflow content
+    flexDirection: "row",
+    justifyContent: "center", // align items along the row
+  },
+  button: {
+    //height: "100%",
+    borderRadius: 20,
+    backgroundColor: "#5e42a6",
+    padding: 5,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
+  infoButton: {
+    position: "absolute",
+    top: 40,
+    right: 5,
+    padding: 10,
+  },
   // ------ Ask Page  --------
+  askContainer: {
+    flex: 1,
+    backgroundColor: "#5E42A6",
+  },
+  tagsContainer: {
+    justifyContent: "space-around",
+    height: 0.2 * screenHeight,
+    flexWrap: "wrap",
+    marginLeft: "10%",
+  },
+  tags: {
+    marginLeft: "10%",
+    // maxWidth: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
+  tagButton: {
+    borderRadius: 30,
+    //  backgroundColor: "white",
+    borderColor: "white",
+    padding: 3,
+    paddingHorizontal: 10,
+    borderWidth: 2,
+    margin: 2,
+    marginRight: 8,
+    marginLeft: 8,
+  },
+  questionBoxContainer: {
+    height: 0.35 * screenHeight,
+  },
+  questionInput: {
+    //  backgroundColor: "white",
+    height: "60%",
+    marginLeft: "10%",
+    marginTop: "5%",
+    marginRight: "10%",
+    backgroundColor: "white",
+
+    marginBottom: 0,
+    borderColor: "white",
+    borderWidth: 2,
+    borderRadius: 20,
+    // shadowColor: "#000",
+    // shadowOffset: { width: 0, height: 10 },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 4,
+  },
+  submitQuestionButton: {
+    //  backgroundColor: "#5E42A6",
+    borderColor: "white",
+    borderWidth: 2,
+    paddingHorizontal: "10%",
+    paddingVertical: "1%",
+    borderRadius: 40,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  },
+  submitQuestionButtonText: {
+    color: "white",
+    fontSize: 20 * scaleFactor,
+    fontWeight: "bold",
+  },
+  selectedTag: {
+    backgroundColor: "white", // Apply your desired background color for selected tags
+    borderColor: "white",
+  },
+  submissionModal: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.8)", // More opaque background
+  },
+  submissionModalContent: {
+    width: "80%", // Adjust width as needed
+    backgroundColor: "white", // Solid background for content
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
 });
 
 export default styles;
