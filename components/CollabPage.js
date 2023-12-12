@@ -100,6 +100,7 @@ const CollabPage = () => {
       const { data, error } = await supabase.from("sameQ-app-data").select("*");
 
       if (data) {
+        // console.log("course data collab page: ", data);
         // 'data' is an array of objects with 'id' and 'course' columns
         const courses = data.map((item) => ({
           id: item.id,
