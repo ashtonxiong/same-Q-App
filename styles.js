@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
     fontSize: 20 * scaleFactor,
   },
   logoImage: {
-    width: 60,
-    height: 60,
+    width: 110,
+    height: 110,
     alignSelf: "center",
   },
   // ---------- ^^ Top Header ^^ ----------
@@ -1091,7 +1091,7 @@ const styles = StyleSheet.create({
   // ------ Ask Page  --------
   askContainer: {
     flex: 1,
-    backgroundColor: "#5E42A6",
+    // backgroundColor: "#5E42A6",
   },
   tagsContainer: {
     justifyContent: "space-around",
